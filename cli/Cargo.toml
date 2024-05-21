@@ -2,7 +2,7 @@
 name = "cli"
 version = "1.0.0"
 authors = ["Jose Palanco <jose.palanco@puffinsecurity.com>", "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"]
-description = "CLI interface for dust-ids"
+description = "DustIDS - The fast and lean industrial IDS"
 edition = "2021"
 
 [dependencies]

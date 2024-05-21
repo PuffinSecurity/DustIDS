@@ -13,7 +13,7 @@ use utils::types::LogLevel;
     name = "dust-ids",
     author,
     about,
-    long_about = "Rust Starter CLI",
+    long_about = "The lean industrial IDS",
     version
 )]
 //TODO: #[clap(setting = AppSettings::SubcommandRequired)]
