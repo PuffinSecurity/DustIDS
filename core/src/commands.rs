@@ -4,6 +4,13 @@ use super::hazard;
 use utils::app_config::AppConfig;
 use utils::error::Result;
 
+
+pub fn ids() -> Result<()> {
+    println!("IDS Running");
+
+    Ok(())
+}
+
 /// Show the configuration file
 pub fn hazard() -> Result<()> {
     // Generate, randomly, True or False

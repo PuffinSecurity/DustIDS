@@ -40,6 +40,12 @@ pub struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     #[clap(
+        name = "ids",
+        about = "test ids",
+        long_about = None, 
+    )]
+    IDS,
+    #[clap(
         name = "hazard",
         about = "Generate a hazardous occurance",
         long_about = None, 
@@ -92,6 +98,7 @@ pub fn cli_match() -> Result<()> {
 
     // Execute the subcommand
     match &cli.command {
+        Commands::IDS => commands::ids()?,
         Commands::Hazard => commands::hazard()?,
         Commands::Error => commands::simulate_error()?,
         Commands::Completion {subcommand} => {
