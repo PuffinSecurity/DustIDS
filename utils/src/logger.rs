@@ -30,7 +30,7 @@ pub fn default_root_logger() -> Result<slog::Logger> {
     .fuse();
 
     // Create Logger
-    let logger = slog::Logger::root(drain, o!("who" => "rust-starter"));
+    let logger = slog::Logger::root(drain, o!("who" => "dust-ids"));
 
     // Return Logger
     Ok(logger)

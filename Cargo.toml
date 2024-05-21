@@ -1,14 +1,13 @@
 [package]
-name = "rust-starter"
-version = "2.0.0-beta"
-authors = ["Abid Omar <contact@omarabid.com>"]
+name = "dust-ids"
+version = "1.0.0"
+authors = ["Jose Palanco <jose.palanco@puffinsecurity.com>", "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"]
 edition = "2021"
-repository = "https://github.com/omarabid/rust-starter"
+repository = "https://github.com/puffinsecurity/DustIDS"
 readme = "README.md"
-license = "MIT"
 keywords = ["cli", "starter"]
 description = """
-Rust Starter aims to provide high quality components to bootstrap your Rust CLI Project. It includes a battery of most used libraries; and defines a set of Rust best practices.
+The lean IDS
 """
 
 [workspace]

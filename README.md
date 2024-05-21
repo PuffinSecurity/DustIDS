@@ -1,22 +1,17 @@
 <p align="center">
-<a href="https://rust-starter.github.io"><img src="https://raw.githubusercontent.com/rust-starter/rust-starter.github.io/master/docs/images/logo_color.png" height="100px"/></a>
+<a href="https://dust-ids.github.io"><img src="https://raw.githubusercontent.com/dust-ids/dust-ids.github.io/master/docs/images/logo_color.png" height="100px"/></a>
  </p>
-<h1 align="center">rust-starter</h1>
+<h1 align="center">DustIDS</h1>
 <div align="center">
  <strong>
-    A simple framework to build Rust CLI Applications
+    The Lean IDS
  </strong>
 </div>
 <br/>
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/omarabid/rust-starter/blob/master/LICENSE) [![Gitter](https://badges.gitter.im/rust-starter/community.svg)](https://gitter.im/rust-starter/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Tests](https://github.com/rust-starter/rust-starter/actions/workflows/tests.yml/badge.svg)](https://github.com/rust-starter/rust-starter/actions/workflows/tests.yml)
-[![Build](https://github.com/rust-starter/rust-starter/actions/workflows/build.yml/badge.svg)](https://github.com/rust-starter/rust-starter/actions/workflows/build.yml)
-[![codecov](https://codecov.io/gh/rust-starter/rust-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/rust-starter/rust-starter)
+[Website](https://dust-ids.github.io)
 
-[Website](https://rust-starter.github.io)
-
-`rust-starter` is a starter boilerplate to create a Rust CLI application. It comes with a battery of components like argument parsing and configuration. It also has different tooling to create your binary, or automate your build process.
+`dust-ids` is a ... TODO
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -54,13 +49,13 @@ Planned for a 2.x release
 
 ## About
 
-`rust-starter` is an empty Rust CLI application with libraries, and few defaults. The goal is to help you bootstrap your next CLI project as quickly as possible while ensuring you make use of the best tools and best-practices that are available today.
+`dust-ids` is an empty Rust CLI application with libraries, and few defaults. The goal is to help you bootstrap your next CLI project as quickly as possible while ensuring you make use of the best tools and best-practices that are available today.
 
 There is no configuration required (though we recommend you check all the possible configurations possible). An empty clone will compile, and has a few sample commands. You can start coding right away!
 
 ## FAQ
 
-For the Full FAQ, check the [website](https://rust-starter.github.io/#faq)
+For the Full FAQ, check the [website](https://dust-ids.github.io/#faq)
 
 ## Features
 
@@ -75,7 +70,7 @@ For the Full FAQ, check the [website](https://rust-starter.github.io/#faq)
 
 ## Quick Bootstrapping
 
-`rust-starter` should compile and run as is. You just need to clone the repository. A `cargo-generate` template is also [available](https://github.com/rust-starter/rust-starter-generate). For a more detailed introduction, check the [Getting Started](https://rust-starter.github.io/#getting-started) guide.
+`dust-ids` should compile and run as is. You just need to clone the repository. A `cargo-generate` template is also [available](https://github.com/dust-ids/dust-ids-generate). For a more detailed introduction, check the [Getting Started](https://dust-ids.github.io/#getting-started) guide.
 
 ## How to Contribute
 
@@ -87,4 +82,4 @@ Rust Starter stricltly adheres to the [SemVer](https://semver.org/) Semantic Ver
 
 ## License
 
-`rust-starter` is licensed under the MIT license. Please read the [LICENSE](LICENSE) file in this repository for more information.
+`dust-ids` is licensed under the MIT license. Please read the [LICENSE](LICENSE) file in this repository for more information.

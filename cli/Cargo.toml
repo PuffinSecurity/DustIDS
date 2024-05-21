@@ -1,8 +1,8 @@
 [package]
 name = "cli"
-version = "2.0.0"
-authors = ["Abid Omar <contact@omarabid.com>"]
-description = "CLI interface for rust-starter"
+version = "1.0.0"
+authors = ["Jose Palanco <jose.palanco@puffinsecurity.com>", "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"]
+description = "CLI interface for dust-ids"
 edition = "2021"
 
 [dependencies]
