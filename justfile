@@ -30,12 +30,3 @@ clean:
 	find . -type f -name "*.orig" -exec rm {} \;
 	find . -type f -name "*.bk" -exec rm {} \;
 	find . -type f -name ".*~" -exec rm {} \;	
-
-build-image:
-    mv docker/.dockerignore .dockerignore
-    docker build -t {{package_name}}:{{package_version}} -f docker/Dockerfile .
-    mv .dockerignore docker/.dockerignore
-
-push-image:
-    docker tag {{package_name}}:{{package_version}} {{dockerhub_org}}/{{package_name}}:{{package_version}}
-    docker push {{dockerhub_org}}/{{package_name}}:{{package_version}}
