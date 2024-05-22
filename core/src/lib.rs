@@ -2,9 +2,8 @@
 extern crate log;
 
 pub mod commands;
-pub mod error;
-pub mod hazard;
 pub mod scan;
+pub mod yara_helpers;
 
 use utils::error::Result;
 

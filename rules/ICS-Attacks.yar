@@ -401,7 +401,7 @@ rule HatMan_inject_payload : ICS_ATTACK
     description = "HatMan inject payload"
     uid = "8b6b5ba8d10e4c379a89303345d893c8"
     dst_port = "1502"
- strings:
+  strings:
     $payload_inject = { 05 00 0A 00 00 00 13 02 00 00 29 00 0A 00 71 38 }
   condition:
     $payload_inject at 0

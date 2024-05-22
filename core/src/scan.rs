@@ -1,20 +1,10 @@
 use pnet::datalink;
 use pnet::datalink::Channel::Ethernet;
+use pnet::datalink::NetworkInterface;
 use pnet::packet::ethernet::EthernetPacket;
-use pnet::packet::FromPacket;
 use pnet::packet::Packet;
-use yara_x::Scanner;
 
-pub fn capture_packets(scanner: &mut Scanner) {
-    let all_interfaces = datalink::interfaces();
-
-    // Search for the default interface - the one that is
-    // up, not loopback and has an IP.
-    let interface = all_interfaces
-        .iter()
-        .find(|e| e.name == "lo") //e.is_up() && !e.is_loopback() && !e.ips.is_empty())
-        .unwrap();
-
+pub fn capture_packets(yara_scanner: &mut yara_x::Scanner, interface: &NetworkInterface) {
     let (_, mut rx) = match datalink::channel(&interface, Default::default()) {
         Ok(Ethernet(tx, rx)) => (tx, rx),
         Ok(_) => panic!("Unhandled channel type: {}", &interface),
@@ -24,26 +14,27 @@ pub fn capture_packets(scanner: &mut Scanner) {
         ),
     };
 
-    println!("Start reading packet: ");
+    log::info!("Starting packet analysis on interface: {}", interface.name);
     loop {
         match rx.next() {
             Ok(packet) => {
                 if let Some(ethernet_packet) = EthernetPacket::new(packet) {
-                    println!(
+                    log::debug!(
                         "{} | {} => {}: {}",
                         interface.name,
                         ethernet_packet.get_destination(),
                         ethernet_packet.get_source(),
                         ethernet_packet.get_ethertype()
                     );
-                    let packet = ethernet_packet.packet();
+                    //let packet = ethernet_packet.packet();
                     let payload = ethernet_packet.payload();
-                    let from_packet = ethernet_packet.from_packet();
+                    //let from_packet = ethernet_packet.from_packet();
 
-                    let results = scanner.scan(payload).unwrap();
+                    let results = yara_scanner.scan(payload).unwrap();
 
                     for rule in results.matching_rules() {
-                        println!("Matched rule: {}", rule.identifier());
+                        log::info!("Matched rule: {}", rule.identifier());
+                        log::debug!("Payload: {:02X?}", payload);
                     }
                 }
             }
