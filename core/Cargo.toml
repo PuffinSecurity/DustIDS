@@ -10,3 +10,6 @@ utils = { path = "../utils" }
 
 rand = "0.8.5"
 log = "0.4.20"
+pnet = "0.34.0"
+yara-x = "0.3.0"
+yara-x-parser = "0.3.0"
