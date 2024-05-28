@@ -1,10 +1,7 @@
 use std::fs;
-use std::path::Path;
 use std::io::Read;
 
-use yara_x_parser::SourceCode;
 use yara_x::Compiler;
-use yara_x::Scanner;
 use yara_x::Rules;
 
 use utils::error::Result;

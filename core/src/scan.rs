@@ -1,10 +1,12 @@
+use super::packet_analysis;
+
 use pnet::datalink;
 use pnet::datalink::Channel::Ethernet;
 use pnet::datalink::NetworkInterface;
 use pnet::packet::ethernet::EthernetPacket;
-use pnet::packet::Packet;
 
-pub fn capture_packets(yara_scanner: &mut yara_x::Scanner, interface: &NetworkInterface) {
+
+pub fn analyze_packets(yara_scanner: &mut yara_x::Scanner, interface: &NetworkInterface, alert_logger: slog::Logger) {
     let (_, mut rx) = match datalink::channel(&interface, Default::default()) {
         Ok(Ethernet(tx, rx)) => (tx, rx),
         Ok(_) => panic!("Unhandled channel type: {}", &interface),
@@ -26,16 +28,11 @@ pub fn capture_packets(yara_scanner: &mut yara_x::Scanner, interface: &NetworkIn
                         ethernet_packet.get_source(),
                         ethernet_packet.get_ethertype()
                     );
-                    //let packet = ethernet_packet.packet();
-                    let payload = ethernet_packet.payload();
-                    //let from_packet = ethernet_packet.from_packet();
 
-                    let results = yara_scanner.scan(payload).unwrap();
-
-                    for rule in results.matching_rules() {
-                        log::info!("Matched rule: {}", rule.identifier());
-                        log::debug!("Payload: {:02X?}", payload);
-                    }
+                    // Analyze packet
+                    packet_analysis::analyze_ethernet_frame(interface, &ethernet_packet, yara_scanner, &alert_logger);
+                    // let payload = ethernet_packet.payload();
+                    //let results = yara_scanner.scan(payload).unwrap();
                 }
             }
             Err(e) => {
