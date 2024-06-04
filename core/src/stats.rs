@@ -6,9 +6,9 @@ use std::sync::{Arc, RwLock};
 
 #[derive(Debug)]
 pub struct Stats {
-    rx_per_sec: Vec<isize>,
-    alerts: Vec<AlertMsg>,
-    analysis_buffer: isize,
+    pub rx_per_sec: Vec<isize>,
+    pub alerts: Vec<AlertMsg>,
+    pub analysis_buffer: isize,
 }
 
 impl Stats {

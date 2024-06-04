@@ -170,6 +170,7 @@ impl  AFXDPListener {
                             //println!("XDP worker {:?} Received {:?} packets", self.core, n_pkt);
                             // Send stats
                             rx_stats_sender.send(n_pkt as isize).unwrap();
+                            println!("Got {:?} packets", n_pkt as isize);
 
                             for frame in v.drain(0..) {
                                 //let packet = EthernetPacket::new(frame).unwrap();

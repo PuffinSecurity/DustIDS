@@ -1,3 +1,7 @@
+mod app;
+mod crossterm;
+mod ui;
+
 use std::{path::PathBuf, str::FromStr};
 use clap::{Parser, Subcommand, CommandFactory};
 use clap_complete::{generate, shells::{Bash, Fish, Zsh}};
@@ -5,6 +9,8 @@ use clap_complete::{generate, shells::{Bash, Fish, Zsh}};
 use core::commands;
 use utils::error::Result;
 use utils::types::LogLevel;
+
+use std::time::Duration;
 
 use std::ffi::OsString;
 
@@ -39,6 +45,13 @@ enum Commands {
             help = "Path to a directory holding yara rules")
         ]
         rules_dir: Option<OsString>,
+
+        #[arg(
+            value_name = "TUI",
+            short, long, action,
+            help = "Use Terminal User Interface")
+        ]
+        tui: bool,
     },
 }
 
@@ -51,6 +64,7 @@ pub fn cli_match() -> Result<()> {
         Commands::Scan {
             iface,
             rules_dir,
+            tui
         } => {
             let iface = iface
                 .as_deref()
@@ -62,9 +76,17 @@ pub fn cli_match() -> Result<()> {
                 .map(|s| s.to_str().unwrap())
                 .unwrap_or(".");
 
-            core::commands::scan_interface(iface, rules_dir).unwrap();
-        }
+            let ret = core::commands::scan_interface(iface, rules_dir).unwrap();
 
+            if tui {
+                let tick_rate = Duration::from_millis(100);
+                crossterm::run(tick_rate, ret.stats).unwrap();
+            }
+
+            for handle in ret.handles {
+                handle.join();
+            }
+        }
     }
 
     Ok(())
