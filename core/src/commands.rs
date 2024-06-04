@@ -6,6 +6,7 @@ use super::xdpworker;
 use super::alerts;
 use super::stats;
 use super::afxdp_listener;
+use super::afpacket_listener;
 
 use rebpf::{interface, libbpf};
 use libbpf_sys;
@@ -58,9 +59,10 @@ pub fn scan_interface(interface_name: &str, rule_dir: &str) -> Result<(ScanResul
 
     //yara_analyzer.thread_handles.join()
 
-    let mut afxdp_listener = afxdp_listener::AFXDPListener::new(interface_name.to_string(), xdp_flags, 2, yara_analyzer.frame_sender.clone(), rx_stat_sender.clone());
-    let afxdp_handle = afxdp_listener.run();
-
+    // let mut afxdp_listener = afxdp_listener::AFXDPListener::new(interface_name.to_string(), xdp_flags, 2, yara_analyzer.frame_sender.clone(), rx_stat_sender.clone());
+    // let afxdp_handle = afxdp_listener.run();
+    let mut afpacket_listener = afpacket_listener::AFPacketListener::new(interface_name.to_string(), yara_analyzer.frame_sender.clone(), rx_stat_sender.clone());
+    let afpacket_handle = afpacket_listener.run();
     // afxdp_handle.join();
     // for handle in yara_analyzer.thread_handles {
     //     handle.join();
@@ -68,7 +70,7 @@ pub fn scan_interface(interface_name: &str, rule_dir: &str) -> Result<(ScanResul
     //xdpanalyzer.disconnect();
 
     let mut all_handles = yara_analyzer.thread_handles;
-    all_handles.push(afxdp_handle); 
+    all_handles.push(afpacket_handle); 
 
     Ok(ScanResult {
         handles: all_handles,
