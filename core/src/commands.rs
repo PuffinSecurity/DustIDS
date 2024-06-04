@@ -1,69 +1,58 @@
-use super::scan;
-use super::yara_helpers::compile_rules_from_dir;
-
-use pnet::datalink;
-use pnet::datalink::NetworkInterface;
-use utils::error::Result;
+use std::cmp::min;
+use std::sync::{mpsc::Sender, Arc, Mutex};
+use std::thread;
 use std::fs;
-use std::path::Path;
 use std::io::Read;
-use slog::{Drain, Logger, o};
-use slog_async::Async;
-use slog_json::Json;
-use slog_term::{FullFormat, PlainDecorator, TermDecorator};
-use std::fs::OpenOptions;
-use std::sync::Arc;
 
-
-
+use yara_x::Rules;
 use yara_x::Compiler;
+use super::yara_analyzer::YaraAnalyzer;
+use super::yara_analyzer::compile_rules_from_dir;
+use super::xdpworker;
+use super::alerts;
 
-pub fn scan_interface(interface_name: &str, rule_dir: &str) -> Result<()> {    
-    // Init EveJSON Logger
-    let file_logger = {
-        let file = OpenOptions::new()
-            .create(true)
-            .write(true)
-            .append(true)
-            .open("json_logs.json")
-            .expect("Failed to open json log file");
-        let drain = Json::new(file)
-            .add_default_keys()
-            .build()
-            .fuse();
-        Async::new(drain).build().fuse()
-    };
-    let json_logger = Logger::root(file_logger, o!());
+use rebpf::{interface, libbpf};
+use libbpf_sys;
+use utils::error::Result;
 
-    // Init YARA-X Scanner
+pub fn scan_interface(interface_name: &str, rule_dir: &str) -> Result<()> {  
+    // DEBUG
+    //let interface_name = "lo";
+    //let yara_dir = "../yaraids/rules";
+    // ! DEBUG
+
+    // Load XDP flags (Optionally, load a BPF program, but this isnt needed as long as its a IDS and not a IPS)
+    let xdp_flags = libbpf::XdpFlags::UPDATE_IF_NOEXIST | libbpf::XdpFlags::DRV_MODE;
+    let interface = interface::get_interface(interface_name).unwrap();
+    let _ = libbpf::bpf_set_link_xdp_fd(&interface, None, xdp_flags).unwrap();
+
+    // Initialize XDP worker
+    let mut xdpanalyzer = xdpworker::XDPWorker::new( // TODO: Add rx queue as param
+        interface_name.to_string(),
+        xdp_flags,
+        2
+    );
+
+    // Initialize alert reciever thread
+    let alerts_sender = alerts::run(&alerts::AlertConfig {
+        stdout: true,
+        ip: "".to_string(),
+        port: 0,
+    });
+
+    // Load Yara rules
     let compiler = Compiler::new();
-    let rules = compile_rules_from_dir(compiler, rule_dir).unwrap();
-    let mut scanner = yara_x::Scanner::new(&rules); 
+    let rules  = compile_rules_from_dir(compiler, rule_dir);
 
-    // Get the network interface
-    let all_interfaces = datalink::interfaces();
-    let interface: &NetworkInterface = match all_interfaces
-        .iter()
-        .find(|e| e.name == interface_name) {
-            Some(interface) => interface,
-            None => {
-                panic!("[!] No interface found matching name: {}", interface_name);
-                //eprintln!("No interface found matching name: {}", interface_name);
-                //return Ok(());  // Exit the function or use std::process::exit(1) to exit the program
-        }
-    };
-        //e.is_up() && !e.is_loopback() && !e.ips.is_empty())
-        //.unwrap();
+    // Initialize analysis threads
+    let yara_analyzer: YaraAnalyzer = YaraAnalyzer::new(2, Arc::new(rules), alerts_sender);
 
-    if interface.is_up() {
-        log::debug!("Interface is up: {}", interface.name);
-    } else {
-        log::error!("Interface is down, unable to start: {}", interface.name);
-        panic!("[!] Interface is down, unable to start: {}", interface.name);
-    }
+    // Run worker
+    xdpanalyzer.run(yara_analyzer.frame_sender);
 
-    // Initiate packet capture
-    let _ = scan::analyze_packets(&mut scanner, interface, json_logger);
+    //yara_analyzer.thread_handles.join();
+
+    xdpanalyzer.disconnect();
 
     Ok(())
 }
