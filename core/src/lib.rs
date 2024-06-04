@@ -9,6 +9,10 @@ pub mod eve_alert;
 
 use utils::error::Result;
 
+pub mod analyzer {
+    pub mod threaded_analyzer;
+}
+
 pub fn start() -> Result<()> {
     // does nothing
 
