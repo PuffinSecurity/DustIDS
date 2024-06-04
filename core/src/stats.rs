@@ -54,7 +54,11 @@ impl Stats {
                         
                         let rx_len = new_stats.rx_per_sec.len();
                         if msg > 0 {
-                            new_stats.rx_per_sec[rx_len - 1] += msg;
+                            if rx_len == 0 {
+                                new_stats.rx_per_sec.push(msg);
+                            } else {
+                                new_stats.rx_per_sec[rx_len - 1] += msg;
+                            }
                         }
                         new_stats.analysis_buffer += msg;
                     }
