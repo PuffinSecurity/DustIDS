@@ -1,34 +1,19 @@
 use arraydeque::{ArrayDeque, Wrapping};
 use rebpf::{interface, libbpf};
 use std::cmp::{min, max};
-use std::sync::{mpsc::Sender, Arc, Mutex};
-use std::thread;
+use std::sync::{Arc, Mutex};
 use num_cpus;
 
 use afxdp::mmap_area::{MmapArea, MmapAreaOptions};
-use afxdp::socket::{Socket, SocketOptions, SocketRx, SocketTx};
-use afxdp::umem::{Umem, UmemCompletionQueue, UmemFillQueue};
+use afxdp::socket::{Socket, SocketOptions, SocketRx};
+use afxdp::umem::{Umem, UmemFillQueue};
 use afxdp::PENDING_LEN;
 use afxdp::{buf::Buf, buf_pool::BufPool};
 use afxdp::{buf_mmap::BufMmap, buf_pool_vec::BufPoolVec};
-use libbpf_sys::{XSK_RING_CONS__DEFAULT_NUM_DESCS, XSK_RING_PROD__DEFAULT_NUM_DESCS, XDP_OPTIONS_ZEROCOPY};
-use pnet::packet::ethernet::EtherTypes;
-use pnet::packet::ethernet::MutableEthernetPacket;
-use pnet::packet::ethernet::EthernetPacket;
-use pnet::packet::ipv4::MutableIpv4Packet;
-use pnet::packet::ipv4::Ipv4Packet;
-use pnet::packet::tcp::MutableTcpPacket;
-use pnet::packet::tcp::TcpPacket;
-use pnet::packet::{MutablePacket, Packet};
-
-use libbpf_sys;
-use libc;
-use std::ffi::CString;
+use libbpf_sys::{XSK_RING_CONS__DEFAULT_NUM_DESCS, XSK_RING_PROD__DEFAULT_NUM_DESCS};
 
 use super::alerts::AlertMsg;
 use super::analyzer_t::Analyzer;
-// use super::yara_helpers::compile_rules_from_dir;
-// use super::packet_analysis::analyze_ethernet_frame;
 
 const BUF_NUM: usize = 65536;
 const BUF_LEN: usize = 4096;
@@ -129,7 +114,7 @@ impl<'a>  XDPWorker<'a> {
         }
     }
 
-    pub fn run(&mut self, frame_sender: crossbeam_channel::Sender<Vec<u8>>) {
+    pub fn run(&mut self, frame_sender: crossbeam_channel::Sender<Vec<u8>>, rx_stats_sender: crossbeam_channel::Sender<isize>) {
         let mut v: ArrayDeque<[BufMmap<BufCustom>; PENDING_LEN], Wrapping> = ArrayDeque::new();
         let mut fq_deficit = 0;
 
@@ -173,8 +158,10 @@ impl<'a>  XDPWorker<'a> {
             match r {
                 Ok(n_pkt) => {
                     if n_pkt > 0 {
-                        println!("XDP worker {:?} Received {:?} packets", self.core, n_pkt);
-                        
+                        //println!("XDP worker {:?} Received {:?} packets", self.core, n_pkt);
+                        // Send stats
+                        rx_stats_sender.send(n_pkt as isize).unwrap();
+
                         for frame in v.drain(0..) {
                             //let packet = EthernetPacket::new(frame).unwrap();
                             // println!("Packet 1: {:?}", frame.get_data());

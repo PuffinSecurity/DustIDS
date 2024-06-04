@@ -1,7 +1,7 @@
 use std::thread;
 use crossbeam_channel;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct AlertMsg {
     pub timestamp: Option<String>,
     pub rule: String,

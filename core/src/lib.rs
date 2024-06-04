@@ -7,6 +7,7 @@ pub mod debug_analyzer;
 pub mod yara_analyzer;
 pub mod xdpworker;
 pub mod alerts;
+pub mod stats;
 
 use utils::error::Result;
 

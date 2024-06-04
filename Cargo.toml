@@ -47,6 +47,7 @@ core_affinity = "0.5"
 arraydeque = "0.4"
 num_cpus = "1.16.0"
 hex = "0.4.3"
+atomic-counter = "1.0.1"
 
 [dev-dependencies]
 assert_cmd = "2.0.12"

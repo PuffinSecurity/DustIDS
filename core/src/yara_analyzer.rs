@@ -1,15 +1,9 @@
 use super::alerts::AlertMsg;
-use super::analyzer_t::Analyzer;
 use yara_x;
 use std::fs;
 use std::io::Read;
-use arraydeque::{ArrayDeque, Wrapping};
-use afxdp::PENDING_LEN;
-use afxdp::buf_mmap::BufMmap;
 use std::thread;
 use std::sync::Arc;
-use std::sync::Mutex;
-use std::cell::RefCell;
 use yara_x::Scanner;
 use std::net::IpAddr;
 
@@ -26,10 +20,8 @@ use yara_x::Rules;
 
 use hex;
 
-//use std::sync::mpsc::Sender;
 use crossbeam_channel;
-
-use super::xdpworker::BufCustom;
+//use std::sync::mpsc::Sender;
 
 pub struct YaraAnalyzer {
     pub frame_sender: crossbeam_channel::Sender<Vec<u8>>,
@@ -37,7 +29,7 @@ pub struct YaraAnalyzer {
 }
 
 impl YaraAnalyzer {
-    pub fn new(num_threads: usize, rules: Arc<yara_x::Rules>, alert_sender: crossbeam_channel::Sender<AlertMsg>) -> Self {
+    pub fn new(num_threads: usize, rules: Arc<yara_x::Rules>, alert_sender: crossbeam_channel::Sender<AlertMsg>, rx_stats_sender: crossbeam_channel::Sender<isize>) -> Self {
         // Create crossbeam channel
         let (frame_sender, frame_receiver) = crossbeam_channel::unbounded();
 
@@ -47,8 +39,9 @@ impl YaraAnalyzer {
             let rules = Arc::clone(&rules);
             let sender = alert_sender.clone();
             let reciever = frame_receiver.clone();
+            let rx_sender = rx_stats_sender.clone();
             let handle = thread::spawn(move || {
-                YaraAnalyzer::thread_run(&*rules, reciever, sender);
+                YaraAnalyzer::thread_run(&*rules, reciever, sender, rx_sender);
             });
             thread_handles.push(handle);
         }
@@ -59,7 +52,7 @@ impl YaraAnalyzer {
         }
     }
 
-    pub fn thread_run(rules: &yara_x::Rules, frame_reciever: crossbeam_channel::Receiver<Vec<u8>>, alert_sender: crossbeam_channel::Sender<AlertMsg>) {
+    pub fn thread_run(rules: &yara_x::Rules, frame_reciever: crossbeam_channel::Receiver<Vec<u8>>, alert_sender: crossbeam_channel::Sender<AlertMsg>, rx_stats_sender: crossbeam_channel::Sender<isize>) {
         // Init scanner
         let mut yara_scanner = Scanner::new(rules);
 
@@ -71,7 +64,8 @@ impl YaraAnalyzer {
                     let ethernet = EthernetPacket::new(frame_slice).unwrap();
                     analyze_ethernet_frame(&ethernet, &mut yara_scanner, &alert_sender);
 
-                    println!("New packet processed by {:?}", thread::current().id());
+                    //println!("New packet processed by {:?}", thread::current().id());
+                    rx_stats_sender.send(-1).unwrap();
                 },
                 _ => {},
             }
