@@ -90,7 +90,7 @@ impl State {
                     on_alert(alert_clone);
 
                     let mut alerts = alerts_thread.write().unwrap();
-                    alerts.push(msg);
+                    alerts.insert(0, msg);
                 }
                 Err(e) => println!("An error occurred while reading: {}", e),
             }

@@ -19,6 +19,8 @@ use pnet::packet::Packet;
 use yara_x::Compiler;
 use yara_x::Rules;
 
+use chrono::Local;
+
 use hex;
 
 use crossbeam_channel;
@@ -143,7 +145,6 @@ fn analyze_ipv4_packet(ethernet: &EthernetPacket, yara_scanner: &mut yara_x::Sca
     let header = Ipv4Packet::new(ethernet.payload());
     if let Some(header) = header {
         analyze_transport_protocol(
-            
             IpAddr::V4(header.get_source()),
             IpAddr::V4(header.get_destination()),
             header.get_next_level_protocol(),
@@ -200,12 +201,13 @@ fn analyze_udp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
         let results = yara_scanner.scan(payload).unwrap();
     
         for rule in results.matching_rules() {
+            let date = Local::now();
             alert_sender.send(AlertMsg {
-                timestamp: "Now".to_string(),
+                timestamp: date.format("%Y-%m-%d-%H:%M:%S").to_string(),
                 rule: rule.identifier().to_string(),
-                src_ip: "src_ip".to_string(),//hex::encode(packet),
+                src_ip: source.to_string(),
                 src_port: "src_port".to_string(),
-                dst_ip: "dst_ip".to_string(),
+                dst_ip: destination.to_string(),
                 dst_port: "dst_port".to_string(),
             }).unwrap();
         };
@@ -222,12 +224,13 @@ fn analyze_tcp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
         let results = yara_scanner.scan(payload).unwrap();
     
         for rule in results.matching_rules() {
+            let date = Local::now();
             alert_sender.send(AlertMsg {
-                timestamp: "Now".to_string(),
+                timestamp: date.format("%Y-%m-%d-%H:%M:%S").to_string(),
                 rule: rule.identifier().to_string(),
-                src_ip: "src_ip".to_string(),//hex::encode(packet),
+                src_ip: source.to_string(),
                 src_port: "src_port".to_string(),
-                dst_ip: "dst_ip".to_string(),
+                dst_ip: destination.to_string(),
                 dst_port: "dst_port".to_string(),
             }).unwrap();
         };
