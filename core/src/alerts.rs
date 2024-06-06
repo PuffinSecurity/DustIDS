@@ -3,7 +3,7 @@ use crossbeam_channel;
 
 #[derive(Debug, Clone)]
 pub struct AlertMsg {
-    pub timestamp: Option<String>,
+    pub timestamp: String,
     pub rule: String,
     pub src_ip: String,
     pub src_port: String,
@@ -18,10 +18,10 @@ pub struct AlertConfig {
 }
 
 pub fn on_alert(msg: AlertMsg) {
-    println!(
-        "[!!!] DETECTED: {} ",
-        msg.rule
-    );
+    // println!(
+    //     "[!!!] DETECTED: {} ",
+    //     msg.rule
+    // );
 }
 
 pub fn run(config: &AlertConfig, alert_stat_sender: crossbeam_channel::Sender<AlertMsg>) -> crossbeam_channel::Sender<AlertMsg> {

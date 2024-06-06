@@ -16,7 +16,8 @@ use crate::{app::App, ui};
 use std::sync::{Arc, RwLock};
 use core::state::State;
 
-pub fn run(tick_rate: Duration, state: State) -> Result<(), Box<dyn Error>> {
+
+pub fn run(tick_rate: usize, state: State) -> Result<(), Box<dyn Error>> {
     // setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
@@ -25,7 +26,8 @@ pub fn run(tick_rate: Duration, state: State) -> Result<(), Box<dyn Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     // create app and run it
-    let app = App::new(" DustIDS by PuffinSecurity ", state);
+    let app = App::new(" DustIDS by PuffinSecurity ", state, tick_rate);
+    let tick_rate = Duration::from_millis(tick_rate as u64);
     let res = run_app(&mut terminal, app, tick_rate);
 
     // restore terminal

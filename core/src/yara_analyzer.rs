@@ -201,7 +201,7 @@ fn analyze_udp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
     
         for rule in results.matching_rules() {
             alert_sender.send(AlertMsg {
-                timestamp: None,
+                timestamp: "Now".to_string(),
                 rule: rule.identifier().to_string(),
                 src_ip: "src_ip".to_string(),//hex::encode(packet),
                 src_port: "src_port".to_string(),
@@ -223,7 +223,7 @@ fn analyze_tcp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
     
         for rule in results.matching_rules() {
             alert_sender.send(AlertMsg {
-                timestamp: None,
+                timestamp: "Now".to_string(),
                 rule: rule.identifier().to_string(),
                 src_ip: "src_ip".to_string(),//hex::encode(packet),
                 src_port: "src_port".to_string(),

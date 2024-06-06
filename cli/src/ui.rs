@@ -3,25 +3,22 @@ use ratatui::{
     prelude::*,
     widgets::{canvas::*, *},
 };
+use std::sync::atomic::Ordering;
 
 use crate::app::App;
 
 pub fn draw(f: &mut Frame, app: &mut App) {
-    let chunks = Layout::vertical([Constraint::Length(3), Constraint::Min(0)]).split(f.size());
-    
-    draw_text(f, chunks[0]);
-    draw_first_tab(f, app, chunks[1]);
-}
-
-fn draw_first_tab(f: &mut Frame, app: &mut App, area: Rect) {
     let chunks = Layout::vertical([
+        Constraint::Length(3),
         Constraint::Length(10),
         Constraint::Min(8),
-    ])
-    .split(area);
-    draw_gauges(f, app, chunks[0]);
-    draw_charts(f, app, chunks[1]);
+    ]).split(f.size());
+    
+    draw_text(f, app, chunks[0]);
+    draw_gauges(f, app, chunks[1]);
+    draw_charts(f, app, chunks[2]);
 }
+
 
 fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
     let chunks = Layout::vertical([
@@ -33,30 +30,40 @@ fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
     let block = Block::bordered().title("Graphs");
     f.render_widget(block, area);
 
+    // let sparkline = Sparkline::default()
+    //     .block(Block::new().title("Realtime RX:"))
+    //     .style(Style::default().fg(Color::Green))
+    //     .data(&app.rx_per_sec[..])
+    //     .direction(RenderDirection::RightToLeft)
+    //     .bar_set(if app.enhanced_graphics {
+    //         symbols::bar::NINE_LEVELS
+    //     } else {
+    //         symbols::bar::THREE_LEVELS
+    //     });
+    // f.render_widget(sparkline, chunks[0]);
+
+    let sparkline_values: Vec<u64> = app.state.rx_per_tick.iter().map(|&num| num as u64).collect();
     let sparkline = Sparkline::default()
         .block(Block::new().title("Realtime RX:"))
         .style(Style::default().fg(Color::Green))
-        .data(&app.rx_per_sec[..])
+        .data(&sparkline_values)
         .direction(RenderDirection::RightToLeft)
-        .bar_set(if app.enhanced_graphics {
-            symbols::bar::NINE_LEVELS
-        } else {
-            symbols::bar::THREE_LEVELS
-        });
+        .bar_set(symbols::bar::NINE_LEVELS);
     f.render_widget(sparkline, chunks[0]);
 
-    let label = format!("{:}", app.analysis_buffer);
+    let buffer_len: u32 = app.state.analysis_buffer_len.load(Ordering::SeqCst);
+    let label = format!("{:}", buffer_len);
     let gauge = Gauge::default()
         .block(Block::new().title("Analysis Buffer:"))
         .gauge_style(
             Style::default()
-                .fg(Color::Yellow)
+                .fg(Color::LightYellow)
                 .bg(Color::Black)
                 .add_modifier(Modifier::ITALIC | Modifier::BOLD),
         )
-        .use_unicode(app.enhanced_graphics)
+        .use_unicode(true)
         .label(label)
-        .ratio(app.progress);
+        .ratio((buffer_len as f64 / app.state.analysis_buffer_cap as f64));
     f.render_widget(gauge, chunks[1]);
 }
 
@@ -72,28 +79,25 @@ fn draw_charts(f: &mut Frame, app: &mut App, area: Rect) {
                 Layout::horizontal([Constraint::Percentage(40), Constraint::Percentage(60)])
                     .split(chunks[0]);
 
-            // Draw tasks
-            let tasks: Vec<ListItem> = app
-                .tasks
-                .items
+            // Draw Rulesets
+            let rules: Vec<ListItem> = app.state
+                .rule_sets
                 .iter()
-                .map(|i| ListItem::new(vec![text::Line::from(Span::raw(*i))]))
+                .map(|i| ListItem::new(vec![text::Line::from(Span::raw(i))]))
                 .collect();
-            let tasks = List::new(tasks)
+            let rules = List::new(rules)
                 .block(Block::bordered().title(" Rule Sets "))
                 .highlight_style(Style::default().add_modifier(Modifier::BOLD))
                 .highlight_symbol("> ");
-            f.render_stateful_widget(tasks, chunks[0], &mut app.tasks.state);
+            f.render_widget(rules, chunks[0]);
 
-            // Draw logs
-            let warning_style = Style::default().fg(Color::Yellow);
-            let logs: Vec<ListItem> = app
-                .logs
+            let alerts = app.state.alerts.read().unwrap();
+            let logs: Vec<ListItem> = alerts
                 .iter()
-                .map(|(ts, name)| {
+                .map(|alert| {
                     let content = vec![text::Line::from(vec![
-                        Span::styled(format!("{:<20}", ts), Style::default()),
-                        Span::styled(name, warning_style),
+                        Span::styled(format!("{:<20}", alert.timestamp), Style::default()),
+                        Span::styled(alert.rule.clone(), Style::default().fg(Color::LightYellow)),
                     ])];
                     ListItem::new(content)
                 })
@@ -104,23 +108,23 @@ fn draw_charts(f: &mut Frame, app: &mut App, area: Rect) {
     }
 }
 
-fn draw_text(f: &mut Frame, area: Rect) {
+fn draw_text(f: &mut Frame, app: &mut App, area: Rect) {
     let text = vec![
         text::Line::from(vec![
             Span::from("Interface: "),
-            Span::styled("Loopback", Style::default().fg(Color::Green)),
+            Span::styled(app.state.iface_name.to_string(), Style::default().fg(Color::LightYellow)),
             Span::raw(" RX Queues: "),
-            Span::styled("1", Style::default().fg(Color::Yellow)),
+            Span::styled(app.state.iface_queues.to_string(), Style::default().fg(Color::LightYellow)),
             Span::raw(" Analyzer: "),
-            Span::styled("Yara-X", Style::default().fg(Color::Green)),
+            Span::styled("Yara-X", Style::default().fg(Color::LightYellow)),
             Span::raw(" Analysis Threads: "),
-            Span::styled("6", Style::default().fg(Color::Yellow)),
+            Span::styled(app.state.analysis_threads.to_string(), Style::default().fg(Color::LightYellow)),
         ])
     ];
     let block = Block::bordered().title(Span::styled(
         "Dust IDS - By PuffinSecurity",
         Style::default()
-            .fg(Color::Yellow)
+            .fg(Color::LightYellow)
             .add_modifier(Modifier::BOLD),
     ));
     let paragraph = Paragraph::new(text).block(block).wrap(Wrap { trim: true });

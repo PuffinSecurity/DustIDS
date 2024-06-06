@@ -1,6 +1,6 @@
-//mod app;
-//mod crossterm;
-// mod ui;
+mod app;
+mod crossterm;
+mod ui;
 
 use std::{path::PathBuf, str::FromStr};
 use clap::{Parser, Subcommand, CommandFactory};
@@ -15,6 +15,9 @@ use std::sync::atomic::{AtomicU32, Ordering};
 use std::time::Duration;
 
 use std::ffi::OsString;
+
+const TICKRATE: usize = 1000;
+
 
 #[derive(Parser, Debug)]
 #[command(
@@ -112,20 +115,21 @@ pub fn cli_match() -> Result<()> {
                 use_afxdp).unwrap();
 
             if tui {
-                let tick_rate = Duration::from_millis(100);
-                //crossterm::run(tick_rate, state).unwrap();
+                crossterm::run(TICKRATE, state).unwrap();
             } else {
                 loop {
                     std::thread::sleep(Duration::from_secs(1));
-                    state.on_tick(1000);
+                    state.on_tick(TICKRATE);
                     // print all state data
-                    println!("Rx per sec: {:?} - RX Dropped {:?} - Analysis Buffer: {:?}/{:?} - Alerts:\n {:?}",
+                    println!("Rx per sec: {:?} Total: {:?} - RX Dropped {:?} - Analysis Buffer: {:?}/{:?} - Alerts:\n {:?}",
                         state.rx_per_sec,
+                        state.rx_total.get(),
                         state.rx_dropped.get(),
                         state.analysis_buffer_len.load(Ordering::Relaxed),
                         state.analysis_buffer_cap,
                         state.alerts.read().unwrap()
                     );
+                    println!("rx queue: {:?}", state.rx_per_tick);
                 }
             }
 
