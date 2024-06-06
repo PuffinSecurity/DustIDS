@@ -17,6 +17,13 @@ pub struct AlertConfig {
     pub port: u16,
 }
 
+pub fn on_alert(msg: AlertMsg) {
+    println!(
+        "[!!!] DETECTED: {} ",
+        msg.rule
+    );
+}
+
 pub fn run(config: &AlertConfig, alert_stat_sender: crossbeam_channel::Sender<AlertMsg>) -> crossbeam_channel::Sender<AlertMsg> {
     let (alert_sender, alert_receiver) = crossbeam_channel::unbounded::<AlertMsg>();
 
@@ -25,10 +32,10 @@ pub fn run(config: &AlertConfig, alert_stat_sender: crossbeam_channel::Sender<Al
         match alert_reciever_thread.recv() {
             Ok(msg) => {
                 println!(
-                    "ALERT: {} {}:{} -> {}:{}",
-                    msg.rule, msg.src_ip, msg.src_port, msg.dst_ip, msg.dst_port
+                    "[!!!] DETECTED: {} ",
+                    msg.rule
                 );
-                alert_stat_sender.send(msg).unwrap();
+                //alert_stat_sender.send(msg).unwrap();
             }
             Err(e) => println!("An error occurred while reading: {}", e),
         }

@@ -8,39 +8,24 @@ use crate::app::App;
 
 pub fn draw(f: &mut Frame, app: &mut App) {
     let chunks = Layout::vertical([Constraint::Length(3), Constraint::Min(0)]).split(f.size());
-    let tabs = app
-        .tabs
-        .titles
-        .iter()
-        .map(|t| text::Line::from(Span::styled(*t, Style::default().fg(Color::Green))))
-        .collect::<Tabs>()
-        .block(Block::bordered().title(app.title))
-        .highlight_style(Style::default().fg(Color::Yellow))
-        .select(app.tabs.index);
-    f.render_widget(tabs, chunks[0]);
-    match app.tabs.index {
-        0 => draw_first_tab(f, app, chunks[1]),
-        1 => draw_second_tab(f, app, chunks[1]),
-        2 => draw_third_tab(f, app, chunks[1]),
-        _ => {}
-    };
+    
+    draw_text(f, chunks[0]);
+    draw_first_tab(f, app, chunks[1]);
 }
 
 fn draw_first_tab(f: &mut Frame, app: &mut App, area: Rect) {
     let chunks = Layout::vertical([
-        Constraint::Length(7),
-        Constraint::Length(9),
+        Constraint::Length(10),
         Constraint::Min(8),
     ])
     .split(area);
-    draw_text(f, chunks[0]);
-    draw_gauges(f, app, chunks[1]);
-    draw_charts(f, app, chunks[2]);
+    draw_gauges(f, app, chunks[0]);
+    draw_charts(f, app, chunks[1]);
 }
 
 fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
     let chunks = Layout::vertical([
-        Constraint::Length(3),
+        Constraint::Length(8),
         Constraint::Length(2),
     ])
     .margin(1)
@@ -77,18 +62,14 @@ fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
 
 #[allow(clippy::too_many_lines)]
 fn draw_charts(f: &mut Frame, app: &mut App, area: Rect) {
-    let constraints = if app.show_chart {
-        vec![Constraint::Percentage(50), Constraint::Percentage(50)]
-    } else {
-        vec![Constraint::Percentage(100)]
-    };
+    let constraints = vec![Constraint::Percentage(100)];
     let chunks = Layout::horizontal(constraints).split(area);
     {
         let chunks = Layout::vertical([Constraint::Percentage(50), Constraint::Percentage(50)])
             .split(chunks[0]);
         {
             let chunks =
-                Layout::horizontal([Constraint::Percentage(50), Constraint::Percentage(50)])
+                Layout::horizontal([Constraint::Percentage(40), Constraint::Percentage(60)])
                     .split(chunks[0]);
 
             // Draw tasks
@@ -99,204 +80,49 @@ fn draw_charts(f: &mut Frame, app: &mut App, area: Rect) {
                 .map(|i| ListItem::new(vec![text::Line::from(Span::raw(*i))]))
                 .collect();
             let tasks = List::new(tasks)
-                .block(Block::bordered().title("List"))
+                .block(Block::bordered().title(" Rule Sets "))
                 .highlight_style(Style::default().add_modifier(Modifier::BOLD))
                 .highlight_symbol("> ");
             f.render_stateful_widget(tasks, chunks[0], &mut app.tasks.state);
 
             // Draw logs
-            let info_style = Style::default().fg(Color::Blue);
             let warning_style = Style::default().fg(Color::Yellow);
-            let error_style = Style::default().fg(Color::Magenta);
-            let critical_style = Style::default().fg(Color::Red);
             let logs: Vec<ListItem> = app
                 .logs
-                .items
                 .iter()
-                .map(|&(evt, level)| {
-                    let s = match level {
-                        "ERROR" => error_style,
-                        "CRITICAL" => critical_style,
-                        "WARNING" => warning_style,
-                        _ => info_style,
-                    };
+                .map(|(ts, name)| {
                     let content = vec![text::Line::from(vec![
-                        Span::styled(format!("{level:<9}"), s),
-                        Span::raw(evt),
+                        Span::styled(format!("{:<20}", ts), Style::default()),
+                        Span::styled(name, warning_style),
                     ])];
                     ListItem::new(content)
                 })
                 .collect();
-            let logs = List::new(logs).block(Block::bordered().title("List"));
-            f.render_stateful_widget(logs, chunks[1], &mut app.logs.state);
+            let logs = List::new(logs).block(Block::bordered().title(" Alerts "));
+            f.render_widget(logs, chunks[1]);
         }
     }
 }
 
 fn draw_text(f: &mut Frame, area: Rect) {
     let text = vec![
-        text::Line::from("This is a paragraph with several lines. You can change style your text the way you want"),
-        text::Line::from(""),
         text::Line::from(vec![
-            Span::from("For example: "),
-            Span::styled("under", Style::default().fg(Color::Red)),
-            Span::raw(" "),
-            Span::styled("the", Style::default().fg(Color::Green)),
-            Span::raw(" "),
-            Span::styled("rainbow", Style::default().fg(Color::Blue)),
-            Span::raw("."),
-        ]),
-        text::Line::from(vec![
-            Span::raw("Oh and if you didn't "),
-            Span::styled("notice", Style::default().add_modifier(Modifier::ITALIC)),
-            Span::raw(" you can "),
-            Span::styled("automatically", Style::default().add_modifier(Modifier::BOLD)),
-            Span::raw(" "),
-            Span::styled("wrap", Style::default().add_modifier(Modifier::REVERSED)),
-            Span::raw(" your "),
-            Span::styled("text", Style::default().add_modifier(Modifier::UNDERLINED)),
-            Span::raw(".")
-        ]),
-        text::Line::from(
-            "One more thing is that it should display unicode characters: 10€"
-        ),
+            Span::from("Interface: "),
+            Span::styled("Loopback", Style::default().fg(Color::Green)),
+            Span::raw(" RX Queues: "),
+            Span::styled("1", Style::default().fg(Color::Yellow)),
+            Span::raw(" Analyzer: "),
+            Span::styled("Yara-X", Style::default().fg(Color::Green)),
+            Span::raw(" Analysis Threads: "),
+            Span::styled("6", Style::default().fg(Color::Yellow)),
+        ])
     ];
     let block = Block::bordered().title(Span::styled(
-        "Footer",
+        "Dust IDS - By PuffinSecurity",
         Style::default()
-            .fg(Color::Magenta)
+            .fg(Color::Yellow)
             .add_modifier(Modifier::BOLD),
     ));
     let paragraph = Paragraph::new(text).block(block).wrap(Wrap { trim: true });
     f.render_widget(paragraph, area);
-}
-
-fn draw_second_tab(f: &mut Frame, app: &mut App, area: Rect) {
-    let chunks =
-        Layout::horizontal([Constraint::Percentage(30), Constraint::Percentage(70)]).split(area);
-    let up_style = Style::default().fg(Color::Green);
-    let failure_style = Style::default()
-        .fg(Color::Red)
-        .add_modifier(Modifier::RAPID_BLINK | Modifier::CROSSED_OUT);
-    let rows = app.servers.iter().map(|s| {
-        let style = if s.status == "Up" {
-            up_style
-        } else {
-            failure_style
-        };
-        Row::new(vec![s.name, s.location, s.status]).style(style)
-    });
-    let table = Table::new(
-        rows,
-        [
-            Constraint::Length(15),
-            Constraint::Length(15),
-            Constraint::Length(10),
-        ],
-    )
-    .header(
-        Row::new(vec!["Server", "Location", "Status"])
-            .style(Style::default().fg(Color::Yellow))
-            .bottom_margin(1),
-    )
-    .block(Block::bordered().title("Servers"));
-    f.render_widget(table, chunks[0]);
-
-    let map = Canvas::default()
-        .block(Block::bordered().title("World"))
-        .paint(|ctx| {
-            ctx.draw(&Map {
-                color: Color::White,
-                resolution: MapResolution::High,
-            });
-            ctx.layer();
-            ctx.draw(&Rectangle {
-                x: 0.0,
-                y: 30.0,
-                width: 10.0,
-                height: 10.0,
-                color: Color::Yellow,
-            });
-            ctx.draw(&Circle {
-                x: app.servers[2].coords.1,
-                y: app.servers[2].coords.0,
-                radius: 10.0,
-                color: Color::Green,
-            });
-            for (i, s1) in app.servers.iter().enumerate() {
-                for s2 in &app.servers[i + 1..] {
-                    ctx.draw(&canvas::Line {
-                        x1: s1.coords.1,
-                        y1: s1.coords.0,
-                        y2: s2.coords.0,
-                        x2: s2.coords.1,
-                        color: Color::Yellow,
-                    });
-                }
-            }
-            for server in &app.servers {
-                let color = if server.status == "Up" {
-                    Color::Green
-                } else {
-                    Color::Red
-                };
-                ctx.print(
-                    server.coords.1,
-                    server.coords.0,
-                    Span::styled("X", Style::default().fg(color)),
-                );
-            }
-        })
-        .marker(if app.enhanced_graphics {
-            symbols::Marker::Braille
-        } else {
-            symbols::Marker::Dot
-        })
-        .x_bounds([-180.0, 180.0])
-        .y_bounds([-90.0, 90.0]);
-    f.render_widget(map, chunks[1]);
-}
-
-fn draw_third_tab(f: &mut Frame, _app: &mut App, area: Rect) {
-    let chunks = Layout::horizontal([Constraint::Ratio(1, 2), Constraint::Ratio(1, 2)]).split(area);
-    let colors = [
-        Color::Reset,
-        Color::Black,
-        Color::Red,
-        Color::Green,
-        Color::Yellow,
-        Color::Blue,
-        Color::Magenta,
-        Color::Cyan,
-        Color::Gray,
-        Color::DarkGray,
-        Color::LightRed,
-        Color::LightGreen,
-        Color::LightYellow,
-        Color::LightBlue,
-        Color::LightMagenta,
-        Color::LightCyan,
-        Color::White,
-    ];
-    let items: Vec<Row> = colors
-        .iter()
-        .map(|c| {
-            let cells = vec![
-                Cell::from(Span::raw(format!("{c:?}: "))),
-                Cell::from(Span::styled("Foreground", Style::default().fg(*c))),
-                Cell::from(Span::styled("Background", Style::default().bg(*c))),
-            ];
-            Row::new(cells)
-        })
-        .collect();
-    let table = Table::new(
-        items,
-        [
-            Constraint::Ratio(1, 3),
-            Constraint::Ratio(1, 3),
-            Constraint::Ratio(1, 3),
-        ],
-    )
-    .block(Block::bordered().title("Colors"));
-    f.render_widget(table, chunks[0]);
 }

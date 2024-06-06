@@ -6,6 +6,7 @@ use std::thread;
 use std::sync::Arc;
 use yara_x::Scanner;
 use std::net::IpAddr;
+use atomic_counter::{AtomicCounter, RelaxedCounter};
 
 use pnet::packet::ethernet::{EtherTypes, EthernetPacket};
 use pnet::packet::ip::{IpNextHeaderProtocol, IpNextHeaderProtocols};
@@ -24,48 +25,50 @@ use crossbeam_channel;
 //use std::sync::mpsc::Sender;
 
 pub struct YaraAnalyzer {
-    pub frame_sender: crossbeam_channel::Sender<Vec<u8>>,
     pub thread_handles: Vec<thread::JoinHandle<()>>,
 }
 
 impl YaraAnalyzer {
-    pub fn new(num_threads: usize, rules: Arc<yara_x::Rules>, alert_sender: crossbeam_channel::Sender<AlertMsg>, rx_stats_sender: crossbeam_channel::Sender<isize>) -> Self {
-        // Create crossbeam channel
-        let (frame_sender, frame_receiver) = crossbeam_channel::unbounded();
-
+    pub fn new(
+        num_threads: usize,
+        anlys_buf_size: usize,
+        rules: Arc<yara_x::Rules>,
+        analyzed_counter: Arc<RelaxedCounter>,
+        alert_sender: crossbeam_channel::Sender<AlertMsg>,
+        frame_receiver: crossbeam_channel::Receiver<Vec<u8>>,
+    ) -> Self {
         // Init threads
         let mut thread_handles = Vec::new();
         for _ in 0..num_threads {
             let rules = Arc::clone(&rules);
             let sender = alert_sender.clone();
             let reciever = frame_receiver.clone();
-            let rx_sender = rx_stats_sender.clone();
+            let analyzed_counter = Arc::clone(&analyzed_counter);
             let handle = thread::spawn(move || {
-                YaraAnalyzer::thread_run(&*rules, reciever, sender, rx_sender);
+                YaraAnalyzer::thread_run(&*rules, reciever, sender, analyzed_counter);
             });
             thread_handles.push(handle);
         }
+        println!("[*] Yara Analizer initialized with {} threads, buffer of {} packets", num_threads, anlys_buf_size);
 
         YaraAnalyzer {
-            frame_sender,
             thread_handles
         }
     }
 
-    pub fn thread_run(rules: &yara_x::Rules, frame_reciever: crossbeam_channel::Receiver<Vec<u8>>, alert_sender: crossbeam_channel::Sender<AlertMsg>, rx_stats_sender: crossbeam_channel::Sender<isize>) {
+    pub fn thread_run(rules: &yara_x::Rules, frame_reciever: crossbeam_channel::Receiver<Vec<u8>>, 
+        alert_sender: crossbeam_channel::Sender<AlertMsg>, analyzed_counter: Arc<RelaxedCounter>,) {
         // Init scanner
         let mut yara_scanner = Scanner::new(rules);
 
-        // Loop over frames
+        // Loop over frame buffer
         loop {
-            match frame_reciever.recv() {
+            match frame_reciever.try_recv() {
                 Ok(frame) => {
                     let frame_slice = &frame;
                     let ethernet = EthernetPacket::new(frame_slice).unwrap();
                     analyze_ethernet_frame(&ethernet, &mut yara_scanner, &alert_sender);
-
-                    //println!("New packet processed by {:?}", thread::current().id());
-                    rx_stats_sender.send(-1).unwrap();
+                    analyzed_counter.inc();
                 },
                 _ => {},
             }
@@ -74,8 +77,9 @@ impl YaraAnalyzer {
 }
 
 
-pub fn compile_rules_from_dir(mut compiler: Compiler, rule_dir: &str) -> Rules {
+pub fn compile_rules_from_dir(mut compiler: Compiler, rule_dir: &str) -> (Rules, Vec<String>) {
     let files_in_path = fs::read_dir(rule_dir).unwrap();
+    let mut rule_files = Vec::new();
     
     let mut count = 0;
     for file in files_in_path {
@@ -93,9 +97,11 @@ pub fn compile_rules_from_dir(mut compiler: Compiler, rule_dir: &str) -> Rules {
             // Add the file's content as a source to the compiler
             if let Err(err) = compiler.add_source(contents.as_str()) {
                 println!("[!] Error while processing rule file: {}: {}", path.display(), err);
+            } else {
+                rule_files.push(path.display().to_string());
             }
 
-            println!("Added Rule File: {:?}", path);
+            println!("[-] Added Rule File: {:?}", path);
         }
         count += 1;
     }
@@ -103,7 +109,7 @@ pub fn compile_rules_from_dir(mut compiler: Compiler, rule_dir: &str) -> Rules {
         panic!("[!] No rule files found in directory: {}", rule_dir);
     }
 
-    compiler.build()
+    (compiler.build(), rule_files)
 }
 
 pub fn analyze_ethernet_frame(ethernet: &EthernetPacket, yara_scanner: &mut yara_x::Scanner, alert_sender: &crossbeam_channel::Sender<AlertMsg>) {
@@ -197,7 +203,7 @@ fn analyze_udp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
             alert_sender.send(AlertMsg {
                 timestamp: None,
                 rule: rule.identifier().to_string(),
-                src_ip: hex::encode(packet),
+                src_ip: "src_ip".to_string(),//hex::encode(packet),
                 src_port: "src_port".to_string(),
                 dst_ip: "dst_ip".to_string(),
                 dst_port: "dst_port".to_string(),
@@ -219,7 +225,7 @@ fn analyze_tcp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
             alert_sender.send(AlertMsg {
                 timestamp: None,
                 rule: rule.identifier().to_string(),
-                src_ip: hex::encode(packet),
+                src_ip: "src_ip".to_string(),//hex::encode(packet),
                 src_port: "src_port".to_string(),
                 dst_ip: "dst_ip".to_string(),
                 dst_port: "dst_port".to_string(),

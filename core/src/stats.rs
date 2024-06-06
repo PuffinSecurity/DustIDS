@@ -35,12 +35,11 @@ impl Stats {
                 // Clean up vector elements > 60
                 while new_stats.rx_per_sec.len() >= 60 {
                     new_stats.rx_per_sec.remove(0);
-                    println!("Timestamp:");
                 }
 
                 // Push new element every 5 secs
                 new_stats.rx_per_sec.push(0);
-                println!("RX: {:?} Buffer: {:?}", new_stats.rx_per_sec, new_stats.analysis_buffer);
+                //println!("[DEBUG] RX: {:?} Buffer: {:?}", new_stats.rx_per_sec, new_stats.analysis_buffer);
             }
         });
 
@@ -48,7 +47,7 @@ impl Stats {
         let thread_stats = stats.clone();
         std::thread::spawn(move || {
             loop {
-                match rx_stat_receiver.recv() {
+                match rx_stat_receiver.try_recv() {
                     Ok(msg) => {
                         let mut new_stats = thread_stats.write().unwrap();
                         
@@ -63,7 +62,7 @@ impl Stats {
                         new_stats.analysis_buffer += msg;
                     }
                     Err(e) => {
-                        println!("An error occurred while reading: {}", e);
+                        //println!("An error occurred while reading: {}", e);
                     }
                 }
             }
@@ -73,7 +72,7 @@ impl Stats {
         let thread_alerts2 = stats.clone();
         std::thread::spawn(move || {
             loop {
-                match alert_stat_receiver.recv() {
+                match alert_stat_receiver.try_recv() {
                     Ok(msg) => {
                         // Update stats
                         let mut new_stats = thread_alerts2.write().unwrap();
@@ -84,7 +83,7 @@ impl Stats {
                         new_stats.alerts.push(msg);
                     }
                     Err(e) => {
-                        println!("An error occurred while reading: {}", e);
+                        //println!("An error occurred while reading: {}", e);
                     }
                 }
             }

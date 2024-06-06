@@ -10,6 +10,7 @@ pub mod afxdp_listener;
 pub mod afpacket_listener;
 pub mod alerts;
 pub mod stats;
+pub mod state;
 
 use utils::error::Result;
 

@@ -1,20 +1,16 @@
-use rand::{
-    distributions::{Distribution, Uniform},
-    rngs::ThreadRng,
-};
 use ratatui::widgets::ListState;
 use core::alerts::AlertMsg;
-use core::stats::Stats;
+use core::state::State;
 use std::sync::{Arc, RwLock};
 
 const TASKS: [&str; 24] = [
-    "Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9", "Item10",
-    "Item11", "Item12", "Item13", "Item14", "Item15", "Item16", "Item17", "Item18", "Item19",
-    "Item20", "Item21", "Item22", "Item23", "Item24",
+    "DNP3.yar", "EIP.yar", "FINS.yas", "ICS-Attacks.yar", "MCCONNECT.yar", "modbus.yar", "mtconnect.yar", "OPC-DA.yar", "OPC-UA.yar", "Siemens-S7.yar",
+    "SLMP.yar", "", "", "", "", "", "", "", "",
+    "", "", "", "", "",
 ];
 
 const LOGS: [(&str, &str); 26] = [
-    ("Event1", "INFO"),
+    ("", ""),
     ("Event2", "INFO"),
     ("Event3", "CRITICAL"),
     ("Event4", "ERROR"),
@@ -40,33 +36,6 @@ const LOGS: [(&str, &str); 26] = [
     ("Event24", "WARNING"),
     ("Event25", "INFO"),
     ("Event26", "INFO"),
-];
-
-const EVENTS: [(&str, u64); 24] = [
-    ("B1", 9),
-    ("B2", 12),
-    ("B3", 5),
-    ("B4", 8),
-    ("B5", 2),
-    ("B6", 4),
-    ("B7", 5),
-    ("B8", 9),
-    ("B9", 14),
-    ("B10", 15),
-    ("B11", 1),
-    ("B12", 0),
-    ("B13", 4),
-    ("B14", 6),
-    ("B15", 4),
-    ("B16", 6),
-    ("B17", 4),
-    ("B18", 7),
-    ("B19", 13),
-    ("B20", 8),
-    ("B21", 11),
-    ("B22", 9),
-    ("B23", 3),
-    ("B24", 5),
 ];
 
 #[derive(Clone)]
@@ -203,111 +172,22 @@ pub struct Server<'a> {
 pub struct App<'a> {
     pub title: &'a str,
     pub should_quit: bool,
-    pub tabs: TabsState<'a>,
-    pub show_chart: bool,
-    pub progress: f64,
-    pub tasks: StatefulList<&'a str>,
-    pub logs: StatefulList<(&'a str, &'a str)>,
-    pub signals: Signals,
-    pub barchart: Vec<(&'a str, u64)>,
-    pub servers: Vec<Server<'a>>,
-    pub enhanced_graphics: bool,
-
-    pub state: Arc<RwLock<Stats>>,
-
-    pub max_rx_per_sec: isize,
-
-    pub rx_per_sec: Vec<u64>,
-    pub alerts: Vec<AlertMsg>,
-    pub analysis_buffer: isize,
+    pub state: State
 }
 
 impl<'a> App<'a> {
-    pub fn new(title: &'a str, stats: Arc<RwLock<Stats>>) -> Self {
-        let mut sin_signal = SinSignal::new(0.2, 3.0, 18.0);
-        let sin1_points = sin_signal.by_ref().take(100).collect();
-        let mut sin_signal2 = SinSignal::new(0.1, 2.0, 10.0);
-        let sin2_points = sin_signal2.by_ref().take(200).collect();
+    pub fn new(title: &'a str, state: State) -> Self {
         App {
             title,
             should_quit: false,
-            tabs: TabsState::new(vec!["Tab0", "Tab1", "Tab2"]),
-            show_chart: true,
-            progress: 0.0,
-            tasks: StatefulList::with_items(TASKS.to_vec()),
-            logs: StatefulList::with_items(LOGS.to_vec()),
-            signals: Signals {
-                sin1: Signal {
-                    source: sin_signal,
-                    points: sin1_points,
-                    tick_rate: 5,
-                },
-                sin2: Signal {
-                    source: sin_signal2,
-                    points: sin2_points,
-                    tick_rate: 10,
-                },
-                window: [0.0, 20.0],
-            },
-            barchart: EVENTS.to_vec(),
-            servers: vec![
-                Server {
-                    name: "NorthAmerica-1",
-                    location: "New York City",
-                    coords: (40.71, -74.00),
-                    status: "Up",
-                },
-                Server {
-                    name: "Europe-1",
-                    location: "Paris",
-                    coords: (48.85, 2.35),
-                    status: "Failure",
-                },
-                Server {
-                    name: "SouthAmerica-1",
-                    location: "São Paulo",
-                    coords: (-23.54, -46.62),
-                    status: "Up",
-                },
-                Server {
-                    name: "Asia-1",
-                    location: "Singapore",
-                    coords: (1.35, 103.86),
-                    status: "Up",
-                },
-            ],
-            enhanced_graphics: true,
-            state: stats,
-            max_rx_per_sec: 500,
-            rx_per_sec: Vec::with_capacity(60),
-            alerts: Vec::with_capacity(50),
-            analysis_buffer: 0,
+            state: state,
         }
-    }
-
-    pub fn on_up(&mut self) {
-        self.tasks.previous();
-    }
-
-    pub fn on_down(&mut self) {
-        self.tasks.next();
-    }
-
-    pub fn on_right(&mut self) {
-        self.tabs.next();
-    }
-
-    pub fn on_left(&mut self) {
-        self.tabs.previous();
     }
 
     pub fn on_key(&mut self, c: char) {
         match c {
             'q' => {
                 self.should_quit = true;
-            }
-            't' => {
-                self.show_chart = !self.show_chart;
             }
             _ => {}
         }
@@ -319,21 +199,13 @@ impl<'a> App<'a> {
 
         self.rx_per_sec = state.rx_per_sec.iter().map(|&rx| rx as u64).collect::<Vec<u64>>().into_iter().rev().collect();
 
-        self.alerts = state.alerts.clone();
         self.analysis_buffer = state.analysis_buffer;
 
+        self.alerts = state.alerts.clone();
+
+        self.logs = self.alerts.iter().map(|alert| (alert.timestamp.as_ref().unwrap().clone(), alert.rule.clone())).collect::<Vec<(String, String)>>();
+
         // Update progress
-        self.progress += 0.001;
-        if self.progress > 1.0 {
-            self.progress = 0.0;
-        }
-
-        self.signals.on_tick();
-
-        let log = self.logs.items.pop().unwrap();
-        self.logs.items.insert(0, log);
-
-        let event = self.barchart.pop().unwrap();
-        self.barchart.insert(0, event);
+        self.progress = self.analysis_buffer as f64 / 32768.0;
     }
 }

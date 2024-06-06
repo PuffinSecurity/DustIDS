@@ -14,9 +14,9 @@ use ratatui::prelude::*;
 use crate::{app::App, ui};
 
 use std::sync::{Arc, RwLock};
-use core::stats::Stats;
+use core::state::State;
 
-pub fn run(tick_rate: Duration, stats: Arc<RwLock<Stats>>) -> Result<(), Box<dyn Error>> {
+pub fn run(tick_rate: Duration, state: State) -> Result<(), Box<dyn Error>> {
     // setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
@@ -25,7 +25,7 @@ pub fn run(tick_rate: Duration, stats: Arc<RwLock<Stats>>) -> Result<(), Box<dyn
     let mut terminal = Terminal::new(backend)?;
 
     // create app and run it
-    let app = App::new(" DustIDS by PuffinSecurity ", stats);
+    let app = App::new(" DustIDS by PuffinSecurity ", state);
     let res = run_app(&mut terminal, app, tick_rate);
 
     // restore terminal
@@ -58,10 +58,6 @@ fn run_app<B: Backend>(
             if let Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Press {
                     match key.code {
-                        KeyCode::Left | KeyCode::Char('h') => app.on_left(),
-                        KeyCode::Up | KeyCode::Char('k') => app.on_up(),
-                        KeyCode::Right | KeyCode::Char('l') => app.on_right(),
-                        KeyCode::Down | KeyCode::Char('j') => app.on_down(),
                         KeyCode::Char(c) => app.on_key(c),
                         _ => {}
                     }
