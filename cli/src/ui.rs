@@ -6,11 +6,13 @@ use ratatui::{
 use std::sync::atomic::Ordering;
 
 use crate::app::App;
+use atomic_counter::AtomicCounter;
+
 
 pub fn draw(f: &mut Frame, app: &mut App) {
     let chunks = Layout::vertical([
         Constraint::Length(3),
-        Constraint::Length(10),
+        Constraint::Min(16),
         Constraint::Min(8),
     ]).split(f.size());
     
@@ -21,85 +23,102 @@ pub fn draw(f: &mut Frame, app: &mut App) {
 
 
 fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
-    let chunks = Layout::vertical([
-        Constraint::Length(8),
-        // Constraint::Length(8),
-        Constraint::Length(2),
-    ])
-    .margin(1)
-    .split(area);
-    let block = Block::bordered().title("Graphs");
+    let block = Block::bordered().title(" Realtime Stats ");
     f.render_widget(block, area);
-    // ////////////////////////////////////////////////////////////////////////
-    // let x_labels = vec![
-    //     Span::styled(
-    //         format!("{}", app.window[0]),
-    //         Style::default().add_modifier(Modifier::BOLD),
-    //     ),
-    //     Span::raw(format!("{}", (app.window[0] + app.window[1]) / 2.0)),
-    //     Span::styled(
-    //         format!("{}", app.window[1]),
-    //         Style::default().add_modifier(Modifier::BOLD),
-    //     ),
-    // ];
 
-    // let datasets = vec![
-    //     Dataset::default()
-    //         .name("data2")
-    //         .marker(symbols::Marker::Dot)
-    //         .style(Style::default().fg(Color::Cyan))
-    //         .data(&app.data1),
-    //     Dataset::default()
-    //         .name("data3")
-    //         .marker(symbols::Marker::Braille)
-    //         .style(Style::default().fg(Color::Yellow))
-    //         .data(&app.data2),
-    // ];
+    let constraints = vec![Constraint::Percentage(70), Constraint::Percentage(30)];
+    let chunks = Layout::horizontal(constraints).split(area);
+    {
+        let chunks = Layout::vertical([Constraint::Min(5), Constraint::Length(3)])
+            .split(chunks[0]);
 
-    // let chart = Chart::new(datasets)
-    //     .block(Block::bordered().title("Chart 1".cyan().bold()))
-    //     .x_axis(
-    //         Axis::default()
-    //             .title("X Axis")
-    //             .style(Style::default().fg(Color::Gray))
-    //             .labels(x_labels)
-    //             .bounds(app.window),
-    //     )
-    //     .y_axis(
-    //         Axis::default()
-    //             .title("Y Axis")
-    //             .style(Style::default().fg(Color::Gray))
-    //             .labels(vec!["-20".bold(), "0".into(), "20".bold()])
-    //             .bounds([-20.0, 20.0]),
-    //     );
+        let block_spark = Block::bordered().title(" Realtime RX: ");
+        let sparkline_values: Vec<u64> = app.state.rx_per_tick.iter().map(|&num| num as u64).collect();
+        let sparkline = Sparkline::default()
+            .block(block_spark)
+            .style(Style::default().fg(Color::Green))
+            .data(&sparkline_values)
+            .direction(RenderDirection::RightToLeft)
+            .bar_set(symbols::bar::NINE_LEVELS);
+        f.render_widget(sparkline, chunks[0]);
 
-    // f.render_widget(chart, area);
+        let block_gauge = Block::bordered().title(" Analysis Buffer: ");
+        let buffer_len: u32 = app.state.analysis_buffer_len.load(Ordering::SeqCst);
+        let label = format!("{:}", buffer_len);
+        let gauge = Gauge::default()
+            .block(block_gauge)
+            .gauge_style(
+                Style::default()
+                    .fg(Color::LightYellow)
+                    .add_modifier(Modifier::ITALIC | Modifier::BOLD),
+            )
+            .use_unicode(true)
+            .label(label)
+            .ratio((buffer_len as f64 / app.state.analysis_buffer_cap as f64));
+        f.render_widget(gauge, chunks[1]);
+    }
 
-    // ////////////////////////////////////////////////////////////////////
+    // let block = Block::bordered();
+    // f.render_widget(block, chunks[1]);
+    let text = vec![
+        text::Line::from(Span::from("Packets Received:")),
+        text::Line::from(vec![
+            Span::raw(">    "),
+            Span::styled(
+                format!("{:}  ", app.state.rx_per_sec.to_string()), 
+                Style::default().fg(Color::LightYellow).bold()
+            ),
+            Span::italic(Span::raw("per second")),
+        ]),
+        text::Line::from(vec![
+            Span::raw(">    "),
+            
+            Span::styled(
+                format!("{:}  ", app.state.rx_total.get().to_string()), 
+                Style::default().fg(Color::LightYellow).bold()
+            ),
+            Span::italic(Span::raw("in total")),
+        ]),
+        
+        text::Line::from(Span::from("Packets Analyzed:")),
+        text::Line::from(vec![
+            Span::raw(">    "),
+            Span::styled(
+                format!("{:}  ", app.state.analyzed_per_sec.to_string()), 
+                Style::default().fg(Color::LightBlue).bold()
+            ),
+            Span::italic(Span::raw("per second")),
+        ]),
+        text::Line::from(vec![
+            Span::raw(">    "),
+            Span::styled(
+                format!("{:}  ", app.state.analyzed_total.get().to_string()), 
+                Style::default().fg(Color::LightBlue).bold()
+            ),
+            Span::italic(Span::raw("in total")),
+        ]),
 
-    let sparkline_values: Vec<u64> = app.state.rx_per_tick.iter().map(|&num| num as u64).collect();
-    let sparkline = Sparkline::default()
-        .block(Block::new().title("Realtime RX:"))
-        .style(Style::default().fg(Color::Green))
-        .data(&sparkline_values)
-        .direction(RenderDirection::RightToLeft)
-        .bar_set(symbols::bar::NINE_LEVELS);
-    f.render_widget(sparkline, chunks[0]);
-
-    let buffer_len: u32 = app.state.analysis_buffer_len.load(Ordering::SeqCst);
-    let label = format!("{:}", buffer_len);
-    let gauge = Gauge::default()
-        .block(Block::new().title("Analysis Buffer:"))
-        .gauge_style(
-            Style::default()
-                .fg(Color::LightYellow)
-                .bg(Color::Black)
-                .add_modifier(Modifier::ITALIC | Modifier::BOLD),
-        )
-        .use_unicode(true)
-        .label(label)
-        .ratio((buffer_len as f64 / app.state.analysis_buffer_cap as f64));
-    f.render_widget(gauge, chunks[1]);
+        text::Line::from(Span::from("Packets Dropped:")),
+        text::Line::from(vec![
+            Span::raw(">    "),
+            Span::styled(
+                format!("{:}  ", app.state.rx_drop_per_sec.to_string()), 
+                Style::default().fg(Color::LightRed).bold()
+            ),
+            Span::italic(Span::raw("per second")),
+        ]),
+        text::Line::from(vec![
+            Span::raw(">    "),
+            Span::styled(
+                format!("{:}  ", app.state.rx_dropped.get().to_string()), 
+                Style::default().fg(Color::LightRed).bold()
+            ).into(),
+            Span::italic(Span::raw("in total")),
+        ]),
+    ];
+    let block = Block::bordered();
+    let paragraph = Paragraph::new(text).block(block).wrap(Wrap { trim: true });
+    f.render_widget(paragraph, chunks[1]);
 }
 
 #[allow(clippy::too_many_lines)]
@@ -107,7 +126,7 @@ fn draw_charts(f: &mut Frame, app: &mut App, area: Rect) {
     let constraints = vec![Constraint::Percentage(100)];
     let chunks = Layout::horizontal(constraints).split(area);
     {
-        let chunks = Layout::vertical([Constraint::Percentage(50), Constraint::Percentage(50)])
+        let chunks = Layout::vertical([Constraint::Percentage(100)])
             .split(chunks[0]);
         {
             let chunks =
