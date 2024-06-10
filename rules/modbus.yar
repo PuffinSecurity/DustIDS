@@ -37,22 +37,6 @@ rule clear_counters_and_diagnostic_registers : modbus
     $modbus_header at 2 and $clear_diag at 7
 }
 
-
-rule report_server_information : modbus 
-{
-  meta:
-    author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Report Server Information"
-    uuid = "12f58835ee0341b5b563577700ab479c"
-  strings: 
-    $modbus_header = { 00 00 }
-    $report_server_info = { 11 }
-  condition: 
-    $modbus_header at 2 and $report_server_info at 7
-}
-
-
-
 rule slave_device_busy_exception_code_delay : modbus 
 {
   meta:
@@ -108,8 +92,6 @@ rule function_code : modbus
   condition: 
     $modbus_header at 2 and $payload at 7 and $points_list at 8
 }
-
-
 
 rule Modbus_TCP_Write_single_coil : modbus 
 {

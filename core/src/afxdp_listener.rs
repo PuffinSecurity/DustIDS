@@ -11,13 +11,14 @@ use afxdp::PENDING_LEN;
 use afxdp::{buf::Buf, buf_pool::BufPool};
 use afxdp::{buf_mmap::BufMmap, buf_pool_vec::BufPoolVec};
 use libbpf_sys::{XSK_RING_CONS__DEFAULT_NUM_DESCS, XSK_RING_PROD__DEFAULT_NUM_DESCS};
+use atomic_counter::{AtomicCounter, RelaxedCounter};
 
 use super::alerts::AlertMsg;
 use super::analyzer_t::Analyzer;
 
 const BUF_NUM: usize = 65536;
 const BUF_LEN: usize = 4096;
-const BATCH_SIZE: usize = 64;
+const BATCH_SIZE: usize = 4096;
 
 
 #[derive(Default, Copy, Clone, Debug)]
@@ -30,7 +31,6 @@ pub struct AFXDPListener {
     rx_queues: usize,
 
     frame_sender: crossbeam_channel::Sender<Vec<u8>>,
-    rx_stats_sender: crossbeam_channel::Sender<isize>
 }
 
 impl  AFXDPListener {
@@ -38,8 +38,7 @@ impl  AFXDPListener {
         interface_name: String, 
         xdp_flags: libbpf::XdpFlags, 
         max_queues: usize,
-        frame_sender: crossbeam_channel::Sender<Vec<u8>>, 
-        rx_stats_sender: crossbeam_channel::Sender<isize>
+        frame_sender: crossbeam_channel::Sender<Vec<u8>>,
     ) -> AFXDPListener 
     {
         // Get and prepare xdp interface
@@ -56,7 +55,6 @@ impl  AFXDPListener {
             rx_queues: threads,
 
             frame_sender: frame_sender.clone(),
-            rx_stats_sender: rx_stats_sender.clone()
         }
     }
 
@@ -67,12 +65,11 @@ impl  AFXDPListener {
         }
     }
 
-    pub fn run(&mut self,) -> std::thread::JoinHandle<()> {
+        pub fn run(&mut self, rx_stats: Arc<RelaxedCounter>) -> std::thread::JoinHandle<()> {
         // Allocate user memory map
 
         let interface = self.interface_name.clone();
         let frame_sender = self.frame_sender.clone();
-        let rx_stats_sender = self.rx_stats_sender.clone();
         std::thread::spawn(move || {
             let options = MmapAreaOptions { huge_tlb: false };
             let r = MmapArea::new(BUF_NUM, BUF_LEN, options);
@@ -122,7 +119,7 @@ impl  AFXDPListener {
                     //continue;
                 }
             };
-            
+
             let mut v: ArrayDeque<[BufMmap<BufCustom>; PENDING_LEN], Wrapping> = ArrayDeque::new();
             let mut fq_deficit = 0;
 
@@ -169,14 +166,15 @@ impl  AFXDPListener {
                         if n_pkt > 0 {
                             //println!("XDP worker {:?} Received {:?} packets", self.core, n_pkt);
                             // Send stats
-                            rx_stats_sender.send(n_pkt as isize).unwrap();
-
                             for frame in v.drain(0..) {
-                                //let packet = EthernetPacket::new(frame).unwrap();
-                                // println!("Packet 1: {:?}", frame.get_data());
+                                rx_stats.inc();
                                 let data_copy = frame.get_data().to_vec();
-                                // println!("Packet 2: {:?}", data_copy);
-                                frame_sender.send(data_copy).unwrap();
+                                match frame_sender.try_send(data_copy) {
+                                    Ok(_) => {}
+                                    Err(_) => {
+                                        log::debug!("[XDP] Analysis Buffer Full. Dropping packet.");
+                                    }
+                                }
                             }
 
                             fq_deficit += n_pkt;
@@ -192,7 +190,8 @@ impl  AFXDPListener {
                 }
 
                 // Fill the fill ring
-                if fq_deficit > 0 {
+                const FILL_THRESHOLD: usize = 64;
+                if fq_deficit >= FILL_THRESHOLD {
                     let r = umem1fq.fill(&mut bufs, fq_deficit);
                     match r {
                         Ok(n) => {
