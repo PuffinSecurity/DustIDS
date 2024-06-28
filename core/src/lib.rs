@@ -2,14 +2,11 @@
 extern crate log;
 
 pub mod commands;
-pub mod analyzer_t;
 pub mod debug_analyzer;
 pub mod yara_analyzer;
-pub mod xdpworker;
-pub mod afxdp_listener;
-pub mod afpacket_listener;
+pub mod listener_afxdp;
+pub mod listener_afpacket;
 pub mod alerts;
-pub mod stats;
 pub mod state;
 
 use utils::error::Result;

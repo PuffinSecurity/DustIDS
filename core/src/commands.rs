@@ -2,11 +2,9 @@ use std::sync::{Arc, RwLock};
 use yara_x::Compiler;
 use super::yara_analyzer::YaraAnalyzer;
 use super::yara_analyzer::compile_rules_from_dir;
-use super::xdpworker;
 use super::alerts;
-use super::stats;
-use super::afxdp_listener;
-use super::afpacket_listener;
+use super::listener_afxdp;
+use super::listener_afpacket;
 use super::state;
 
 use rebpf::{interface, libbpf};
@@ -58,7 +56,7 @@ pub fn scan_interface(
         let interface = interface::get_interface(interface_name).unwrap();
         let _ = libbpf::bpf_set_link_xdp_fd(&interface, None, xdp_flags).unwrap();
 
-        let mut afxdp_listener = afxdp_listener::AFXDPListener::new(
+        let mut afxdp_listener = listener_afxdp::AFXDPListener::new(
             interface_name.to_string(),
             xdp_flags, 
             2,
@@ -67,7 +65,7 @@ pub fn scan_interface(
         all_handles.push(afpacket_handle);
 
     } else {
-        let mut afpacket_listener = afpacket_listener::AFPacketListener::new(
+        let mut afpacket_listener = listener_afpacket::AFPacketListener::new(
             interface_name.to_string(),
             frame_sender.clone());
         let afpacket_handle = afpacket_listener.run(Arc::clone(&state.rx_total), Arc::clone(&state.rx_dropped));    
