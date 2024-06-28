@@ -13,6 +13,9 @@ crossterm = "0.27.0"
 ratatui = "0.26.3"
 rand = "0.8.5"
 atomic-counter = "1.0.1"
+log = "0.4.21"
+simplelog = "0.12.2"
+multi_log = "0.1.2"
 
 [dependencies.clap]
 version = "4.4.7"

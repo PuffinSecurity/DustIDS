@@ -24,7 +24,7 @@ fn main() -> Result<()> {
             .install();
     }
 
-    let _guard = utils::logger::setup_logging()?;
+    //let _guard = utils::logger::setup_logging()?;
 
     // Match Commands
     cli::cli_match()?;

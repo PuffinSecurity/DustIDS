@@ -7,6 +7,7 @@ use clap::{Parser, Subcommand, CommandFactory};
 use clap_complete::{generate, shells::{Bash, Fish, Zsh}};
 
 use core::commands;
+use core::logging;
 use utils::error::Result;
 use utils::types::LogLevel;
 
@@ -15,6 +16,8 @@ use std::sync::atomic::{AtomicU32, Ordering};
 use std::time::Duration;
 
 use std::ffi::OsString;
+
+extern crate log;
 
 const TICKRATE: usize = 1000;
 
@@ -50,6 +53,22 @@ enum Commands {
             help = "Path to a directory holding yara rules")
         ]
         rules_dir: Option<OsString>,
+
+        #[arg(
+            value_name = "SYSLOG-URL",
+            long,
+            required = false,
+            help = "URL or ip:port to send syslog alerts")
+        ]
+        syslog_url: Option<OsString>,
+
+        #[arg(
+            value_name = "LOG-LEVEL",
+            long,
+            required = false,
+            help = "Set the log level [trace, debug, info, warn, error]")
+        ]
+        log_level: Option<OsString>,
 
         #[arg(
             value_name = "ANALYSIS-THREADS",
@@ -95,8 +114,11 @@ pub fn cli_match() -> Result<()> {
             analysis_threads,
             analysis_buffer_size,
             use_afxdp,
+            syslog_url,
+            log_level,
             tui,
         } => {
+            // Parse args
             let iface = iface
                 .as_deref()
                 .map(|s| s.to_str().unwrap())
@@ -107,12 +129,37 @@ pub fn cli_match() -> Result<()> {
                 .map(|s| s.to_str().unwrap())
                 .unwrap_or(".");
 
+            let syslog_url = syslog_url
+                .as_deref()
+                .map(|s| s.to_str().unwrap())
+                .unwrap_or("");
+
+            let log_level = logging::log_level_from_str(log_level
+                .as_deref()
+                .map(|s| s.to_str().unwrap())
+                .unwrap_or("info"));
+
+            // Initialize Loggers
+            let mut loggers = vec![];
+            if syslog_url.len() > 0 {
+                logging::init_syslog_tcp_logger(syslog_url, log_level);
+            } else if !tui {
+                logging::init_stdout_logger(log_level);
+            }
+
+            // logging::start_loggers(loggers, log_level);
+
             let (mut state, handles) = core::commands::scan_interface(
                 iface,
                 rules_dir,
                 analysis_threads as usize,
                 analysis_buffer_size,
-                use_afxdp).unwrap();
+                use_afxdp,
+                !tui,
+                false,
+                syslog_url,
+                log::LevelFilter::Info
+            ).unwrap();
 
             if tui {
                 crossterm::run(TICKRATE, state).unwrap();

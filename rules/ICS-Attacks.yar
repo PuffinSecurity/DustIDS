@@ -397,7 +397,7 @@ rule schneider_quantumn_set_plc_cpu_restart : ICS_ATTACK
 rule HatMan_inject_payload : ICS_ATTACK
 {
   meta:
-    author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
+    author = "Jose Ramon Palanco <jpalanco@puffinsecurity.com>"
     description = "HatMan inject payload"
     uid = "8b6b5ba8d10e4c379a89303345d893c8"
     dst_port = "1502"

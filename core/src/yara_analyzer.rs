@@ -65,7 +65,7 @@ impl YaraAnalyzer {
 
         // Loop over frame buffer
         loop {
-            match frame_reciever.try_recv() {
+            match frame_reciever.recv() {
                 Ok(frame) => {
                     let frame_slice = &frame;
                     let ethernet = EthernetPacket::new(frame_slice).unwrap();

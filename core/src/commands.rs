@@ -2,12 +2,12 @@ use std::sync::{Arc, RwLock};
 use yara_x::Compiler;
 use super::yara_analyzer::YaraAnalyzer;
 use super::yara_analyzer::compile_rules_from_dir;
-use super::xdpworker;
+use super::syslog_alerts;
 use super::alerts;
-use super::stats;
 use super::afxdp_listener;
 use super::afpacket_listener;
 use super::state;
+use super::logging;
 
 use rebpf::{interface, libbpf};
 use libbpf_sys;
@@ -15,11 +15,17 @@ use utils::error::Result;
 
 
 pub fn scan_interface(
-    interface_name: &str,
-    rule_dir: &str,
-    analysis_threads: usize,
-    anlys_buf_size: usize,
-    use_afxdp: bool,
+        interface_name: &str,
+        rule_dir: &str,
+        analysis_threads: usize,
+        anlys_buf_size: usize,
+
+        use_afxdp: bool,
+
+        log_to_term: bool,
+        log_to_syslog: bool,
+        syslog_url: &str,
+        log_level: log::LevelFilter,
     ) -> Result<(state::State, Vec<std::thread::JoinHandle<()>>)> {
     // Load Yara rules
     let compiler = Compiler::new();

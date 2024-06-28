@@ -23,22 +23,3 @@ pub fn on_alert(msg: AlertMsg) {
     //     msg.rule
     // );
 }
-
-pub fn run(config: &AlertConfig, alert_stat_sender: crossbeam_channel::Sender<AlertMsg>) -> crossbeam_channel::Sender<AlertMsg> {
-    let (alert_sender, alert_receiver) = crossbeam_channel::unbounded::<AlertMsg>();
-
-    let alert_reciever_thread = alert_receiver.clone();
-    thread::spawn(move || loop {
-        match alert_reciever_thread.recv() {
-            Ok(msg) => {
-                println!(
-                    "[!!!] DETECTED: {} ",
-                    msg.rule
-                );
-                //alert_stat_sender.send(msg).unwrap();
-            }
-            Err(e) => println!("An error occurred while reading: {}", e),
-        }
-    });
-    alert_sender
-}

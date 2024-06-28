@@ -77,7 +77,7 @@ impl  AFPacketListener {
                         }
                     }
                     Err(e) => {
-                        panic!("[AFPACKET] An error occurred while reading: {}", e);
+                        println!("[AFPACKET] An error occurred while reading: {}", e); // TODO: log error
                     }
                 }
             }
