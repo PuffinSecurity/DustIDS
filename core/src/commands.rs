@@ -6,6 +6,7 @@ use super::alerts;
 use super::listener_afxdp;
 use super::listener_afpacket;
 use super::state;
+use super::syslog_alerter;
 
 use rebpf::{interface, libbpf};
 use libbpf_sys;
@@ -18,6 +19,7 @@ pub fn scan_interface(
     analysis_threads: usize,
     anlys_buf_size: usize,
     use_afxdp: bool,
+    syslog_server: &str,
     ) -> Result<(state::State, Vec<std::thread::JoinHandle<()>>)> {
     // Load Yara rules
     let compiler = Compiler::new();
@@ -26,13 +28,18 @@ pub fn scan_interface(
     // Create crossbeam channel
     let (frame_sender, frame_receiver) = crossbeam_channel::bounded(anlys_buf_size);
 
+    // Init Alert Handler TODO1
+    // let syslog_alerter = syslog_alerter::new();
+
+
     // Initialize state // TODO For now hardcode number of queues to 1
     let (state, state_handle) = state::State::new(
         interface_name.to_string(),
         1,
         analysis_threads as u8,
         rule_files,
-        frame_receiver.clone()
+        frame_receiver.clone(),
+        syslog_server.to_string(),
     );
 
     // Initialize analysis threads

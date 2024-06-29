@@ -202,13 +202,17 @@ fn analyze_udp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
     
         for rule in results.matching_rules() {
             let date = Local::now();
-            alert_sender.send(AlertMsg {
+
+            alert_sender.send(AlertMsg { // TODO1
                 timestamp: date.format("%Y-%m-%d-%H:%M:%S").to_string(),
-                rule: rule.identifier().to_string(),
+                event_type: "alert".to_string(),
                 src_ip: source.to_string(),
-                src_port: "src_port".to_string(),
+                src_port: 0,
                 dst_ip: destination.to_string(),
-                dst_port: "dst_port".to_string(),
+                dst_port: 0,
+                proto: "UDP".to_string(),
+                rule: rule.identifier().to_string(),
+                alert_metadata: rule.metadata().into_json().to_string(),
             }).unwrap();
         };
     } else {
@@ -223,15 +227,18 @@ fn analyze_tcp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
         let payload = tcp.payload();
         let results = yara_scanner.scan(payload).unwrap();
     
-        for rule in results.matching_rules() {
+        for rule in results.matching_rules() { // TODO1
             let date = Local::now();
             alert_sender.send(AlertMsg {
                 timestamp: date.format("%Y-%m-%d-%H:%M:%S").to_string(),
-                rule: rule.identifier().to_string(),
+                event_type: "alert".to_string(),
                 src_ip: source.to_string(),
-                src_port: "src_port".to_string(),
+                src_port: 0,
                 dst_ip: destination.to_string(),
-                dst_port: "dst_port".to_string(),
+                dst_port: 0,
+                proto: "TCP".to_string(),
+                rule: rule.identifier().to_string(),
+                alert_metadata: rule.metadata().into_json().to_string(),
             }).unwrap();
         };
     } else {

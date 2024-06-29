@@ -1,10 +1,11 @@
 use std::time::Duration;
-use super::alerts::{AlertMsg, on_alert};
+use super::alerts::AlertMsg;
 use crossbeam_channel::{bounded, unbounded};
 use std::sync::{Arc, RwLock};
 use atomic_counter::{AtomicCounter, RelaxedCounter};
 use std::thread;
 use std::sync::atomic::{AtomicU32, Ordering};
+use super::syslog_alerter;
 
 #[derive(Clone)]
 pub struct State {
@@ -13,6 +14,7 @@ pub struct State {
     pub analysis_threads: u8,
 
     pub rule_sets: Vec<String>,
+    pub syslog_server: String,
 
     pub alerts: Arc<RwLock<Vec<AlertMsg>>>,
 
@@ -44,7 +46,8 @@ impl State {
     // Constructor, initialize arrays empty and counter to 0
     pub fn new(iface_name: String, iface_queues: u8,
         analysis_threads: u8, rule_sets: Vec<String>,
-        frame_receiver: crossbeam_channel::Receiver<Vec<u8>>) -> (State, thread::JoinHandle<()>) {
+        frame_receiver: crossbeam_channel::Receiver<Vec<u8>>,
+        syslog_server: String) -> (State, thread::JoinHandle<()>) {
 
         // Init self and return sender
         let (alert_sender, alert_receiver) = unbounded::<AlertMsg>();
@@ -55,6 +58,7 @@ impl State {
             iface_queues: iface_queues,
             analysis_threads: analysis_threads,
             rule_sets: rule_sets.clone(),
+            syslog_server: syslog_server.clone(),
             alerts: Arc::new(RwLock::new(Vec::new())),
             rx_total: Arc::new(RelaxedCounter::new(0)),
             rx_dropped: Arc::new(RelaxedCounter::new(0)),
@@ -81,14 +85,17 @@ impl State {
         // Spawn a thread to listen for alerts
         let alert_receiver = alert_receiver.clone();
         let alerts_thread = state.alerts.clone();
-        let frame_receiver = frame_receiver.clone();
-        let analysis_buffer_len = state.analysis_buffer_len.clone();
+
         let handle = thread::spawn(move || loop {
             match alert_receiver.recv() {
                 Ok(msg) => {
-                    let alert_clone = msg.clone();
-                    on_alert(alert_clone);
+                    if !(&syslog_server as &str).is_empty() {   
+                        let syslog_alerter = syslog_alerter::SyslogAlerter::new(
+                            &syslog_server,
+                        );
 
+                        syslog_alerter.on_alert(msg.clone());
+                    }
                     let mut alerts = alerts_thread.write().unwrap();
                     alerts.insert(0, msg);
                 }
