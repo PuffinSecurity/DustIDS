@@ -1,44 +1,25 @@
-use std::thread;
-use crossbeam_channel;
-
 #[derive(Debug, Clone)]
 pub struct AlertMsg {
     pub timestamp: String,
-    pub rule: String,
+    pub event_type: String,
     pub src_ip: String,
-    pub src_port: String,
+    pub src_port: u16,
     pub dst_ip: String,
-    pub dst_port: String,
+    pub dst_port: u16,
+    pub proto: String,
+    pub rule: String,
+    pub alert_metadata: serde_json::Value,
 }
 
-pub struct AlertConfig {
-    pub stdout: bool,
-    pub ip: String,
-    pub port: u16,
-}
-
-pub fn on_alert(msg: AlertMsg) {
-    // println!(
-    //     "[!!!] DETECTED: {} ",
-    //     msg.rule
-    // );
-}
-
-pub fn run(config: &AlertConfig, alert_stat_sender: crossbeam_channel::Sender<AlertMsg>) -> crossbeam_channel::Sender<AlertMsg> {
-    let (alert_sender, alert_receiver) = crossbeam_channel::unbounded::<AlertMsg>();
-
-    let alert_reciever_thread = alert_receiver.clone();
-    thread::spawn(move || loop {
-        match alert_reciever_thread.recv() {
-            Ok(msg) => {
-                println!(
-                    "[!!!] DETECTED: {} ",
-                    msg.rule
-                );
-                //alert_stat_sender.send(msg).unwrap();
-            }
-            Err(e) => println!("An error occurred while reading: {}", e),
-        }
-    });
-    alert_sender
+impl AlertMsg {
+    pub fn to_json(&self) -> String {
+        format!(
+            r#"{{"timestamp": "{}", "event_type": "{}", "src_ip": "{}",
+            "src_port": {}, "dst_ip": "{}", "dst_port": {},
+            "proto": "{}", "rule": "{}", "alert": {}}}"#,
+            self.timestamp, self.event_type, self.src_ip,
+            self.src_port, self.dst_ip, self.dst_port,
+            self.proto, self.rule, self.alert_metadata
+        )
+    }
 }

@@ -2,12 +2,11 @@ use std::sync::{Arc, RwLock};
 use yara_x::Compiler;
 use super::yara_analyzer::YaraAnalyzer;
 use super::yara_analyzer::compile_rules_from_dir;
-use super::xdpworker;
 use super::alerts;
-use super::stats;
-use super::afxdp_listener;
-use super::afpacket_listener;
+use super::listener_afxdp;
+use super::listener_afpacket;
 use super::state;
+use super::syslog_alerter;
 
 use rebpf::{interface, libbpf};
 use libbpf_sys;
@@ -20,6 +19,7 @@ pub fn scan_interface(
     analysis_threads: usize,
     anlys_buf_size: usize,
     use_afxdp: bool,
+    syslog_server: &str,
     ) -> Result<(state::State, Vec<std::thread::JoinHandle<()>>)> {
     // Load Yara rules
     let compiler = Compiler::new();
@@ -28,13 +28,18 @@ pub fn scan_interface(
     // Create crossbeam channel
     let (frame_sender, frame_receiver) = crossbeam_channel::bounded(anlys_buf_size);
 
+    // Init Alert Handler TODO1
+    // let syslog_alerter = syslog_alerter::new();
+
+
     // Initialize state // TODO For now hardcode number of queues to 1
     let (state, state_handle) = state::State::new(
         interface_name.to_string(),
         1,
         analysis_threads as u8,
         rule_files,
-        frame_receiver.clone()
+        frame_receiver.clone(),
+        syslog_server.to_string(),
     );
 
     // Initialize analysis threads
@@ -58,7 +63,7 @@ pub fn scan_interface(
         let interface = interface::get_interface(interface_name).unwrap();
         let _ = libbpf::bpf_set_link_xdp_fd(&interface, None, xdp_flags).unwrap();
 
-        let mut afxdp_listener = afxdp_listener::AFXDPListener::new(
+        let mut afxdp_listener = listener_afxdp::AFXDPListener::new(
             interface_name.to_string(),
             xdp_flags, 
             2,
@@ -67,7 +72,7 @@ pub fn scan_interface(
         all_handles.push(afpacket_handle);
 
     } else {
-        let mut afpacket_listener = afpacket_listener::AFPacketListener::new(
+        let mut afpacket_listener = listener_afpacket::AFPacketListener::new(
             interface_name.to_string(),
             frame_sender.clone());
         let afpacket_handle = afpacket_listener.run(Arc::clone(&state.rx_total), Arc::clone(&state.rx_dropped));    

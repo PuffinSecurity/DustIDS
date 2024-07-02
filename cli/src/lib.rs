@@ -52,6 +52,14 @@ enum Commands {
         rules_dir: Option<OsString>,
 
         #[arg(
+            value_name = "SYSLOG-SERVER",
+            long,
+            required = false,
+            help = "[IP:PORT] of the syslog server to which send alerts")
+        ]
+        syslog_server: Option<OsString>,
+
+        #[arg(
             value_name = "ANALYSIS-THREADS",
             long,
             default_value_t = 1,
@@ -92,6 +100,7 @@ pub fn cli_match() -> Result<()> {
         Commands::Scan {
             iface,
             rules_dir,
+            syslog_server,
             analysis_threads,
             analysis_buffer_size,
             use_afxdp,
@@ -107,18 +116,24 @@ pub fn cli_match() -> Result<()> {
                 .map(|s| s.to_str().unwrap())
                 .unwrap_or(".");
 
+            let syslog_server = syslog_server
+                .as_deref()
+                .map(|s| s.to_str().unwrap())
+                .unwrap_or("");
+
             let (mut state, handles) = core::commands::scan_interface(
                 iface,
                 rules_dir,
                 analysis_threads as usize,
                 analysis_buffer_size,
-                use_afxdp).unwrap();
+                use_afxdp,
+                syslog_server).unwrap();
 
             if tui {
                 crossterm::run(TICKRATE, state).unwrap();
             } else {
                 loop {
-                    std::thread::sleep(Duration::from_secs(1));
+                    std::thread::sleep(Duration::from_secs(30));//TODO 
                     state.on_tick(TICKRATE);
                     // print all state data
                     println!("Rx per sec: {:?} Total: {:?} - RX Dropped {:?} - Analysis Buffer: {:?}/{:?} - Alerts:\n {:?}",

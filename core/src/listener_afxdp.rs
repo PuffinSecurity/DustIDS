@@ -14,7 +14,6 @@ use libbpf_sys::{XSK_RING_CONS__DEFAULT_NUM_DESCS, XSK_RING_PROD__DEFAULT_NUM_DE
 use atomic_counter::{AtomicCounter, RelaxedCounter};
 
 use super::alerts::AlertMsg;
-use super::analyzer_t::Analyzer;
 
 const BUF_NUM: usize = 65536;
 const BUF_LEN: usize = 4096;
