@@ -8,7 +8,7 @@ pub struct AlertMsg {
     pub dst_port: u16,
     pub proto: String,
     pub rule: String,
-    pub alert_metadata: String,
+    pub alert_metadata: serde_json::Value,
 }
 
 impl AlertMsg {
@@ -16,7 +16,7 @@ impl AlertMsg {
         format!(
             r#"{{"timestamp": "{}", "event_type": "{}", "src_ip": "{}",
             "src_port": {}, "dst_ip": "{}", "dst_port": {},
-            "proto": "{}", "rule": "{}", "alert_metadata": "{}"}}"#,
+            "proto": "{}", "rule": "{}", "alert": {}}}"#,
             self.timestamp, self.event_type, self.src_ip,
             self.src_port, self.dst_ip, self.dst_port,
             self.proto, self.rule, self.alert_metadata

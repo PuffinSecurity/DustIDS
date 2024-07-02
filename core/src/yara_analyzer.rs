@@ -19,6 +19,8 @@ use pnet::packet::Packet;
 use yara_x::Compiler;
 use yara_x::Rules;
 
+use serde_json::{Value, Map};
+
 use chrono::Local;
 
 use hex;
@@ -143,6 +145,7 @@ pub fn analyze_ethernet_frame(ethernet: &EthernetPacket, yara_scanner: &mut yara
 
 fn analyze_ipv4_packet(ethernet: &EthernetPacket, yara_scanner: &mut yara_x::Scanner, alert_sender: &crossbeam_channel::Sender<AlertMsg>) {
     let header = Ipv4Packet::new(ethernet.payload());
+    
     if let Some(header) = header {
         analyze_transport_protocol(
             IpAddr::V4(header.get_source()),
@@ -196,6 +199,7 @@ fn analyze_transport_protocol(
 fn analyze_udp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_scanner: &mut yara_x::Scanner, alert_sender: &crossbeam_channel::Sender<AlertMsg>) {
     let udp = UdpPacket::new(packet);
 
+    
     if let Some(udp) = udp {
         let payload = udp.payload();
         let results = yara_scanner.scan(payload).unwrap();
@@ -203,16 +207,34 @@ fn analyze_udp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
         for rule in results.matching_rules() {
             let date = Local::now();
 
+            let mut map = Map::new();
+
+            // Ensure the input is an array of arrays
+            if let Value::Array(pairs) = rule.metadata().into_json() {
+                for pair in pairs {
+                    if let Value::Array(pair_vec) = pair {
+                        if pair_vec.len() == 2 {
+                            if let (Value::String(key), Value::String(value)) = (&pair_vec[0], &pair_vec[1]) {
+                                map.insert(key.clone(), Value::String(value.clone()));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Convert the map to a JSON object
+            let metadata_object = Value::Object(map);
+
             alert_sender.send(AlertMsg { // TODO1
                 timestamp: date.format("%Y-%m-%d-%H:%M:%S").to_string(),
                 event_type: "alert".to_string(),
                 src_ip: source.to_string(),
-                src_port: 0,
+                src_port: udp.get_source(),
                 dst_ip: destination.to_string(),
-                dst_port: 0,
+                dst_port: udp.get_destination(),
                 proto: "UDP".to_string(),
                 rule: rule.identifier().to_string(),
-                alert_metadata: rule.metadata().into_json().to_string(),
+                alert_metadata: metadata_object,
             }).unwrap();
         };
     } else {
@@ -229,16 +251,35 @@ fn analyze_tcp_packet(packet: &[u8], source: IpAddr, destination: IpAddr, yara_s
     
         for rule in results.matching_rules() { // TODO1
             let date = Local::now();
+
+            let mut map = Map::new();
+
+            // Ensure the input is an array of arrays
+            if let Value::Array(pairs) = rule.metadata().into_json() {
+                for pair in pairs {
+                    if let Value::Array(pair_vec) = pair {
+                        if pair_vec.len() == 2 {
+                            if let (Value::String(key), Value::String(value)) = (&pair_vec[0], &pair_vec[1]) {
+                                map.insert(key.clone(), Value::String(value.clone()));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Convert the map to a JSON object
+            let metadata_object = Value::Object(map);
+
             alert_sender.send(AlertMsg {
                 timestamp: date.format("%Y-%m-%d-%H:%M:%S").to_string(),
                 event_type: "alert".to_string(),
                 src_ip: source.to_string(),
-                src_port: 0,
+                src_port: tcp.get_source(),
                 dst_ip: destination.to_string(),
-                dst_port: 0,
+                dst_port: tcp.get_destination(),
                 proto: "TCP".to_string(),
                 rule: rule.identifier().to_string(),
-                alert_metadata: rule.metadata().into_json().to_string(),
+                alert_metadata: metadata_object,
             }).unwrap();
         };
     } else {

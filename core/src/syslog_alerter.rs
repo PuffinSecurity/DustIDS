@@ -29,20 +29,16 @@ impl SyslogAlerter {
     pub fn on_alert(&self, alert: AlertMsg) {
         // Parse AlertMsg to EveJSON
         let msg = alert.to_json();
-        println!("{}", msg);
 
         let syslog_msg = SyslogMessage {
             message_level: 1,
             structured: vec![],
             message: msg,
         };
-        //let syslog: Result<Logger<LoggerBackend, F>> = syslog_tls::tcp(self.syslog_formatter.clone(), self.syslog_server.as_str());
+
         // Send Message
         match syslog_tls::tcp(self.syslog_formatter.clone(), self.syslog_server.as_str()) {
-        //match syslog_tls::unix(self.syslog_formatter.clone()) {
-            Err(e) => {
-                println!("Error: {}", e);
-            }
+            Err(e) => { }
             Ok(mut writer) => {
                 writer.alert(syslog_msg).unwrap();
                 //writer.alert(msg.as_str());

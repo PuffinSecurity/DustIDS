@@ -54,7 +54,7 @@ enum Commands {
         #[arg(
             value_name = "SYSLOG-SERVER",
             long,
-            required = true,
+            required = false,
             help = "[IP:PORT] of the syslog server to which send alerts")
         ]
         syslog_server: Option<OsString>,
@@ -133,7 +133,7 @@ pub fn cli_match() -> Result<()> {
                 crossterm::run(TICKRATE, state).unwrap();
             } else {
                 loop {
-                    std::thread::sleep(Duration::from_secs(15));//TODO 
+                    std::thread::sleep(Duration::from_secs(30));//TODO 
                     state.on_tick(TICKRATE);
                     // print all state data
                     println!("Rx per sec: {:?} Total: {:?} - RX Dropped {:?} - Analysis Buffer: {:?}/{:?} - Alerts:\n {:?}",

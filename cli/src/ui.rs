@@ -173,6 +173,11 @@ fn draw_text(f: &mut Frame, app: &mut App, area: Rect) {
             Span::styled("Yara-X", Style::default().fg(Color::LightYellow)),
             Span::raw(" Analysis Threads: "),
             Span::styled(app.state.analysis_threads.to_string(), Style::default().fg(Color::LightYellow)),
+            Span::raw(" Syslog Server: "),
+            Span::styled(
+                if app.state.syslog_server.to_string() == "" { "None" } else { &app.state.syslog_server }, 
+                if app.state.syslog_server.to_string() == "" { Style::default().fg(Color::LightRed)  } else { Style::default().fg(Color::LightYellow) }
+            ),
         ])
     ];
     let block = Block::bordered().title(Span::styled(
