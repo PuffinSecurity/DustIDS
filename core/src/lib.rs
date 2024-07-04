@@ -2,7 +2,6 @@
 extern crate log;
 
 pub mod commands;
-pub mod debug_analyzer;
 pub mod yara_analyzer;
 pub mod listener_afxdp;
 pub mod listener_afpacket;
