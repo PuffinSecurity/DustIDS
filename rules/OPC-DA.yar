@@ -2,7 +2,11 @@ rule OPCDA_IOPCBrowse_v180402 : OPC_DA
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "IOPCBrowse 39227004-a18f-4b57-8b0a-5235670f4468"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.2.0"
+    description = "Detects the IOPCBrowse operation for OPC DA."
+    impact = "Identifies browsing operations in OPC DA servers, which may indicate network scanning or enumeration."
     uuid = "acf5480a10e54a1e91bf5232fc982e3b" 
   strings:
     $opc_da_header = { 05 00 ?? 03 10 00 00 00 }
@@ -11,12 +15,15 @@ rule OPCDA_IOPCBrowse_v180402 : OPC_DA
     $opc_da_header at 0 and $IOPCBrowse
 }
 
-
 rule OPCDA_IOPCEnumGUID_v180402 : OPC_DA
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "IOPCEnumGUID 55c382c8-21c7-4e88-96c1-becfb1e3f483"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.2.1"
+    description = "Detects the IOPCEnumGUID operation for OPC DA."
+    impact = "Identifies enumeration of GUIDs in OPC DA servers, which may indicate network scanning or enumeration."
     uuid = "ceaba4a1323f4736b41880b02ea9a723" 
   strings:
     $opc_da_header = { 05 00 ?? 03 10 00 00 00 }
@@ -29,7 +36,11 @@ rule OPCDA_IOPCServerList2_v180402 : OPC_DA
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "IOPCServerList2 9dd0b56c-ad9e-43ee-8305-487f3188bf7a "
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.2.2"
+    description = "Detects the IOPCServerList2 operation for OPC DA."
+    impact = "Identifies server list operations in OPC DA servers, which may indicate network scanning or enumeration."
     uuid = "4913506dfb634e509955311052d1f5b9" 
   strings:
     $opc_da_header = { 05 00 ?? 03 10 00 00 00 }
@@ -37,4 +48,3 @@ rule OPCDA_IOPCServerList2_v180402 : OPC_DA
   condition:
     $opc_da_header at 0 and $IOPCServerList2
 }
-
