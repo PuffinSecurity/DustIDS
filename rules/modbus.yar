@@ -2,7 +2,11 @@ rule force_listen_only_mode : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Force Listen Only Mode"
+    description = "Enables forced listen only mode"
+    impact = "Places the device in listen only mode, preventing it from acting on commands"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.3.2"
     uuid = "1e0af54bf2fd4e75aa985608f3a0c361"
   strings: 
     $modbus_header = { 00 00 }
@@ -15,7 +19,11 @@ rule restart_communications_option : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Restart Communications Option"
+    description = "Restarts communication options"
+    impact = "Resets communication settings, potentially disrupting normal operations"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.3.2"
     uuid = "dadb0f5fb6144db981a06bd706646c80"
   strings: 
     $modbus_header = { 00 00 }
@@ -28,7 +36,11 @@ rule clear_counters_and_diagnostic_registers : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Clear Counters and Diagnostic Registers"
+    description = "Clears counters and diagnostic registers"
+    impact = "Erases diagnostic data and counters, affecting system monitoring and diagnostics"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.2.5"
     uuid = "5bc4878a009942dd8fdefe9e91e24a70"
   strings: 
     $modbus_header = { 00 00 }
@@ -41,7 +53,11 @@ rule slave_device_busy_exception_code_delay : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Slave Device Busy Exception Code Delay"
+    description = "Induces busy exception code on slave devices"
+    impact = "Signals that the slave device is busy, potentially delaying response to legitimate commands"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.4.0"
     uuid = "9adde64659e24456badb74be64d315ce"
   strings: 
     $modbus_header = { 00 00 }
@@ -55,7 +71,11 @@ rule ack_exception_code_delay : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Acknowledge Exception Code Delay"
+    description = "Acknowledges exception code with a delay"
+    impact = "Delays the acknowledgment of exception codes, affecting error handling procedures"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.4.0"
     uuid = "52cf133f7ec543388d6a90bdc2a219fe"
   strings: 
     $modbus_header = { 00 00 }
@@ -69,7 +89,11 @@ rule points_list_scan : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Points List"
+    description = "Scans points list"
+    impact = "Retrieves a list of points from the device, which may disclose operational details"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.1.0"
     uuid = "51325c4b7a35415dbfa77360b031a451"
   strings: 
     $modbus_header = { 00 00 }
@@ -83,7 +107,11 @@ rule function_code : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Function code"
+    description = "Handles specific function codes"
+    impact = "Executes commands based on the function code received, impacting device operations"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.1.0"
     uuid = "1a09d6f501004b168e3b85ff46fac53b"
   strings: 
     $modbus_header = { 00 00 }
@@ -97,7 +125,11 @@ rule Modbus_TCP_Write_single_coil : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Write Single Coil"
+    description = "Writes to a single coil via Modbus TCP"
+    impact = "Modifies the state of a single coil, potentially affecting device behavior"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.2.3"
     uuid = "a6be02ca588341fa9318ca8330c0f9f8"
   strings: 
     $modbus_header = { 00 00 }
@@ -106,13 +138,15 @@ rule Modbus_TCP_Write_single_coil : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
 rule Modbus_TCP_Write_single_register : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Write Single Register"
+    description = "Writes to a single register via Modbus TCP"
+    impact = "Alters the value of a single register, which could change device operations or settings"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.2.3"
     uuid = "04904d0e255e436d8519fa2b1dcbf7bb"
   strings: 
     $modbus_header = { 00 00 }
@@ -127,7 +161,11 @@ rule Modbus_TCP_Read_Exception_Status : modbus
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Read Exception Status"
+    description = "Reads the exception status via Modbus TCP"
+    impact = "Checks the exception status of the device, used for diagnostics and error analysis"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.2.1"
     uuid = "4a81b3de62d74600b557cf17e28345d5"
   strings: 
     $modbus_header = { 00 00 }
@@ -136,14 +174,15 @@ rule Modbus_TCP_Read_Exception_Status : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
-
 rule Modbus_TCP_Diagnostics_Device : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Diagnostics Device"
+    description = "Performs device diagnostics via Modbus TCP"
+    impact = "Executes diagnostic commands that could interrupt normal device operation or reveal sensitive information"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.2.1"
     uuid = "cdba7682c5404eb7b4f2077252752ab9"
   strings: 
     $modbus_header = { 00 00 }
@@ -152,14 +191,15 @@ rule Modbus_TCP_Diagnostics_Device : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
-
 rule Modbus_TCP_Write_Multiple_Coils : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Write Multiple Coils"
+    description = "Writes to multiple coils via Modbus TCP"
+    impact = "Modifies multiple coil states, affecting multiple aspects of device operation"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.3.1"
     uuid = "be6d7d1694e44deeae195bee99011ce5"
   strings: 
     $modbus_header = { 00 00 }
@@ -168,13 +208,15 @@ rule Modbus_TCP_Write_Multiple_Coils : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
 rule Modbus_TCP_Write_Multiple_registers : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Write Multiple registers"
+    description = "Writes to multiple registers via Modbus TCP"
+    impact = "Changes settings across multiple registers, potentially leading to significant changes in device behavior"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.3.1"
     uuid = "7ffea98b5f0e45448c4e8e3f5e7d371d"
   strings: 
     $modbus_header = { 00 00 }
@@ -183,14 +225,15 @@ rule Modbus_TCP_Write_Multiple_registers : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
-
 rule Modbus_TCP_Write_File_Record : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Write File Record"
+    description = "Writes a file record via Modbus TCP"
+    impact = "Stores data to the device's file system, potentially overwriting existing files or data"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.4.1"
     uuid = "3a32a1948c8b49398b36f4b0b549ec3b"
   strings: 
     $modbus_header = { 00 00 }
@@ -199,13 +242,15 @@ rule Modbus_TCP_Write_File_Record : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
 rule Modbus_TCP_Write_Register : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Mask Write Register"
+    description = "Masks and writes to a register via Modbus TCP"
+    impact = "Manipulates register values with a mask before writing, allowing for precise control over register contents"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.3.5"
     uuid = "0e87e4a32de44013ba73df5f8ed268fa"
   strings: 
     $modbus_header = { 00 00 }
@@ -214,12 +259,15 @@ rule Modbus_TCP_Write_Register : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
 rule Modbus_TCP_Read_Write_Multiple_Registers : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Read/Write Multiple registers"
+    description = "Reads and writes multiple registers via Modbus TCP"
+    impact = "Performs both reading and writing operations on multiple registers, influencing device processes and settings"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.4.5"
     uuid = "129082bb1a3f48fab882df6e30cd519f"
   strings: 
     $modbus_header = { 00 00 }
@@ -228,12 +276,15 @@ rule Modbus_TCP_Read_Write_Multiple_Registers : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
 rule Modbus_TCP_Read_Device_Identification : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Modbus TCP/Read Device Identification"
+    description = "Reads device identification via Modbus TCP"
+    impact = "Obtains device identification information, useful for asset management and network mapping"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.3.0"
     uuid = "e68410aee14244a985f372b88769bd2e"
   strings: 
     $modbus_header = { 00 00 }
@@ -242,14 +293,15 @@ rule Modbus_TCP_Read_Device_Identification : modbus
     $modbus_header at 2 and $payload at 7 
 }
 
-
-
-
 rule unauthorized_read_request_plc : modbus 
 {
   meta:
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Unauthorized Read Request to a PLC"
+    description = "Unauthorized read request to a PLC"
+    impact = "Attempts to read from a PLC without authorization, potentially exposing sensitive operational data"
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "v1.2.4"
     uuid = "032d4d272ced432b804beb6dfeca98d1"
   strings: 
     $modbus_header = { 00 00 }
@@ -257,10 +309,3 @@ rule unauthorized_read_request_plc : modbus
   condition: 
     $modbus_header at 2 and $unauth_read_plc at 3
 }
-
-
-
-
-
-
-
