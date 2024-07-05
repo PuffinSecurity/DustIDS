@@ -1,6 +1,7 @@
 rule ascii_device_write_in_bits : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing bits to a device using ASCII format."
     impact = "Allows direct bit manipulation of device memory, potentially altering device operation."
@@ -19,6 +20,7 @@ rule ascii_device_write_in_bits : SLMP
 rule binary_device_write_in_bits : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing bits to a device using binary format."
     impact = "Allows direct bit manipulation of device memory, potentially altering device operation."
@@ -37,6 +39,7 @@ rule binary_device_write_in_bits : SLMP
 rule ascii_device_write_in_word : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing words to a device using ASCII format."
     impact = "Enables modification of device memory at the word level, influencing device operations."
@@ -55,6 +58,7 @@ rule ascii_device_write_in_word : SLMP
 rule binary_device_write_in_word : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing words to a device using binary format."
     impact = "Enables modification of device memory at the word level, influencing device operations."
@@ -73,6 +77,7 @@ rule binary_device_write_in_word : SLMP
 rule ascii_device_write_random_in_bits : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Randomly writing bits to a device using ASCII format."
     impact = "Allows random bit manipulation in device memory, potentially causing unpredictable device behavior."
@@ -91,6 +96,7 @@ rule ascii_device_write_random_in_bits : SLMP
 rule binary_device_write_random_in_bits : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Randomly writing bits to a device using binary format."
     impact = "Allows random bit manipulation in device memory, potentially causing unpredictable device behavior."
@@ -109,6 +115,7 @@ rule binary_device_write_random_in_bits : SLMP
 rule ascii_device_write_random_in_word : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Randomly writing words to a device using ASCII format."
     impact = "Enables random word-level modifications in device memory, affecting device functionality unpredictably."
@@ -127,6 +134,7 @@ rule ascii_device_write_random_in_word : SLMP
 rule binary_device_write_random_in_word : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Randomly writing words to a device using binary format."
     impact = "Enables random word-level modifications in device memory, affecting device functionality unpredictably."
@@ -145,6 +153,7 @@ rule binary_device_write_random_in_word : SLMP
 rule ascii_device_write_block : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing blocks to a device using ASCII format."
     impact = "Facilitates block-level data writing, impacting device storage and program execution."
@@ -163,6 +172,7 @@ rule ascii_device_write_block : SLMP
 rule binary_device_write_block : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing blocks to a device using binary format."
     impact = "Facilitates block-level data writing, impacting device storage and program execution."
@@ -181,6 +191,7 @@ rule binary_device_write_block : SLMP
 rule ascii_extend_unit_write : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing to an extended unit using ASCII format."
     impact = "Enables writing to additional storage or processing units, potentially expanding system capabilities."
@@ -199,6 +210,7 @@ rule ascii_extend_unit_write : SLMP
 rule binary_extend_unit_write : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing to an extended unit using binary format."
     impact = "Enables writing to additional storage or processing units, potentially expanding system capabilities."
@@ -217,6 +229,7 @@ rule binary_extend_unit_write : SLMP
 rule ascii_memory_write : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing to memory using ASCII format."
     impact = "Directly modifies system memory, potentially altering program execution or data integrity."
@@ -235,6 +248,7 @@ rule ascii_memory_write : SLMP
 rule binary_memory_write : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing to memory using binary format."
     impact = "Directly modifies system memory, potentially altering program execution or data integrity."
@@ -253,6 +267,7 @@ rule binary_memory_write : SLMP
 rule ascii_remote_run : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote run commands using ASCII format."
     impact = "Triggers execution of remote operations, potentially starting processes or tasks on a device."
@@ -271,6 +286,7 @@ rule ascii_remote_run : SLMP
 rule binary_remote_run : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote run commands using binary format."
     impact = "Triggers execution of remote operations, potentially starting processes or tasks on a device."
@@ -289,6 +305,7 @@ rule binary_remote_run : SLMP
 rule ascii_remote_stop : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote stop commands using ASCII format."
     impact = "Allows remote halting of device operations, potentially stopping processes or tasks."
@@ -307,6 +324,7 @@ rule ascii_remote_stop : SLMP
 rule binary_remote_stop : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote stop commands using binary format."
     impact = "Allows remote halting of device operations, potentially stopping processes or tasks."
@@ -325,6 +343,7 @@ rule binary_remote_stop : SLMP
 rule ascii_remote_pause : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote pause commands using ASCII format."
     impact = "Enables temporary suspension of device activities, potentially pausing ongoing processes."
@@ -343,6 +362,7 @@ rule ascii_remote_pause : SLMP
 rule binary_remote_pause : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote pause commands using binary format."
     impact = "Enables temporary suspension of device activities, potentially pausing ongoing processes."
@@ -361,6 +381,7 @@ rule binary_remote_pause : SLMP
 rule ascii_remote_latch : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote latch commands using ASCII format."
     impact = "Triggers the latching mechanism in devices, potentially locking their current state or configuration."
@@ -379,6 +400,7 @@ rule ascii_remote_latch : SLMP
 rule binary_remote_latch : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote latch commands using binary format."
     impact = "Triggers the latching mechanism in devices, potentially locking their current state or configuration."
@@ -397,6 +419,7 @@ rule binary_remote_latch : SLMP
 rule ascii_remote_reset : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote reset commands using ASCII format."
     impact = "Allows resetting of device to initial or default settings, potentially clearing current configurations."
@@ -415,6 +438,7 @@ rule ascii_remote_reset : SLMP
 rule binary_remote_reset : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Initiating remote reset commands using binary format."
     impact = "Allows resetting of device to initial or default settings, potentially clearing current configurations."
@@ -433,6 +457,7 @@ rule binary_remote_reset : SLMP
 rule ascii_change_file_date : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Changing file date using ASCII format."
     impact = "Modifies file metadata, specifically the date, which can affect file system organization and data retrieval."
@@ -451,6 +476,7 @@ rule ascii_change_file_date : SLMP
 rule binary_change_file_date : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Changing file date using binary format."
     impact = "Modifies file metadata, specifically the date, which can affect file system organization and data retrieval."
@@ -469,6 +495,7 @@ rule binary_change_file_date : SLMP
 rule ascii_write_file : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing to a file using ASCII format."
     impact = "Writes data to files, potentially modifying content and affecting data integrity and system behavior."
@@ -487,6 +514,7 @@ rule ascii_write_file : SLMP
 rule binary_write_file : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Writing to a file using binary format."
     impact = "Writes data to files, potentially modifying content and affecting data integrity and system behavior."
@@ -505,6 +533,7 @@ rule binary_write_file : SLMP
 rule ascii_copy_file : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Copying a file using ASCII format."
     impact = "Duplicates file data, affecting disk usage and data management."
@@ -523,6 +552,7 @@ rule ascii_copy_file : SLMP
 rule binary_copy_file : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Copying a file using binary format."
     impact = "Duplicates file data, affecting disk usage and data management."
@@ -541,6 +571,7 @@ rule binary_copy_file : SLMP
 rule ascii_delete_file : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Deleting a file using ASCII format."
     impact = "Removes files, potentially affecting data availability."
@@ -559,6 +590,7 @@ rule ascii_delete_file : SLMP
 rule binary_delete_file : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Deleting a file using binary format."
     impact = "Removes files, potentially affecting data availability."
@@ -577,6 +609,7 @@ rule binary_delete_file : SLMP
 rule ascii_change_file_state : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Changing file state using ASCII format."
     impact = "Alters file properties, which can influence how the file is accessed or managed."
@@ -595,6 +628,7 @@ rule ascii_change_file_state : SLMP
 rule binary_change_file_state : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Changing file state using binary format."
     impact = "Alters file properties, which can influence how the file is accessed or managed."
@@ -613,6 +647,7 @@ rule binary_change_file_state : SLMP
 rule ascii_remote_password_unlock : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Remote password unlock using ASCII format."
     impact = "Enables access to secured areas of the system, potentially compromising security settings."
@@ -631,6 +666,7 @@ rule ascii_remote_password_unlock : SLMP
 rule binary_remote_password_unlock : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Remote password unlock using binary format."
     impact = "Enables access to secured areas of the system, potentially compromising security settings."
@@ -650,6 +686,7 @@ rule binary_remote_password_unlock : SLMP
 rule ascii_remote_password_lock : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Remote password lock using ASCII format."
     impact = "If an adversary locked the system, it might prevent legitimate users from accessing it."
@@ -668,6 +705,7 @@ rule ascii_remote_password_lock : SLMP
 rule binary_remote_password_lock : SLMP 
 {
   meta:
+    protocol = "SLMP"
     author = "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"
     description = "Remote password lock using binary format."
     impact = "If an adversary locked the system, it might prevent legitimate users from accessing it."
