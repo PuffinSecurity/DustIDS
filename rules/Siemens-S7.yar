@@ -1,4 +1,3 @@
-
 rule Siemens_S7_Set_Clock : Siemens_S7
 {
   meta:
@@ -11,13 +10,17 @@ rule Siemens_S7_Set_Clock : Siemens_S7
     status = "stable"
     ruleVersion = "v1.3.0"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects clock synchronization or manipulation requests."
+  strings:
     $header = { 03 00 }
     $payload1 = { 32 07 00 }
     $payload2 = { 00 01 12 04 11 47 02 00 }
   condition:
     $header at 0 and $payload1 at 7 and $payload2 at 17
-
 }
 
 rule Siemens_S7_Set_Password : Siemens_S7
@@ -32,12 +35,16 @@ rule Siemens_S7_Set_Password : Siemens_S7
     status = "stable"
     ruleVersion = "v1.3.2"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "IA"
+    category_name = "Identification and Authentication"
+    control = "IA-5"
+    control_description = "Authenticator Management: Detects requests to set or change PLC session passwords."
+  strings:
     $header = { 03 00 }
     $payload = { 00 01 12 04 11 45 01 00 }
   condition:
     $header at 0 and $payload at 17
-
 }
 
 rule Siemens_S7_Set_CPU_Stop : Siemens_S7
@@ -52,11 +59,15 @@ rule Siemens_S7_Set_CPU_Stop : Siemens_S7
     status = "stable"
     ruleVersion = "v1.1.0"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CP"
+    category_name = "Contingency Planning"
+    control = "CP-10"
+    control_description = "System Recovery and Reconstitution: Detects CPU stop commands to halt operations."
+  strings:
     $payload = { 29 00 00 00 00 00 09 50 5f 50 52 4f 47 52 41 4d }
   condition:
-    $payload 
-
+    $payload
 }
 
 rule Siemens_S7_Set_CPU_Hot_Restart : Siemens_S7
@@ -71,11 +82,15 @@ rule Siemens_S7_Set_CPU_Hot_Restart : Siemens_S7
     status = "stable"
     ruleVersion = "v1.1.0"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CP"
+    category_name = "Contingency Planning"
+    control = "CP-10"
+    control_description = "System Recovery and Reconstitution: Detects hot restart commands to restart CPU without losing memory."
+  strings:
     $payload = { 28 00 00 00 00 00 00 fd 00 00 09 50 5f 50 52 4f }
   condition:
-    $payload 
-
+    $payload
 }
 
 rule Siemens_S7_Set_CPU_Cold_Restart : Siemens_S7
@@ -90,11 +105,15 @@ rule Siemens_S7_Set_CPU_Cold_Restart : Siemens_S7
     status = "stable"
     ruleVersion = "v1.1.0"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CP"
+    category_name = "Contingency Planning"
+    control = "CP-10"
+    control_description = "System Recovery and Reconstitution: Detects cold restart commands to reset CPU and clear memory."
+  strings:
     $payload = { 28 00 00 00 00 00 00 fd 00 02 43 20 09 50 5f 50 52 4f 47 52 41 4d }
   condition:
-    $payload 
-
+    $payload
 }
 
 rule Siemens_S7_Write_Var : Siemens_S7
@@ -109,12 +128,16 @@ rule Siemens_S7_Write_Var : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-5"
+    control_description = "Access Restrictions for Change: Detects write variable operations to ensure proper data handling."
+  strings:
     $header = { 03 00 }
     $payload = { 05 }
   condition:
     $header at 0 and $payload at 17
-
 }
 
 rule Siemens_S7_Request_Download : Siemens_S7
@@ -129,12 +152,16 @@ rule Siemens_S7_Request_Download : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects requests to download data or programs to PLC."
+  strings:
     $header = { 03 00 }
     $payload = { 1a }
   condition:
     $header at 0 and $payload at 17
-
 }
 
 rule Siemens_S7_Download_Block : Siemens_S7
@@ -149,13 +176,17 @@ rule Siemens_S7_Download_Block : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects block-wise download operations to PLC."
+  strings:
     $header = { 03 00 }
     $payload1 = { 32 01 }
-    $payload2 = { 1b }    
+    $payload2 = { 1b }
   condition:
     $header at 0 and $payload1 at 7 and $payload2 at 17
-
 }
 
 rule Siemens_S7_Download_Ended : Siemens_S7
@@ -170,13 +201,17 @@ rule Siemens_S7_Download_Ended : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects the end of block-wise download operations to PLC."
+  strings:
     $header = { 03 00 }
     $payload1 = { 32 01 }
-    $payload2 = { 1c }    
+    $payload2 = { 1c }
   condition:
     $header at 0 and $payload1 at 7 and $payload2 at 17
-
 }
 
 rule Siemens_S7_Start_Upload : Siemens_S7
@@ -191,13 +226,17 @@ rule Siemens_S7_Start_Upload : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects requests to start uploading data or programs from PLC."
+  strings:
     $header = { 03 00 }
     $payload1 = { 32 01 }
-    $payload2 = { 1d }    
+    $payload2 = { 1d }
   condition:
     $header at 0 and $payload1 at 7 and $payload2 at 17
-
 }
 
 rule Siemens_S7_Upload : Siemens_S7
@@ -212,13 +251,17 @@ rule Siemens_S7_Upload : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects block-wise upload operations from PLC."
+  strings:
     $header = { 03 00 }
     $payload1 = { 32 01 }
-    $payload2 = { 1e }    
+    $payload2 = { 1e }
   condition:
     $header at 0 and $payload1 at 7 and $payload2 at 17
-
 }
 
 rule Siemens_S7_End_Upload : Siemens_S7
@@ -233,13 +276,17 @@ rule Siemens_S7_End_Upload : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects the end of block-wise upload operations from PLC."
+  strings:
     $header = { 03 00 }
     $payload1 = { 32 01 }
-    $payload2 = { 1f }    
+    $payload2 = { 1f }
   condition:
     $header at 0 and $payload1 at 7 and $payload2 at 17
-
 }
 
 rule Siemens_S7_Delete_Block : Siemens_S7
@@ -254,15 +301,14 @@ rule Siemens_S7_Delete_Block : Siemens_S7
     status = "stable"
     ruleVersion = "v1.2.5"
     dst_port = "102"
- strings:
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects delete block operations to ensure proper data handling."
+  strings:
     $header = { 03 00 }
-    $payload = { 05 5f  }
- condition:
+    $payload = { 05 5f }
+  condition:
     $header at 0 and $payload
-
 }
-
-
-
-
-
