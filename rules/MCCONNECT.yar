@@ -8,6 +8,11 @@ rule mcconnect_ascii_batch_write_in_bits : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -26,6 +31,11 @@ rule mcconnect_binary_batch_write_in_bits : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -44,6 +54,11 @@ rule mcconnect_ascii_batch_write_in_word : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -62,6 +77,11 @@ rule mcconnect_binary_batch_write_in_word : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -80,6 +100,11 @@ rule mcconnect_ascii_write_random_in_bits_test : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -98,6 +123,11 @@ rule mcconnect_binary_write_random_in_bits_test : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -116,6 +146,11 @@ rule mcconnect_ascii_write_random_in_word_test : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -134,6 +169,11 @@ rule mcconnect_binary_write_random_in_word_test : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -152,6 +192,11 @@ rule mcconnect_ascii_multiple_block_batch_write : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -170,6 +215,11 @@ rule mcconnect_binary_multiple_block_batch_write : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -188,6 +238,11 @@ rule mcconnect_ascii_inteligent_function_buffer_memory_write : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -206,6 +261,11 @@ rule mcconnect_binary_inteligent_function_buffer_memory_write : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -224,6 +284,11 @@ rule mcconnect_ascii_buffer_memory_write : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -242,6 +307,11 @@ rule mcconnect_binary_buffer_memory_write : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -260,6 +330,11 @@ rule mcconnect_ascii_remote_run : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Enforces security controls on remote access to ensure proper authorization and protection against unauthorized actions."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -278,6 +353,11 @@ rule mcconnect_binary_remote_run : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Enforces security controls on remote access to ensure proper authorization and protection against unauthorized actions."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -296,6 +376,11 @@ rule mcconnect_ascii_remote_stop : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Enforces security controls on remote access to ensure proper authorization and protection against unauthorized actions."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -314,6 +399,11 @@ rule mcconnect_binary_remote_stop : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Enforces security controls on remote access to ensure proper authorization and protection against unauthorized actions."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -332,6 +422,11 @@ rule mcconnect_ascii_remote_pause : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Enforces security controls on remote access to ensure proper authorization and protection against unauthorized actions."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -350,6 +445,11 @@ rule mcconnect_binary_remote_pause : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Enforces security controls on remote access to ensure proper authorization and protection against unauthorized actions."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -368,6 +468,11 @@ rule mcconnect_remote_latch_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-4"
+    control_description = "Information System Monitoring: Ensuring the system's state and activity are consistently monitored to detect and respond to unauthorized changes or actions."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -386,6 +491,11 @@ rule mcconnect_remote_latch_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-4"
+    control_description = "Information System Monitoring: Ensuring the system's state and activity are consistently monitored to detect and respond to unauthorized changes or actions."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -404,6 +514,11 @@ rule mcconnect_remote_reset_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -422,6 +537,11 @@ rule mcconnect_remote_reset_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -440,6 +560,11 @@ rule mcconnect_file_information_modification_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -458,6 +583,11 @@ rule mcconnect_file_information_modification_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -476,6 +606,11 @@ rule mcconnect_file_write_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -494,6 +629,11 @@ rule mcconnect_file_write_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -512,6 +652,11 @@ rule mcconnect_file_copy_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -530,6 +675,11 @@ rule mcconnect_file_copy_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -548,6 +698,11 @@ rule mcconnect_file_delete_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -566,6 +721,11 @@ rule mcconnect_file_delete_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -584,6 +744,11 @@ rule mcconnect_file_write_slmp_compatible_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -602,6 +767,11 @@ rule mcconnect_file_write_slmp_compatible_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -620,6 +790,11 @@ rule mcconnect_file_copy_slmp_compatible_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -638,6 +813,11 @@ rule mcconnect_file_copy_slmp_compatible_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -656,6 +836,11 @@ rule mcconnect_file_delete_slmp_compatible_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -674,6 +859,11 @@ rule mcconnect_file_delete_slmp_compatible_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -692,6 +882,11 @@ rule mcconnect_file_creation_date_modification_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -710,6 +905,11 @@ rule mcconnect_file_creation_date_modification_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -728,6 +928,11 @@ rule mcconnect_file_attribute_modification_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -746,6 +951,11 @@ rule mcconnect_file_attribute_modification_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detecting and protecting against unauthorized changes to software, firmware, and information."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -764,6 +974,11 @@ rule mcconnect_remote_password_unlock_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-2"
+    control_description = "Account Management: Ensuring only authorized users have access to systems and resources."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -782,6 +997,11 @@ rule mcconnect_remote_password_unlock_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-2"
+    control_description = "Account Management: Ensuring only authorized users have access to systems and resources."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -800,6 +1020,11 @@ rule mcconnect_remote_password_lock_ascii_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-2"
+    control_description = "Account Management: Ensuring only authorized users have access to systems and resources."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -818,6 +1043,11 @@ rule mcconnect_remote_password_lock_binary_v180302 : MCCONNECT
     lastUpdate = "2022-07-05T14:13:15+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-2"
+    control_description = "Account Management: Ensuring only authorized users have access to systems and resources."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -825,4 +1055,3 @@ rule mcconnect_remote_password_lock_binary_v180302 : MCCONNECT
   condition: 
     ($slmp_header_4e_frame at 0 and $slmp_command at 15) or ($slmp_header_3e_frame at 0 and $slmp_command at 11)
 }
-
