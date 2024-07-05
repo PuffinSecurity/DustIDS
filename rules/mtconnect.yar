@@ -1,4 +1,4 @@
-rule unavaliability : MTCONNECT
+rule unavailability : MTCONNECT
 {
   meta:
     protocol = "MTConnect"
@@ -9,6 +9,11 @@ rule unavaliability : MTCONNECT
     ruleVersion = "v1.2.0"
     description = "Adapter unavailable."
     impact = "Detects when an adapter becomes unavailable in SCADA systems, affecting device communication."
+    standard = "NIST SP 800-82"
+    category = "SC"
+    category_name = "System and Communications Protection"
+    control = "SC-7"
+    control_description = "Boundary Protection: Detects unavailability of components to maintain system integrity."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -31,6 +36,11 @@ rule armed_emergency_stop : MTCONNECT
     ruleVersion = "v1.3.0"
     description = "Emergency stop activated."
     impact = "Detects activation of emergency stops, indicating a potential safety or security issue in SCADA environments."
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-4"
+    control_description = "Information System Monitoring: Detects activation of emergency stops to ensure safety and integrity."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -53,6 +63,11 @@ rule triggered_emergency_stop : MTCONNECT
     ruleVersion = "v1.3.0"
     description = "Emergency stop ended."
     impact = "Monitors the cessation of emergency stops, potentially indicating the resolution of earlier detected safety or security issues."
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-4"
+    control_description = "Information System Monitoring: Detects cessation of emergency stops to ensure continued safety and integrity."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -75,6 +90,11 @@ rule interface_state : MTCONNECT
     ruleVersion = "v1.2.5"
     description = "Interface state disabled."
     impact = "Identifies when a device interface is disabled, potentially impacting operational control and monitoring."
+    standard = "NIST SP 800-82"
+    category = "SC"
+    category_name = "System and Communications Protection"
+    control = "SC-7"
+    control_description = "Boundary Protection: Detects disabled interfaces to ensure continued protection and integrity."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -97,6 +117,11 @@ rule power_state_off : MTCONNECT
     ruleVersion = "v1.2.5"
     description = "Adapter power is off."
     impact = "Detects when an adapter is powered off, potentially indicating a shutdown or power failure in SCADA systems."
+    standard = "NIST SP 800-82"
+    category = "PE"
+    category_name = "Physical and Environmental Protection"
+    control = "PE-11"
+    control_description = "Emergency Power Off: Ensures detection of power-off states to maintain system availability."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -119,6 +144,11 @@ rule program_edit_active : MTCONNECT
     ruleVersion = "v1.2.5"
     description = "Controller in program edit mode."
     impact = "Detects when a controller is in program edit mode, allowing modifications to operational programming which might affect SCADA operations."
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-5"
+    control_description = "Access Restrictions for Change: Ensures that program edits are monitored to prevent unauthorized changes."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -141,6 +171,11 @@ rule development_functional_mode : MTCONNECT
     ruleVersion = "v1.2.0"
     description = "Functional mode set to development."
     impact = "Identifies when a device is set to development mode, potentially indicating changes in operational settings or testing phases."
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Security Impact Analysis: Detects development mode to assess security impacts of configuration changes."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -163,6 +198,11 @@ rule maintenance_functional_mode : MTCONNECT
     ruleVersion = "v1.2.0"
     description = "Functional mode set to maintenance."
     impact = "Detects when a device is set to maintenance mode, possibly indicating ongoing or scheduled maintenance activities."
+    standard = "NIST SP 800-82"
+    category = "MA"
+    category_name = "Maintenance"
+    control = "MA-3"
+    control_description = "Maintenance Tools: Detects maintenance mode to ensure proper use of maintenance tools and protocols."
   strings:
     $http_header = "HTTP"
     $xml_schema_loc = "urn:mtconnect.org:MTConnectStreams"
@@ -173,4 +213,3 @@ rule maintenance_functional_mode : MTCONNECT
   condition: 
     $http_header at 0 and $xml_schema_loc and $xml_devicestream_tag and $xml_componentstreams_tag and $xml_events_tag and $xml_state_tag 
 }
-
