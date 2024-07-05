@@ -2,6 +2,7 @@
 rule Siemens_S7_Set_Clock : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Set clock request"
     impact = "Allows time synchronization or manipulation of the PLC clock."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -22,6 +23,7 @@ rule Siemens_S7_Set_Clock : Siemens_S7
 rule Siemens_S7_Set_Password : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Set PLC session password request"
     impact = "Enables setting or changing the session password, enhancing security control."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -41,6 +43,7 @@ rule Siemens_S7_Set_Password : Siemens_S7
 rule Siemens_S7_Set_CPU_Stop : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Set PLC CPU stop request"
     impact = "Commands the PLC CPU to stop, halting operations."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -59,6 +62,7 @@ rule Siemens_S7_Set_CPU_Stop : Siemens_S7
 rule Siemens_S7_Set_CPU_Hot_Restart : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Set PLC CPU hot restart request"
     impact = "Triggers a hot restart of the CPU, restarting without losing memory."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -77,6 +81,7 @@ rule Siemens_S7_Set_CPU_Hot_Restart : Siemens_S7
 rule Siemens_S7_Set_CPU_Cold_Restart : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Set PLC CPU cold restart request"
     impact = "Initiates a cold restart, resetting the CPU and clearing memory."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -95,6 +100,7 @@ rule Siemens_S7_Set_CPU_Cold_Restart : Siemens_S7
 rule Siemens_S7_Write_Var : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Write variable"
     impact = "Allows writing data to a variable in the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -114,6 +120,7 @@ rule Siemens_S7_Write_Var : Siemens_S7
 rule Siemens_S7_Request_Download : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Request download"
     impact = "Initiates the process of downloading data or a program to the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -133,6 +140,7 @@ rule Siemens_S7_Request_Download : Siemens_S7
 rule Siemens_S7_Download_Block : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Download block"
     impact = "Facilitates block-wise download of data or programs to the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -153,6 +161,7 @@ rule Siemens_S7_Download_Block : Siemens_S7
 rule Siemens_S7_Download_Ended : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Download ended"
     impact = "Marks the completion of a block-wise data or program download to the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -173,6 +182,7 @@ rule Siemens_S7_Download_Ended : Siemens_S7
 rule Siemens_S7_Start_Upload : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Start upload"
     impact = "Begins the process of uploading data or programs from the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -193,6 +203,7 @@ rule Siemens_S7_Start_Upload : Siemens_S7
 rule Siemens_S7_Upload : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Upload"
     impact = "Allows block-wise upload of data or programs from the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -213,6 +224,7 @@ rule Siemens_S7_Upload : Siemens_S7
 rule Siemens_S7_End_Upload : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "End upload"
     impact = "Marks the completion of a block-wise upload of data or programs from the PLC."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
@@ -233,6 +245,7 @@ rule Siemens_S7_End_Upload : Siemens_S7
 rule Siemens_S7_Delete_Block : Siemens_S7
 {
   meta:
+    protocol = "SiemensS7"
     description = "Delete block"
     impact = "Allows the deletion of a data block or program from the PLC, potentially disrupting operations."
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"

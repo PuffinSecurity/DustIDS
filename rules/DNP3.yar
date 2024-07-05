@@ -1,6 +1,7 @@
 rule unsolicited_response : DNP3 
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -18,6 +19,7 @@ rule unsolicited_response : DNP3
 rule cold_restart : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -35,6 +37,7 @@ rule cold_restart : DNP3
 rule warm_restart : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -52,6 +55,7 @@ rule warm_restart : DNP3
 rule broadcast_request : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -69,6 +73,7 @@ rule broadcast_request : DNP3
 rule unauthorized_write_req_to_plc : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -86,6 +91,7 @@ rule unauthorized_write_req_to_plc : DNP3
 rule unauthorized_miscellaneous_req_to_plc : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -103,6 +109,7 @@ rule unauthorized_miscellaneous_req_to_plc : DNP3
 rule points_list : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -121,6 +128,7 @@ rule points_list : DNP3
 rule function_code_request : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -138,6 +146,7 @@ rule function_code_request : DNP3
 rule stop_application : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -155,6 +164,7 @@ rule stop_application : DNP3
 rule link_status_scan : DNP3
 {
   meta:
+    protocol = "DNP3"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"

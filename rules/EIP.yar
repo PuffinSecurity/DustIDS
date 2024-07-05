@@ -1,6 +1,7 @@
 rule eip_change_date_binary_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -18,6 +19,7 @@ rule eip_change_date_binary_v180414 : EIP
 rule eip_change_port_binary_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -35,6 +37,7 @@ rule eip_change_port_binary_v180414 : EIP
 rule eip_firmware_update_binary_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -52,6 +55,7 @@ rule eip_firmware_update_binary_v180414 : EIP
 rule eip_software_upload_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -69,6 +73,7 @@ rule eip_software_upload_v180414 : EIP
 rule eip_reset_binary_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -86,6 +91,7 @@ rule eip_reset_binary_v180414 : EIP
 rule eip_start_binary_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -103,6 +109,7 @@ rule eip_start_binary_v180414 : EIP
 rule eip_stop_binary_v180414 : EIP
 {
   meta:
+    protocol = "ETHERNET/IP"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"

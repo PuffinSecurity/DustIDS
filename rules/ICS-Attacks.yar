@@ -1,6 +1,8 @@
 rule yokogawa_CENTUM_CS_3000_exploit : ICS_ATTACK 
 {
   meta:
+    product = "CENTUM CS 3000"
+    manufacturer = "Yokogawa"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -19,6 +21,8 @@ rule yokogawa_CENTUM_CS_3000_exploit : ICS_ATTACK
 rule wonderware_InBatch_exploit : ICS_ATTACK 
 {
   meta:
+    product = "InBatch"
+    manufacturer = "Wonderware"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -37,6 +41,7 @@ rule wonderware_InBatch_exploit : ICS_ATTACK
 rule realwin_HMI_exploit_1 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "RealWin"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -55,6 +60,7 @@ rule realwin_HMI_exploit_1 : ICS_ATTACK
 rule realwin_HMI_exploit_2 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "RealWin"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -73,6 +79,7 @@ rule realwin_HMI_exploit_2 : ICS_ATTACK
 rule realwin_HMI_exploit_3 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "RealWin"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -91,6 +98,7 @@ rule realwin_HMI_exploit_3 : ICS_ATTACK
 rule realwin_HMI_exploit_4 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "RealWin"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -109,6 +117,8 @@ rule realwin_HMI_exploit_4 : ICS_ATTACK
 rule Genesis_SCADA_free_unitialized_1 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -126,6 +136,8 @@ rule Genesis_SCADA_free_unitialized_1 : ICS_ATTACK
 rule Genesis_SCADA_free_unitialized_2 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -143,6 +155,8 @@ rule Genesis_SCADA_free_unitialized_2 : ICS_ATTACK
 rule Genesis_SCADA_free_unitialized_3 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -160,6 +174,8 @@ rule Genesis_SCADA_free_unitialized_3 : ICS_ATTACK
 rule Genesis_SCADA_free_unitialized_4 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -177,6 +193,8 @@ rule Genesis_SCADA_free_unitialized_4 : ICS_ATTACK
 rule Genesis_SCADA_free_unitialized_5 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -194,6 +212,8 @@ rule Genesis_SCADA_free_unitialized_5 : ICS_ATTACK
 rule IGSS_Directory_Transversal_Download : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "IGSS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -213,6 +233,8 @@ rule IGSS_Directory_Transversal_Download : ICS_ATTACK
 rule IGSS_Directory_Transversal_Upload_Overwrite : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "IGSS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -232,6 +254,8 @@ rule IGSS_Directory_Transversal_Upload_Overwrite : ICS_ATTACK
 rule ROCKWELL_ControlLogix_Stop_CPU_DoS : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Rockwell Automation"
+    product = "ControlLogix"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -254,6 +278,8 @@ rule ROCKWELL_ControlLogix_Stop_CPU_DoS : ICS_ATTACK
 rule ROCKWELL_ControlLogix_Crash_CPU_DoS : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Rockwell Automation"
+    product = "ControlLogix"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -276,6 +302,8 @@ rule ROCKWELL_ControlLogix_Crash_CPU_DoS : ICS_ATTACK
 rule ROCKWELL_ControlLogix_EtherNET_Dump_Code : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Rockwell Automation"
+    product = "ControlLogix"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -297,6 +325,8 @@ rule ROCKWELL_ControlLogix_EtherNET_Dump_Code : ICS_ATTACK
 rule ROCKWELL_ControlLogix_EtherNET_DoS : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Rockwell Automation"
+    product = "ControlLogix"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -319,6 +349,8 @@ rule ROCKWELL_ControlLogix_EtherNET_DoS : ICS_ATTACK
 rule ROCKWELL_ControlLogix_Crash : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Rockwell Automation"
+    product = "ControlLogix"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -341,6 +373,8 @@ rule ROCKWELL_ControlLogix_Crash : ICS_ATTACK
 rule ROCKWELL_ControlLogix_Update_Firmware : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Rockwell Automation"
+    product = "ControlLogix"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -363,6 +397,8 @@ rule ROCKWELL_ControlLogix_Update_Firmware : ICS_ATTACK
 rule schneider_quantumn_request_memory_card_id : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Modicon Quantumn"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -382,6 +418,8 @@ rule schneider_quantumn_request_memory_card_id : ICS_ATTACK
 rule schneider_quantumn_request_cpu_module_info : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Modicon Quantumn"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -401,6 +439,8 @@ rule schneider_quantumn_request_cpu_module_info : ICS_ATTACK
 rule schneider_quantumn_request_project_filename : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Modicon Quantumn"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -420,6 +460,8 @@ rule schneider_quantumn_request_project_filename : ICS_ATTACK
 rule schneider_quantumn_request_project_info : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Modicon Quantumn"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -439,6 +481,8 @@ rule schneider_quantumn_request_project_info : ICS_ATTACK
 rule schneider_quantumn_set_plc_cpu_stop : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Modicon Quantumn"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -458,6 +502,8 @@ rule schneider_quantumn_set_plc_cpu_stop : ICS_ATTACK
 rule schneider_quantumn_set_plc_cpu_restart : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Modicon Quantumn"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -477,11 +523,13 @@ rule schneider_quantumn_set_plc_cpu_restart : ICS_ATTACK
 rule HatMan_inject_payload : ICS_ATTACK
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "Triconex Safety Instrumented System Controller - Tricon"
     author = "Jose Ramon Palanco <jpalanco@barbaraiot.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
     ruleVersion = "1.1.0"
-    description = "Injects a payload in the HatMan attack."
+    description = "Triton Malware, injects a payload in the HatMan attack."
     impact = "Injects malicious payload, potentially compromising the device."
     uuid = "8b6b5ba8d10e4c379a89303345d893c8"
     dst_port = "1502"
@@ -494,6 +542,8 @@ rule HatMan_inject_payload : ICS_ATTACK
 rule IGSS_Directory_Transversal_Arbitrary_File_Execution_0x0A : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "IGSS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -512,6 +562,8 @@ rule IGSS_Directory_Transversal_Arbitrary_File_Execution_0x0A : ICS_ATTACK
 rule IGSS_Directory_Transversal_Arbitrary_File_Execution_0x17 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Schneider Electric"
+    product = "IGSS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -530,6 +582,8 @@ rule IGSS_Directory_Transversal_Arbitrary_File_Execution_0x17 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x9a08 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -548,6 +602,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x9a08 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x5304 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -566,6 +622,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x5304 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x04b0 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -584,6 +642,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x04b0 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x04b2 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -602,6 +662,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x04b2 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x04b5 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -620,6 +682,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x04b5 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x7d0 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -638,6 +702,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x7d0 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0xdae : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -656,6 +722,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0xdae : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0xfa4 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -674,6 +742,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0xfa4 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0xfa7 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -692,6 +762,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0xfa7 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x1bbc : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -710,6 +782,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x1bbc : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x1c84 : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -728,6 +802,8 @@ rule Iconics_Genesis_SCADA_Integer_Overflow_0x1c84 : ICS_ATTACK
 rule Iconics_Genesis_SCADA_Integer_Overflow_0x26ac : ICS_ATTACK 
 {
   meta:
+    manufacturer = "Iconics"
+    product = "Genesis SCADA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"

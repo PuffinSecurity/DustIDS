@@ -1,6 +1,8 @@
 rule memory_area_write : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -18,6 +20,8 @@ rule memory_area_write : FINS
 rule stop_command : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -35,6 +39,8 @@ rule stop_command : FINS
 rule invalid_command_area_clear : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -52,6 +58,8 @@ rule invalid_command_area_clear : FINS
 rule force_right_acquire : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -69,6 +77,8 @@ rule force_right_acquire : FINS
 rule error_clear : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -86,6 +96,8 @@ rule error_clear : FINS
 rule force_reset : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -103,6 +115,8 @@ rule force_reset : FINS
 rule memory_area_fill : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -120,6 +134,8 @@ rule memory_area_fill : FINS
 rule memory_area_transfer : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -137,6 +153,8 @@ rule memory_area_transfer : FINS
 rule parameter_area_write : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -154,6 +172,8 @@ rule parameter_area_write : FINS
 rule parameter_area_clear : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -171,6 +191,8 @@ rule parameter_area_clear : FINS
 rule program_area_protect : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -188,6 +210,8 @@ rule program_area_protect : FINS
 rule program_area_protect_clear : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -205,6 +229,8 @@ rule program_area_protect_clear : FINS
 rule program_area_write : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -222,6 +248,8 @@ rule program_area_write : FINS
 rule program_area_clear : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -239,6 +267,8 @@ rule program_area_clear : FINS
 rule error_log_clear : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -256,6 +286,8 @@ rule error_log_clear : FINS
 rule clock_write : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -273,6 +305,8 @@ rule clock_write : FINS
 rule run : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -290,6 +324,8 @@ rule run : FINS
 rule forced_set_reset_cancel : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -307,6 +343,8 @@ rule forced_set_reset_cancel : FINS
 rule data_link_table_write : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -324,6 +362,8 @@ rule data_link_table_write : FINS
 rule name_delete : FINS 
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -341,6 +381,8 @@ rule name_delete : FINS
 rule fins_single_file_write_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -358,6 +400,8 @@ rule fins_single_file_write_binary_v180316 : FINS
 rule fins_single_file_write_with_overwrite_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -375,6 +419,8 @@ rule fins_single_file_write_with_overwrite_binary_v180316 : FINS
 rule fins_single_file_append_data_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -392,6 +438,8 @@ rule fins_single_file_append_data_binary_v180316 : FINS
 rule fins_single_file_overwrite_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -409,6 +457,8 @@ rule fins_single_file_overwrite_binary_v180316 : FINS
 rule fins_memory_card_format_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -426,6 +476,8 @@ rule fins_memory_card_format_binary_v180316 : FINS
 rule fins_file_delete_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -443,6 +495,8 @@ rule fins_file_delete_v180316 : FINS
 rule fins_volume_label_create_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -460,6 +514,8 @@ rule fins_volume_label_create_binary_v180316 : FINS
 rule fins_volume_label_create_or_overwrite_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -477,6 +533,8 @@ rule fins_volume_label_create_or_overwrite_binary_v180316 : FINS
 rule fins_volume_label_delete_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -494,6 +552,8 @@ rule fins_volume_label_delete_binary_v180316 : FINS
 rule fins_file_copy_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -511,6 +571,8 @@ rule fins_file_copy_binary_v180316 : FINS
 rule fins_file_name_change_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -528,6 +590,8 @@ rule fins_file_name_change_binary_v180316 : FINS
 rule fins_memory_area_file_transfer_pc_to_device_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -545,6 +609,8 @@ rule fins_memory_area_file_transfer_pc_to_device_binary_v180316 : FINS
 rule fins_memory_area_file_transfer_device_to_pc_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -562,6 +628,8 @@ rule fins_memory_area_file_transfer_device_to_pc_binary_v180316 : FINS
 rule fins_parameter_area_file_transfer_pc_to_device_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -579,6 +647,8 @@ rule fins_parameter_area_file_transfer_pc_to_device_binary_v180316 : FINS
 rule fins_parameter_area_file_transfer_device_to_pc_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -596,6 +666,8 @@ rule fins_parameter_area_file_transfer_device_to_pc_binary_v180316 : FINS
 rule fins_program_area_file_transfer_pc_to_device_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -613,6 +685,8 @@ rule fins_program_area_file_transfer_pc_to_device_binary_v180316 : FINS
 rule fins_program_area_file_transfer_device_to_pc_binary_v180316 : FINS
 {
   meta:
+    protocol = "FINS"
+    manufacturer = "Omron"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"

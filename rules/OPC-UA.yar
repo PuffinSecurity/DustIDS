@@ -1,6 +1,7 @@
 rule browse_request_forward : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -21,6 +22,7 @@ rule browse_request_forward : OPC_UA
 rule request_session_python_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -40,6 +42,7 @@ rule request_session_python_client : OPC_UA
 rule request_session_dotnet_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -58,6 +61,7 @@ rule request_session_dotnet_client : OPC_UA
 rule request_session_eclipse_milo_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -77,6 +81,7 @@ rule request_session_eclipse_milo_client : OPC_UA
 rule request_session_nodejs_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -95,6 +100,7 @@ rule request_session_nodejs_client : OPC_UA
 rule request_session_without_cert : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -112,6 +118,7 @@ rule request_session_without_cert : OPC_UA
 rule localhost_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -129,6 +136,7 @@ rule localhost_client : OPC_UA
 rule client_from_internet : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"

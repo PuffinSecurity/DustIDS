@@ -1,6 +1,7 @@
 rule OPCDA_IOPCBrowse_v180402 : OPC_DA
 {
   meta:
+    protocol = "OPC_DA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -18,6 +19,7 @@ rule OPCDA_IOPCBrowse_v180402 : OPC_DA
 rule OPCDA_IOPCEnumGUID_v180402 : OPC_DA
 {
   meta:
+    protocol = "OPC_DA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"
@@ -35,6 +37,7 @@ rule OPCDA_IOPCEnumGUID_v180402 : OPC_DA
 rule OPCDA_IOPCServerList2_v180402 : OPC_DA
 {
   meta:
+    protocol = "OPC_DA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     lastUpdate = "2023-02-06T12:11:00+0100"
     status = "stable"

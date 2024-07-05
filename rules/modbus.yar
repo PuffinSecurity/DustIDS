@@ -1,6 +1,7 @@
 rule force_listen_only_mode : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Enables forced listen only mode"
     impact = "Places the device in listen only mode, preventing it from acting on commands"
@@ -18,6 +19,7 @@ rule force_listen_only_mode : modbus
 rule restart_communications_option : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Restarts communication options"
     impact = "Resets communication settings, potentially disrupting normal operations"
@@ -35,6 +37,7 @@ rule restart_communications_option : modbus
 rule clear_counters_and_diagnostic_registers : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Clears counters and diagnostic registers"
     impact = "Erases diagnostic data and counters, affecting system monitoring and diagnostics"
@@ -52,6 +55,7 @@ rule clear_counters_and_diagnostic_registers : modbus
 rule slave_device_busy_exception_code_delay : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Induces busy exception code on slave devices"
     impact = "Signals that the slave device is busy, potentially delaying response to legitimate commands"
@@ -70,6 +74,7 @@ rule slave_device_busy_exception_code_delay : modbus
 rule ack_exception_code_delay : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Acknowledges exception code with a delay"
     impact = "Delays the acknowledgment of exception codes, affecting error handling procedures"
@@ -88,6 +93,7 @@ rule ack_exception_code_delay : modbus
 rule points_list_scan : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Scans points list"
     impact = "Retrieves a list of points from the device, which may disclose operational details"
@@ -106,6 +112,7 @@ rule points_list_scan : modbus
 rule function_code : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Handles specific function codes"
     impact = "Executes commands based on the function code received, impacting device operations"
@@ -124,6 +131,7 @@ rule function_code : modbus
 rule Modbus_TCP_Write_single_coil : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Writes to a single coil via Modbus TCP"
     impact = "Modifies the state of a single coil, potentially affecting device behavior"
@@ -141,6 +149,7 @@ rule Modbus_TCP_Write_single_coil : modbus
 rule Modbus_TCP_Write_single_register : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Writes to a single register via Modbus TCP"
     impact = "Alters the value of a single register, which could change device operations or settings"
@@ -160,6 +169,7 @@ rule Modbus_TCP_Write_single_register : modbus
 rule Modbus_TCP_Read_Exception_Status : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Reads the exception status via Modbus TCP"
     impact = "Checks the exception status of the device, used for diagnostics and error analysis"
@@ -177,6 +187,7 @@ rule Modbus_TCP_Read_Exception_Status : modbus
 rule Modbus_TCP_Diagnostics_Device : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Performs device diagnostics via Modbus TCP"
     impact = "Executes diagnostic commands that could interrupt normal device operation or reveal sensitive information"
@@ -194,6 +205,7 @@ rule Modbus_TCP_Diagnostics_Device : modbus
 rule Modbus_TCP_Write_Multiple_Coils : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Writes to multiple coils via Modbus TCP"
     impact = "Modifies multiple coil states, affecting multiple aspects of device operation"
@@ -211,6 +223,7 @@ rule Modbus_TCP_Write_Multiple_Coils : modbus
 rule Modbus_TCP_Write_Multiple_registers : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Writes to multiple registers via Modbus TCP"
     impact = "Changes settings across multiple registers, potentially leading to significant changes in device behavior"
@@ -228,6 +241,7 @@ rule Modbus_TCP_Write_Multiple_registers : modbus
 rule Modbus_TCP_Write_File_Record : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Writes a file record via Modbus TCP"
     impact = "Stores data to the device's file system, potentially overwriting existing files or data"
@@ -245,6 +259,7 @@ rule Modbus_TCP_Write_File_Record : modbus
 rule Modbus_TCP_Write_Register : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Masks and writes to a register via Modbus TCP"
     impact = "Manipulates register values with a mask before writing, allowing for precise control over register contents"
@@ -262,6 +277,7 @@ rule Modbus_TCP_Write_Register : modbus
 rule Modbus_TCP_Read_Write_Multiple_Registers : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Reads and writes multiple registers via Modbus TCP"
     impact = "Performs both reading and writing operations on multiple registers, influencing device processes and settings"
@@ -279,6 +295,7 @@ rule Modbus_TCP_Read_Write_Multiple_Registers : modbus
 rule Modbus_TCP_Read_Device_Identification : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Reads device identification via Modbus TCP"
     impact = "Obtains device identification information, useful for asset management and network mapping"
@@ -296,6 +313,7 @@ rule Modbus_TCP_Read_Device_Identification : modbus
 rule unauthorized_read_request_plc : modbus 
 {
   meta:
+    protocol = "MODBUS"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
     description = "Unauthorized read request to a PLC"
     impact = "Attempts to read from a PLC without authorization, potentially exposing sensitive operational data"
