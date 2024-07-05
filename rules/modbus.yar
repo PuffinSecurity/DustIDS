@@ -145,7 +145,7 @@ rule Modbus_TCP_Write_single_register : modbus
     description = "Writes to a single register via Modbus TCP"
     impact = "Alters the value of a single register, which could change device operations or settings"
     lastUpdate = "2023-02-06T12:11:00+0100"
-    status = "stable"
+    status = "experimental"
     ruleVersion = "v1.2.3"
     uuid = "04904d0e255e436d8519fa2b1dcbf7bb"
   strings: 
@@ -164,7 +164,7 @@ rule Modbus_TCP_Read_Exception_Status : modbus
     description = "Reads the exception status via Modbus TCP"
     impact = "Checks the exception status of the device, used for diagnostics and error analysis"
     lastUpdate = "2023-02-06T12:11:00+0100"
-    status = "stable"
+    status = "experimental"
     ruleVersion = "v1.2.1"
     uuid = "4a81b3de62d74600b557cf17e28345d5"
   strings: 
@@ -300,7 +300,7 @@ rule unauthorized_read_request_plc : modbus
     description = "Unauthorized read request to a PLC"
     impact = "Attempts to read from a PLC without authorization, potentially exposing sensitive operational data"
     lastUpdate = "2023-02-06T12:11:00+0100"
-    status = "stable"
+    status = "experimental"
     ruleVersion = "v1.2.4"
     uuid = "032d4d272ced432b804beb6dfeca98d1"
   strings: 
