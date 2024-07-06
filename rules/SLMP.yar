@@ -9,6 +9,11 @@ rule ascii_device_write_in_bits : SLMP
     lastUpdate = "2023-02-06T11:15:00+0100"
     status = "stable"
     ruleVersion = "v1.2.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects ASCII format bit writing operations."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -28,6 +33,11 @@ rule binary_device_write_in_bits : SLMP
     lastUpdate = "2023-02-06T11:15:00+0100"
     status = "stable"
     ruleVersion = "v1.2.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects binary format bit writing operations."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -47,6 +57,11 @@ rule ascii_device_write_in_word : SLMP
     lastUpdate = "2023-02-06T11:17:00+0100"
     status = "stable"
     ruleVersion = "v1.2.5"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects ASCII format word writing operations."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -66,6 +81,11 @@ rule binary_device_write_in_word : SLMP
     lastUpdate = "2023-02-06T11:17:00+0100"
     status = "stable"
     ruleVersion = "v1.2.5"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects binary format word writing operations."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -85,6 +105,11 @@ rule ascii_device_write_random_in_bits : SLMP
     lastUpdate = "2023-02-06T11:20:00+0100"
     status = "stable"
     ruleVersion = "v1.3.0"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detects random bit writing operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -104,6 +129,11 @@ rule binary_device_write_random_in_bits : SLMP
     lastUpdate = "2023-02-06T11:20:00+0100"
     status = "stable"
     ruleVersion = "v1.3.0"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detects random bit writing operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -123,6 +153,11 @@ rule ascii_device_write_random_in_word : SLMP
     lastUpdate = "2023-02-06T11:22:00+0100"
     status = "stable"
     ruleVersion = "v1.3.3"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detects random word writing operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -142,6 +177,11 @@ rule binary_device_write_random_in_word : SLMP
     lastUpdate = "2023-02-06T11:22:00+0100"
     status = "stable"
     ruleVersion = "v1.3.3"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detects random word writing operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -161,6 +201,11 @@ rule ascii_device_write_block : SLMP
     lastUpdate = "2023-02-06T11:25:00+0100"
     status = "stable"
     ruleVersion = "v1.4.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects block writing operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -180,6 +225,11 @@ rule binary_device_write_block : SLMP
     lastUpdate = "2023-02-06T11:25:00+0100"
     status = "stable"
     ruleVersion = "v1.4.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects block writing operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -199,6 +249,11 @@ rule ascii_extend_unit_write : SLMP
     lastUpdate = "2023-02-06T11:30:00+0100"
     status = "stable"
     ruleVersion = "v1.4.3"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects writing operations to extended units in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -218,6 +273,11 @@ rule binary_extend_unit_write : SLMP
     lastUpdate = "2023-02-06T11:30:00+0100"
     status = "stable"
     ruleVersion = "v1.4.3"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects writing operations to extended units in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -237,6 +297,11 @@ rule ascii_memory_write : SLMP
     lastUpdate = "2023-02-06T11:35:00+0100"
     status = "stable"
     ruleVersion = "v1.4.5"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detects memory writing operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -256,6 +321,11 @@ rule binary_memory_write : SLMP
     lastUpdate = "2023-02-06T11:35:00+0100"
     status = "stable"
     ruleVersion = "v1.4.5"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-7"
+    control_description = "Software, Firmware, and Information Integrity: Detects memory writing operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -275,6 +345,11 @@ rule ascii_remote_run : SLMP
     lastUpdate = "2023-02-06T11:40:00+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote run command initiation in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -294,6 +369,11 @@ rule binary_remote_run : SLMP
     lastUpdate = "2023-02-06T11:40:00+0100"
     status = "stable"
     ruleVersion = "v1.4.7"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote run command initiation in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -313,6 +393,11 @@ rule ascii_remote_stop : SLMP
     lastUpdate = "2023-02-06T11:45:00+0100"
     status = "stable"
     ruleVersion = "v1.4.9"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote stop command initiation in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -332,6 +417,11 @@ rule binary_remote_stop : SLMP
     lastUpdate = "2023-02-06T11:45:00+0100"
     status = "stable"
     ruleVersion = "v1.4.9"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote stop command initiation in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -351,6 +441,11 @@ rule ascii_remote_pause : SLMP
     lastUpdate = "2023-02-06T11:50:00+0100"
     status = "stable"
     ruleVersion = "v1.4.9"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote pause command initiation in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -370,6 +465,11 @@ rule binary_remote_pause : SLMP
     lastUpdate = "2023-02-06T11:50:00+0100"
     status = "stable"
     ruleVersion = "v1.4.9"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote pause command initiation in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -389,6 +489,11 @@ rule ascii_remote_latch : SLMP
     lastUpdate = "2023-02-06T11:55:00+0100"
     status = "stable"
     ruleVersion = "v1.4.9"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote latch command initiation in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -408,6 +513,11 @@ rule binary_remote_latch : SLMP
     lastUpdate = "2023-02-06T11:55:00+0100"
     status = "stable"
     ruleVersion = "v1.4.9"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote latch command initiation in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -427,6 +537,11 @@ rule ascii_remote_reset : SLMP
     lastUpdate = "2023-02-06T12:00:00+0100"
     status = "stable"
     ruleVersion = "v1.5.0"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote reset command initiation in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -446,6 +561,11 @@ rule binary_remote_reset : SLMP
     lastUpdate = "2023-02-06T12:00:00+0100"
     status = "stable"
     ruleVersion = "v1.5.0"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-3"
+    control_description = "Access Enforcement: Detects remote reset command initiation in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -465,6 +585,11 @@ rule ascii_change_file_date : SLMP
     lastUpdate = "2023-02-06T12:05:00+0100"
     status = "stable"
     ruleVersion = "v1.1.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file date change operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -484,6 +609,11 @@ rule binary_change_file_date : SLMP
     lastUpdate = "2023-02-06T12:05:00+0100"
     status = "stable"
     ruleVersion = "v1.1.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file date change operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -503,6 +633,11 @@ rule ascii_write_file : SLMP
     lastUpdate = "2023-02-06T12:10:00+0100"
     status = "stable"
     ruleVersion = "v1.1.5"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file writing operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -522,6 +657,11 @@ rule binary_write_file : SLMP
     lastUpdate = "2023-02-06T12:10:00+0100"
     status = "stable"
     ruleVersion = "v1.1.5"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file writing operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -541,6 +681,11 @@ rule ascii_copy_file : SLMP
     lastUpdate = "2023-02-06T12:15:00+0100"
     status = "stable"
     ruleVersion = "v1.2.3"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file copy operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -560,6 +705,11 @@ rule binary_copy_file : SLMP
     lastUpdate = "2023-02-06T12:15:00+0100"
     status = "stable"
     ruleVersion = "v1.2.3"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file copy operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -579,6 +729,11 @@ rule ascii_delete_file : SLMP
     lastUpdate = "2023-02-06T12:20:00+0100"
     status = "stable"
     ruleVersion = "v1.3.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file deletion operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -598,6 +753,11 @@ rule binary_delete_file : SLMP
     lastUpdate = "2023-02-06T12:20:00+0100"
     status = "stable"
     ruleVersion = "v1.3.0"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file deletion operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -617,6 +777,11 @@ rule ascii_change_file_state : SLMP
     lastUpdate = "2023-02-06T12:25:00+0100"
     status = "stable"
     ruleVersion = "v1.3.5"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file state change operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -636,6 +801,11 @@ rule binary_change_file_state : SLMP
     lastUpdate = "2023-02-06T12:25:00+0100"
     status = "stable"
     ruleVersion = "v1.3.5"
+    standard = "NIST SP 800-82"
+    category = "CM"
+    category_name = "Configuration Management"
+    control = "CM-4"
+    control_description = "Monitoring Configuration Changes: Detects file state change operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -655,6 +825,11 @@ rule ascii_remote_password_unlock : SLMP
     lastUpdate = "2023-02-06T12:30:00+0100"
     status = "stable"
     ruleVersion = "v1.3.7"
+    standard = "NIST SP 800-82"
+    category = "IA"
+    category_name = "Identification and Authentication"
+    control = "IA-2"
+    control_description = "Identification and Authentication (Organizational Users): Detects remote password unlock operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -674,6 +849,11 @@ rule binary_remote_password_unlock : SLMP
     lastUpdate = "2023-02-06T12:30:00+0100"
     status = "stable"
     ruleVersion = "v1.3.7"
+    standard = "NIST SP 800-82"
+    category = "IA"
+    category_name = "Identification and Authentication"
+    control = "IA-2"
+    control_description = "Identification and Authentication (Organizational Users): Detects remote password unlock operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
@@ -694,6 +874,11 @@ rule ascii_remote_password_lock : SLMP
     lastUpdate = "2023-02-06T12:35:00+0100"
     status = "stable"
     ruleVersion = "v1.3.9"
+    standard = "NIST SP 800-82"
+    category = "IA"
+    category_name = "Identification and Authentication"
+    control = "IA-2"
+    control_description = "Identification and Authentication (Organizational Users): Detects remote password lock operations in ASCII format."
   strings:
     $slmp_header_4e_frame = { 35 34 30 30 ?? ?? ?? ?? 30 30 30 30 }
     $slmp_header_3e_frame = { 35 30 30 30 }
@@ -713,6 +898,11 @@ rule binary_remote_password_lock : SLMP
     lastUpdate = "2023-02-06T12:35:00+0100"
     status = "stable"
     ruleVersion = "v1.3.9"
+    standard = "NIST SP 800-82"
+    category = "IA"
+    category_name = "Identification and Authentication"
+    control = "IA-2"
+    control_description = "Identification and Authentication (Organizational Users): Detects remote password lock operations in binary format."
   strings: 
     $slmp_header_4e_frame = { 54 00 ?? ?? 00 00 }
     $slmp_header_3e_frame = { 50 00 }
