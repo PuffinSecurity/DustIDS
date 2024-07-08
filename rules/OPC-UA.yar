@@ -1,9 +1,19 @@
 rule browse_request_forward : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "OPC UA Browse Broadcast with subtypes"
-    uuid = "8d57814a742e428cb4c4a52a093cde72" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects an OPC UA browse request broadcast with subtypes."
+    impact = "Identifies browsing operations in OPC UA servers, which may indicate network scanning or enumeration."
+    uuid = "8d57814a742e428cb4c4a52a093cde72"
+    standard = "NIST SP 800-82"
+    category = "SI"
+    category_name = "System and Information Integrity"
+    control = "SI-4"
+    control_description = "Information System Monitoring: Detects browsing operations to identify potential network scanning or enumeration."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $browse_request_header = { 02 00 00 }
@@ -17,9 +27,19 @@ rule browse_request_forward : OPC_UA
 rule request_session_python_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Python client request a session"
-    uuid = "5acd84d20d144a3cba75165a02035a88" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects a Python client requesting a session."
+    impact = "Identifies sessions initiated by Python clients, which may indicate automation or scripting access."
+    uuid = "5acd84d20d144a3cba75165a02035a88"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Detects Python client session requests to monitor remote access attempts."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $python_client = "Pure Python Client"
@@ -32,9 +52,19 @@ rule request_session_python_client : OPC_UA
 rule request_session_dotnet_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Python client request a session"
-    uuid = "5acd84d20d144a3cba75165a02035a88" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects a .NET client requesting a session."
+    impact = "Identifies sessions initiated by .NET clients, which may indicate automation or scripting access."
+    uuid = "5acd84d20d144a3cba75165a02035a88"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Detects .NET client session requests to monitor remote access attempts."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $urn = "urn:"
@@ -43,14 +73,22 @@ rule request_session_dotnet_client : OPC_UA
     $opc_ua_header at 0 and $product_uri and $urn
 }
 
-
-
 rule request_session_eclipse_milo_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Milo client request a session"
-    uuid = "5acd84d20d144a3cba75165a02035a88" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects an Eclipse Milo client requesting a session."
+    impact = "Identifies sessions initiated by Eclipse Milo clients, which may indicate automation or scripting access."
+    uuid = "5acd84d20d144a3cba75165a02035a88"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Detects Eclipse Milo client session requests to monitor remote access attempts."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $python_client = "Milo Client"
@@ -63,9 +101,19 @@ rule request_session_eclipse_milo_client : OPC_UA
 rule request_session_nodejs_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "Node.js client request a session"
-    uuid = "5acd84d20d144a3cba75165a02035a88" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects a Node.js client requesting a session."
+    impact = "Identifies sessions initiated by Node.js clients, which may indicate automation or scripting access."
+    uuid = "5acd84d20d144a3cba75165a02035a88"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-17"
+    control_description = "Remote Access: Detects Node.js client session requests to monitor remote access attempts."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $urn = "urn:"
@@ -77,9 +125,19 @@ rule request_session_nodejs_client : OPC_UA
 rule request_session_without_cert : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "A client request a session without certificate"
-    uuid = "" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects a client requesting a session without a certificate."
+    impact = "Identifies clients attempting to establish sessions without providing a certificate, which may indicate a potential security risk."
+    uuid = "2cdef1e9e478438f9b8e9882f0e60e6b"
+    standard = "NIST SP 800-82"
+    category = "IA"
+    category_name = "Identification and Authentication"
+    control = "IA-5"
+    control_description = "Authenticator Management: Detects session requests without certificates to identify potential security risks."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $certificate = { FF FF FF FF }
@@ -90,22 +148,42 @@ rule request_session_without_cert : OPC_UA
 rule localhost_client : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "A client creates request access from localhost"
-    uuid = "" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects a client requesting access from localhost."
+    impact = "Identifies local access attempts, which may indicate local testing or internal scanning."
+    uuid = "3ae9f1b5f8b7420a9d8f935e9ed3c9b0"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-20"
+    control_description = "Use of External Information Systems: Detects local access attempts to monitor testing or internal scanning activities."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $opc_uri = "opc.tcp://127.0.0.1"
   condition:
-    $opc_ua_header at 0 and $opc_uri at 162 
+    $opc_ua_header at 0 and $opc_uri at 162
 }
 
 rule client_from_internet : OPC_UA
 {
   meta:
+    protocol = "OPC_UA"
     author = "Jose Ramon Palanco <jose.palanco@puffinsecurity.com>"
-    description = "A client creates request access from internet"
-    uuid = "" 
+    lastUpdate = "2023-02-06T12:11:00+0100"
+    status = "stable"
+    ruleVersion = "1.1.0"
+    description = "Detects a client requesting access from the internet."
+    impact = "Identifies remote access attempts, which may indicate external scanning or unauthorized access."
+    uuid = "1f8e37b8e4a24e41b7a2b4f01f31e3f0"
+    standard = "NIST SP 800-82"
+    category = "AC"
+    category_name = "Access Control"
+    control = "AC-20"
+    control_description = "Use of External Information Systems: Detects remote access attempts to monitor external scanning or unauthorized access."
   strings:
     $opc_ua_header = { 4d 53 47 }
     $protocol = "opc.tcp://"
@@ -114,18 +192,3 @@ rule client_from_internet : OPC_UA
   condition:
     $opc_ua_header at 0 and $protocol at 162 and $ip at 172 and not $private_ip at 172
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

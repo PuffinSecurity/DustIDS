@@ -23,8 +23,6 @@ use serde_json::{Value, Map};
 
 use chrono::Local;
 
-use hex;
-
 use crossbeam_channel;
 //use std::sync::mpsc::Sender;
 
@@ -124,24 +122,6 @@ pub fn analyze_ethernet_frame(ethernet: &EthernetPacket, yara_scanner: &mut yara
         _ => {},
     }
 }
-
-// fn analyze_raw_packet(ethernet: &EthernetPacket, yara_scanner: &mut yara_x::Scanner, alert_sender: &Sender<AlertMsg>) {
-//     let results = yara_scanner.scan(ethernet.payload()).unwrap();
-
-//     for rule in results.matching_rules() {
-//         let data = json!({
-//             "timestamp": "2021-08-01T00:00:00.000Z".to_string(),
-//             "event_type": "alert".to_string(),
-//             // "src_ip": source.to_string(),
-//             // "src_port": udp.get_source(),
-//             // "dest_ip": destination.to_string(),
-//             // "dest_port": udp.get_destination(),
-//             "protocol": "UDP".to_string(),
-//             "alert": rule.identifier().to_string(),
-//         });
-//         println!("{}", data.to_string());
-//     };
-// }
 
 fn analyze_ipv4_packet(ethernet: &EthernetPacket, yara_scanner: &mut yara_x::Scanner, alert_sender: &crossbeam_channel::Sender<AlertMsg>) {
     let header = Ipv4Packet::new(ethernet.payload());
