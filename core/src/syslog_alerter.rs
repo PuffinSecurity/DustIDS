@@ -38,9 +38,19 @@ impl SyslogAlerter {
 
         // Send Message
         match syslog_tls::tcp(self.syslog_formatter.clone(), self.syslog_server.as_str()) {
-            Err(e) => { }
+            Err(e) => {
+                println!("Syslog Error: {}", e);
+            },
             Ok(mut writer) => {
-                writer.alert(syslog_msg).unwrap();
+                let old_msg = syslog_msg.message.clone();
+                match writer.alert(syslog_msg) {
+                    Err(e) => {
+                        println!("Syslog Error: {}", e);
+                    },
+                    Ok(_) => {
+                        println!("Sent Syslog msg: {}", old_msg);
+                    }
+                }
                 //writer.alert(msg.as_str());
             },
         };
