@@ -5,7 +5,8 @@ authors = ["Jose Palanco <jose.palanco@puffinsecurity.com>", "Ricardo Stefanescu
 edition = "2021"
 repository = "https://github.com/puffinsecurity/DustIDS"
 readme = "README.md"
-keywords = ["cli", "starter"]
+license = "AGPL-3.0-only"
+keywords = ["ids", "ics", "scada", "yara", "security"]
 description = """
 The lean IDS
 """
