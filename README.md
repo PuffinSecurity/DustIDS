@@ -12,8 +12,8 @@
 </p>
 
 > [!WARNING]
-> **This project is not actively maintained.** DustIDS was developed by
-> [Puffin Security](https://puffinsecurity.com) in 2024 and is published as-is for
+> **This project is not actively maintained.** DustIDS was developed by Ricardo
+> Stefanescu at [Puffin Security](https://puffinsecurity.com) in 2024 and is published as-is for
 > reference, research and education. We have no plans to continue development for
 > now. Issues and pull requests may not get a response. It is an experimental
 > prototype: do not rely on it to protect production OT/ICS environments.
@@ -36,7 +36,7 @@
 - [Project layout](#project-layout)
 - [Known limitations](#known-limitations)
 - [Branches](#branches)
-- [Authors](#authors)
+- [Author](#author)
 - [License](#license)
 
 ## What is DustIDS?
@@ -58,7 +58,8 @@ rules that security analysts can read and write without learning a new DSL.
 - **YARA-based detection** using [YARA-X](https://github.com/VirusTotal/yara-x),
   the Rust rewrite of YARA. Rules are plain `.yar` files loaded from a directory.
 - **228 ready-made rules** for 10 ICS/IoT protocols plus known ICS exploits, with
-  each rule mapped to a NIST SP 800-82 control.
+  each rule mapped to a NIST SP 800-82 control (from
+  [Mole](https://github.com/mole-ids/mole), by Jose Ramon Palanco).
 - **Multi-threaded analysis**: a bounded capture buffer feeds a configurable pool of
   analysis threads.
 - **JSON alerts** in an EVE-style format (similar to Suricata), which include all the
@@ -287,14 +288,18 @@ gaps include:
 - `development`, `feature/*`, `feat/*`, `AFPacket`: historical work-in-progress
   branches, kept for reference.
 
-## Authors
+## Author
 
-- Jose Ramon Palanco ([@jpalanco](https://github.com/jpalanco)): detection rules and
-  protocol research
-- Ricardo Stefanescu ([@ricardo-st](https://github.com/ricardo-st)): engine and
-  tooling
+DustIDS was developed by **Ricardo Stefanescu**
+([@ricardo-st](https://github.com/ricardo-st)) at
+[Puffin Security](https://puffinsecurity.com).
 
-Built at [Puffin Security](https://puffinsecurity.com).
+### Acknowledgements
+
+Many thanks to **Jose Ramon Palanco** ([@jpalanco](https://github.com/jpalanco)) for
+the original detection rules and protocol research. The rules in [`rules/`](rules/)
+come from his project [Mole](https://github.com/mole-ids/mole), a YARA-powered NIDS,
+and keep their original Apache-2.0 license.
 
 ## License
 
@@ -308,6 +313,12 @@ In short: you may use, study, modify and share DustIDS, including for commercial
 purposes. If you distribute a modified version, **or let users interact with it over
 a network**, you must publish your source code under the same license.
 
-The initial project scaffolding came from
-[rust-starter](https://github.com/rust-starter/rust-starter) (MIT License). See
-[NOTICE](NOTICE) for the details.
+Third-party components keep their own licenses:
+
+- The detection rules in [`rules/`](rules/) and `tests/test_pcap/port_80.pcap` come
+  from [Mole](https://github.com/mole-ids/mole) and are licensed under the
+  Apache License 2.0 (see [`rules/LICENSE`](rules/LICENSE)).
+- The initial project scaffolding came from
+  [rust-starter](https://github.com/rust-starter/rust-starter) (MIT License).
+
+See [NOTICE](NOTICE) for the details.

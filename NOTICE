@@ -4,6 +4,18 @@ Copyright (C) 2024 Puffin Security
 DustIDS is licensed under the GNU Affero General Public License v3.0.
 See the LICENSE file for the full text.
 
+Developed by Ricardo Stefanescu at Puffin Security.
+
+----------------------------------------------------------------------
+
+The detection rules in rules/ and tests/test_pcap/port_80.pcap come from
+Mole (https://github.com/mole-ids/mole), a YARA-powered NIDS, and are
+licensed under the Apache License, Version 2.0. A copy of that license
+is in rules/LICENSE.
+
+   Copyright 2019-2020 Jose Ramon Palanco
+   Copyright 2020 Jaume Martin
+
 ----------------------------------------------------------------------
 
 The project scaffolding (workspace layout, error handling, logging and

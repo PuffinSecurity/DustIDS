@@ -1,7 +1,7 @@
 [package]
 name = "utils"
 version = "1.0.0"
-authors = ["Jose Palanco <jose.palanco@puffinsecurity.com>", "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"]
+authors = ["Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"]
 description = "Various utilities and functionalities"
 edition = "2021"
 
