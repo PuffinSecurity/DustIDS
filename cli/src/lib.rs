@@ -1,38 +1,33 @@
+mod app;
+mod crossterm;
+mod ui;
+
 use std::{path::PathBuf, str::FromStr};
 use clap::{Parser, Subcommand, CommandFactory};
 use clap_complete::{generate, shells::{Bash, Fish, Zsh}};
 
 use core::commands;
-use utils::app_config::AppConfig;
 use utils::error::Result;
 use utils::types::LogLevel;
+
+use atomic_counter::{AtomicCounter, RelaxedCounter};
+use std::sync::atomic::{AtomicU32, Ordering};
+use std::time::Duration;
+
+use std::ffi::OsString;
+
+const TICKRATE: usize = 1000;
 
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "dust-ids",
+    name = "dust",
     author,
     about,
-    long_about = "Rust Starter CLI",
+    long_about = "The lean industrial IDS",
     version
 )]
-//TODO: #[clap(setting = AppSettings::SubcommandRequired)]
-//TODO: #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 pub struct Cli {
-    /// Set a custom config file
-    /// TODO: parse(from_os_str)
-    #[arg(short, long, value_name = "FILE")]
-    pub config: Option<PathBuf>,
-
-    /// Set a custom config file
-    #[arg(name="debug", short, long="debug", value_name = "DEBUG")]
-    pub debug: Option<bool>,
-
-    /// Set Log Level 
-    #[arg(name="log_level", short, long="log-level", value_name = "LOG_LEVEL")]
-    pub log_level: Option<LogLevel>,
-
-    /// Subcommands
     #[clap(subcommand)]
     command: Commands,
 }
@@ -40,75 +35,123 @@ pub struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     #[clap(
-        name = "hazard",
-        about = "Generate a hazardous occurance",
+        name = "scan",
+        about = "Scan a interface for malicious traffic",
         long_about = None, 
     )]
-    Hazard,
-    #[clap(
-        name = "error",
-        about = "Simulate an error",
-        long_about = None, 
-    )]
-    Error,
-    #[clap(
-        name = "completion",
-        about = "Generate completion scripts",
-        long_about = None,
-        )]
-        Completion {
-            #[clap(subcommand)]
-            subcommand: CompletionSubcommand,
-        },
-    #[clap(
-        name = "config",
-        about = "Show Configuration",
-        long_about = None,
-    )]
-    Config,
-}
+    Scan {
+        #[arg(required = true, value_name = "INTERFACE", help = "Interface to scan")]
+        iface: Option<OsString>,
 
-#[derive(Subcommand, PartialEq, Debug)]
-enum CompletionSubcommand {
-    #[clap(about = "generate the autocompletion script for bash")]
-    Bash,
-    #[clap(about = "generate the autocompletion script for zsh")]
-    Zsh,
-    #[clap(about = "generate the autocompletion script for fish")]
-    Fish,
+        #[arg(
+            value_name = "RULES-DIR",
+            short, long,
+            required = true,
+            help = "Path to a directory holding yara rules")
+        ]
+        rules_dir: Option<OsString>,
+
+        #[arg(
+            value_name = "SYSLOG-SERVER",
+            long,
+            required = false,
+            help = "[IP:PORT] of the syslog server to which send alerts")
+        ]
+        syslog_server: Option<OsString>,
+
+        #[arg(
+            value_name = "ANALYSIS-THREADS",
+            long,
+            default_value_t = 1,
+            help = "Number of threads to use for analysis")
+        ]
+        analysis_threads: u8,
+
+        #[arg(
+            value_name = "ANALYSIS-BUFFER-SIZE",
+            long,
+            default_value_t = 32768,
+            help = "Max number of packets to buffer for analysis")
+        ]
+        analysis_buffer_size: usize,
+
+        #[arg(
+            value_name = "AF-XDP",
+            short, long, action,
+            help = "Use AF_XDP instead of AF_PACKET (Experimental)")
+        ]
+        use_afxdp: bool,
+
+        #[arg(
+            value_name = "TUI",
+            short, long, action,
+            help = "Use Terminal User Interface")
+        ]
+        tui: bool,
+    },
 }
 
 pub fn cli_match() -> Result<()> {
     // Parse the command line arguments
     let cli = Cli::parse();
 
-    // Merge clap config file if the value is set
-    AppConfig::merge_config(cli.config.as_deref())?;
-
-    let app = Cli::command();
-    let matches = app.get_matches();
-    
-    AppConfig::merge_args(matches)?;
-
     // Execute the subcommand
-    match &cli.command {
-        Commands::Hazard => commands::hazard()?,
-        Commands::Error => commands::simulate_error()?,
-        Commands::Completion {subcommand} => {
-            let mut app = Cli::command();
-            match subcommand {
-                CompletionSubcommand::Bash => {
-                    generate(Bash, &mut app, "dust-ids", &mut std::io::stdout());
-                }
-                CompletionSubcommand::Zsh => {
-                    generate(Zsh, &mut app, "dust-ids", &mut std::io::stdout());
-                }
-                CompletionSubcommand::Fish => {
-                    generate(Fish, &mut app, "dust-ids", &mut std::io::stdout());
+    match cli.command {
+        Commands::Scan {
+            iface,
+            rules_dir,
+            syslog_server,
+            analysis_threads,
+            analysis_buffer_size,
+            use_afxdp,
+            tui,
+        } => {
+            let iface = iface
+                .as_deref()
+                .map(|s| s.to_str().unwrap())
+                .unwrap_or("lo");
+
+            let rules_dir = rules_dir
+                .as_deref()
+                .map(|s| s.to_str().unwrap())
+                .unwrap_or(".");
+
+            let syslog_server = syslog_server
+                .as_deref()
+                .map(|s| s.to_str().unwrap())
+                .unwrap_or("");
+
+            let (mut state, handles) = core::commands::scan_interface(
+                iface,
+                rules_dir,
+                analysis_threads as usize,
+                analysis_buffer_size,
+                use_afxdp,
+                syslog_server).unwrap();
+
+            if tui {
+                crossterm::run(TICKRATE, state).unwrap();
+            } else {
+                loop {
+                    std::thread::sleep(Duration::from_secs(30));//TODO 
+                    state.on_tick(TICKRATE);
+                    // print all state data
+                    println!("Rx per sec: {:?} Total: {:?} - RX Dropped {:?} - Analysis Buffer: {:?}/{:?} - Alerts:\n {:?}",
+                        state.rx_per_sec,
+                        state.rx_total.get(),
+                        state.rx_dropped.get(),
+                        state.analysis_buffer_len.load(Ordering::Relaxed),
+                        state.analysis_buffer_cap,
+                        state.alerts.read().unwrap()
+                    );
+                    println!("rx queue: {:?}", state.rx_per_tick);
                 }
             }
+
+            for handle in handles {
+                handle.join();
+            }
         }
-        Commands::Config => commands::config()?,
     }
 
     Ok(())

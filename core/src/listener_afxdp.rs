@@ -1,0 +1,205 @@
+use arraydeque::{ArrayDeque, Wrapping};
+use rebpf::{interface, libbpf};
+use std::cmp::{min, max};
+use std::sync::{Arc, Mutex};
+use num_cpus;
+
+use afxdp::mmap_area::{MmapArea, MmapAreaOptions};
+use afxdp::socket::{Socket, SocketOptions, SocketRx};
+use afxdp::umem::{Umem, UmemFillQueue};
+use afxdp::PENDING_LEN;
+use afxdp::{buf::Buf, buf_pool::BufPool};
+use afxdp::{buf_mmap::BufMmap, buf_pool_vec::BufPoolVec};
+use libbpf_sys::{XSK_RING_CONS__DEFAULT_NUM_DESCS, XSK_RING_PROD__DEFAULT_NUM_DESCS};
+use atomic_counter::{AtomicCounter, RelaxedCounter};
+
+use super::alerts::AlertMsg;
+
+const BUF_NUM: usize = 65536;
+const BUF_LEN: usize = 4096;
+const BATCH_SIZE: usize = 4096;
+
+
+#[derive(Default, Copy, Clone, Debug)]
+pub struct BufCustom {}
+
+
+pub struct AFXDPListener {
+    interface: interface::Interface,
+    interface_name: String,
+    rx_queues: usize,
+
+    frame_sender: crossbeam_channel::Sender<Vec<u8>>,
+}
+
+impl  AFXDPListener {
+    pub fn new(
+        interface_name: String, 
+        xdp_flags: libbpf::XdpFlags, 
+        max_queues: usize,
+        frame_sender: crossbeam_channel::Sender<Vec<u8>>,
+    ) -> AFXDPListener 
+    {
+        // Get and prepare xdp interface
+        let interface = interface::get_interface(interface_name.as_str()).unwrap();
+        //self.interface = interface;
+        let _ = libbpf::bpf_set_link_xdp_fd(&interface, None, xdp_flags).unwrap();
+
+        let threads = min(max(max_queues, 1), num_cpus::get());
+        println!("AF_XDP Listener initialized with {} threads", threads);
+        AFXDPListener {
+            interface_name: interface_name,
+            interface: interface,
+
+            rx_queues: threads,
+
+            frame_sender: frame_sender.clone(),
+        }
+    }
+
+    // This function is used to cleanly disconnect the XDP program from the interface
+    pub fn disconnect(&mut self) {
+        unsafe {
+            libbpf_sys::bpf_set_link_xdp_fd(self.interface.ifindex() as i32, -1, 0);
+        }
+    }
+
+        pub fn run(&mut self, rx_stats: Arc<RelaxedCounter>) -> std::thread::JoinHandle<()> {
+        // Allocate user memory map
+
+        let interface = self.interface_name.clone();
+        let frame_sender = self.frame_sender.clone();
+        std::thread::spawn(move || {
+            let options = MmapAreaOptions { huge_tlb: false };
+            let r = MmapArea::new(BUF_NUM, BUF_LEN, options);
+            let (area, mut bufs) = match r {
+                Ok((area, bufs)) => (area, bufs),
+                Err(err) => panic!("Unable to create mmap for XDP: {:?}", err),
+            };
+
+            // Add all the Bufs to the global Buf pool
+            let mut bp: BufPoolVec<BufMmap<BufCustom>, BufCustom> = BufPoolVec::new(bufs.len());
+            let len = bufs.len();
+            let r = bp.put(&mut bufs, len);
+            assert!(r == len);
+
+            // Prepare for multithreading (in case we want in a future to have multiple workers per interface (Requires multiple RX Queues))
+            let bp = Arc::new(Mutex::new(bp));
+
+            // Prepare user memory
+            let r = Umem::new(
+                area.clone(),
+                XSK_RING_CONS__DEFAULT_NUM_DESCS,
+                XSK_RING_PROD__DEFAULT_NUM_DESCS,
+            );
+            let (umem1, _, mut umem1fq) = match r {
+                Ok(umem) => umem,
+                Err(err) => panic!("Unable to create umem for XDP load balancing: {:?}", err),
+            };
+
+            // Create the AF_XDP socket
+            let mut sock_opts = SocketOptions::default();
+            sock_opts.copy_mode = true;
+            //sock_opts.zero_copy_mode = true; TODO
+
+            let sock_r = Socket::new_rx(
+                umem1.clone(),
+                interface.as_str(),
+                0, // Currently hardcoded to RX Queue 0 TODO: Multithread with multiple queues
+                XSK_RING_CONS__DEFAULT_NUM_DESCS,
+                sock_opts,
+            );
+            let (_, mut socket_rx) = match sock_r {
+                Ok(socket) => socket,
+                Err(err) => {
+                    panic!(
+                        "Unable to create XSK for XDP: {:?}", err
+                    );
+                    //continue;
+                }
+            };
+
+            let mut v: ArrayDeque<[BufMmap<BufCustom>; PENDING_LEN], Wrapping> = ArrayDeque::new();
+            let mut fq_deficit = 0;
+
+            const START_BUFS: usize = 8192;
+
+            let mut bufs = Vec::with_capacity(START_BUFS);
+
+            let r = bp.lock().unwrap().get(&mut bufs, START_BUFS);
+            if r != START_BUFS {
+                println!(
+                    "Failed to get initial bufs. Wanted {} got {}",
+                    START_BUFS, r
+                );
+            }
+
+            // Initial fill of the worker UMEM // Prepared for multiple threads...
+            let r = umem1fq.fill(
+                &mut bufs,
+                min(XSK_RING_PROD__DEFAULT_NUM_DESCS as usize, BUF_NUM),
+            );
+            match r {
+                Ok(n) => {
+                    if n != min(XSK_RING_PROD__DEFAULT_NUM_DESCS as usize, BUF_NUM) {
+                        panic!(
+                            "Initial fill of umem incomplete. Wanted {} got {}.",
+                            BUF_NUM, n
+                        );
+                    }
+                }
+                Err(err) => panic!("error: {:?}", err),
+            }
+
+
+            let core = core_affinity::CoreId { id: 0 };
+            core_affinity::set_for_current(core);
+
+            println!("Starting XDP");
+            let custom = BufCustom {};
+            loop {
+                // Receive ring
+                let r = socket_rx.try_recv(&mut v, BATCH_SIZE, custom);
+                match r {
+                    Ok(n_pkt) => {
+                        if n_pkt > 0 {
+                            //println!("XDP worker {:?} Received {:?} packets", self.core, n_pkt);
+                            // Send stats
+                            for frame in v.drain(0..) {
+                                rx_stats.inc();
+                                let data_copy = frame.get_data().to_vec();
+                                match frame_sender.try_send(data_copy) {
+                                    Ok(_) => {}
+                                    Err(_) => {
+                                        log::debug!("[XDP] Analysis Buffer Full. Dropping packet.");
+                                    }
+                                }
+                            }
+
+                            fq_deficit += n_pkt;
+                        } else {
+                            if umem1fq.needs_wakeup() {
+                                socket_rx.wake();
+                            }
+                        }
+                    }
+                    Err(err) => {
+                        println!("XDP: {:?}", err);
+                    }
+                }
+
+                // Fill the fill ring
+                const FILL_THRESHOLD: usize = 64;
+                if fq_deficit >= FILL_THRESHOLD {
+                    let r = umem1fq.fill(&mut bufs, fq_deficit);
+                    match r {
+                        Ok(n) => {
+                            fq_deficit -= n;
+                        }
+                        Err(err) => panic!("error: {:?}", err),
+                    }
+                }
+            }
+        })
+    }
+}

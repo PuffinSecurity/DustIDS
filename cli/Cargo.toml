@@ -2,13 +2,17 @@
 name = "cli"
 version = "1.0.0"
 authors = ["Jose Palanco <jose.palanco@puffinsecurity.com>", "Ricardo Stefanescu <ricardo.stefanescu@puffinsecurity.com>"]
-description = "CLI interface for dust-ids"
+description = "DustIDS - The fast and lean industrial IDS"
 edition = "2021"
 
 [dependencies]
 utils = { path = "../utils" }
 core = { path = "../core" }
 clap_complete = "4.4.4"
+crossterm = "0.27.0"
+ratatui = "0.26.3"
+rand = "0.8.5"
+atomic-counter = "1.0.1"
 
 [dependencies.clap]
 version = "4.4.7"
